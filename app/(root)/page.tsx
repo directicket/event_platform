@@ -1,8 +1,24 @@
+import CategoryFilter from "@/components/shared/CategoryFilter";
+import Collection from "@/components/shared/Collection";
+import Search from "@/components/shared/Search";
 import { Button } from "@/components/ui/button";
+import { getAllEvents } from "@/lib/actions/event.actions";
+import { SearchParamProps } from "@/types";
 import Image from "next/image";
 import Link from "next/link";
 
-export default function Home() {
+export default async function Home({ searchParams }: SearchParamProps) {
+  const page = Number(searchParams?.page) || 1;
+  const searchText = (searchParams?.query as string) || '';
+  const category = (searchParams?.category as string) || '';
+
+  const events = await getAllEvents({
+    query: searchText,
+    category,
+    page,
+    limit: 20,
+  });
+
   return (
     <>
       <section className="bg-white bg-contain py-5 md:py-10
@@ -15,11 +31,11 @@ export default function Home() {
               </span>.
             </h1>
             <p className="p-regular-18 md:p-regular-24 sm:text-center md:text-left text-muted-foreground">
-            Buy tickets or sell and keep 100% of money made on tickets. 
-            All on Nigeria's most secure event ticketing platform.</p>
+            Buy or sell tickets and keep 100% of your earnings on 
+            Nigeria's most secure platform for experiences and gatherings.</p>
             <Button size="lg" asChild className="bg-blue-700 hover:bg-blue-500 md:w-fit sm:items-center">
               <Link href="/events/create">
-                Create an event &rarr;
+                Create a ticket now &rarr;
               </Link>
             </Button>
           </div>
@@ -35,12 +51,21 @@ export default function Home() {
       </section>
 
       <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
-        <h3 className="h3-bold">Browse event tickets</h3>
+        <h3 className="h3-bold">Browse event Tickets</h3>
 
         <div className="flex w-full flex-col gap-5 md:flex-row">
-          Search
-          CategoryFilter
+          <Search />
         </div>
+
+        <Collection 
+          data={events?.data}
+          emptyTitle="Couldn&apos;t find any Tickets with that name."
+          emptyStateSubtext="Check your search for spelling errors or try searching for something else."
+          collectionType="All_Events"
+          limit={6}
+          page={1}
+          totalPages={2}
+        />
       </section>
     </>
   );

@@ -4,11 +4,11 @@ export const headerLinks = [
       route: '/',
     },
     {
-      label: 'Create Event',
+      label: 'Create Ticket',
       route: '/events/create',
     },
     {
-      label: 'My Profile',
+      label: 'Manage Tickets',
       route: '/profile',
     },
   ]
