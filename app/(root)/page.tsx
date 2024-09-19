@@ -41,7 +41,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
             Nigeria's most secure platform for experiences and gatherings.</p>
             <Button size="lg" asChild className="bg-blue-700 hover:bg-blue-500 md:w-fit sm:items-center min-w-[200px]">
               <Link href="/events/create">
-                Create a ticket now &rarr;
+                Create a ticket now;
               </Link>
             </Button>
             <Button size="lg" asChild className="mt-[-15px] min-w-[200px] bg-white border hover:bg-white border-blue-700 text-blue-700 md:w-fit sm:items-center">

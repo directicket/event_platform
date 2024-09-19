@@ -25,13 +25,15 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
     <>
     <section className="flex justify-center bg-white bg-contain">
       <div className="grid grid-cols-1 md:grid-cols-2 2xl:max-w-7xl">
-        <Image 
-          src={event.imageURL}
-          alt="hero image"
-          width={1000}
-          height={1000}
-          className="min-h-[300px] max-h-[2500px] h-fit w-full md:rounded-md object-cover object-center"
-        />
+        <div className="wrapper flex mb-[-15px]">
+          <Image 
+            src={event.imageURL}
+            alt="hero image"
+            width={1000}
+            height={1000}
+            className="min-h-[300px] max-h-[2500px] rounded-md h-fit w-full md:rounded-md object-cover object-center"
+          />
+        </div>
 
         <div className='flex w-full flex-col gap-8 p-5 md:p-10 bg-white'>
           <div className='flex flex-col gap-6'>
@@ -84,8 +86,8 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
           </div>
 
           <div className='flex flex-col gap-2'>
-            <p className='p-bold-20 text-black'>Ticket description</p>
-            <p className='p-regular-16 lg:p-regular-18'>{event.description}</p>
+            <p className='p-bold-16 lg:p-bold-18'>Ticket description</p>
+            <p className='p-regular-16 lg:p-regular-18 mt-[-5px]'>{event.description}</p>
             <p className='p-bold-16 lg:p-bold-18 mt-6'>Stay updated</p>
             <p className='p-regular-16 lg:p-regular-18 text-black mt-[-5px]'>Learn more about this event via this link: {' '}
               <a href={`${event.url}`} className="truncate text-wrap">
