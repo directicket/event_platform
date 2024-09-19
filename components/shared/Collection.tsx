@@ -45,7 +45,7 @@ const Collection = ({
             )} */}
         </div>
       ): (
-        <div className='text-muted-foreground flex-left wrapper min-h-[200px] text-left w-full flex-col gap-3 rounded-[14px] bg-grey-50 py-28'>
+        <div className='text-muted-foreground flex-left wrapper min-h-[200px] text-left w-full flex-col gap-3 rounded-[14px] bg-white py-28'>
             <h3 className='p-bold-20 md:h5-bold'>{emptyTitle}</h3>
             <p className='p-regular-14'>{emptyStateSubtext}</p>
         </div>
