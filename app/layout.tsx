@@ -14,7 +14,7 @@ export const metadata: Metadata = {
   title: "Directicket",
   description: "Buy and sell tickets to events.",
   icons: {
-    icon: "favicon.ico"
+    icon: "/favicon.ico"
   }
 };
 

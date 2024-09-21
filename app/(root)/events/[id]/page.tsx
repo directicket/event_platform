@@ -3,7 +3,7 @@ import Collection from '@/components/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
-import { Calendar, MapPin } from 'lucide-react';
+import { BadgeCheck, Calendar, MapPin } from 'lucide-react';
 import Image from 'next/image';
 import {
   Accordion,
@@ -37,6 +37,10 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
         <div className='flex w-full flex-col gap-8 p-5 md:p-10 bg-white'>
           <div className='flex flex-col gap-6'>
+            <div className='flex gap-1'>
+              <BadgeCheck className='w-5 text-muted-foreground'></BadgeCheck>
+              <p className='text-muted-foreground'>Verified by Directicket</p>
+            </div>
             <h2 className='h2-bold'>{event.title}</h2>
 
             <div className='flex flex-col gap-3 sm:flex-row sm:items-center'>
@@ -50,8 +54,8 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
               </div>
 
               <p className='p-medium-16 ml-2 mt-2 sm:mt-0 text-muted-foreground'>
-                by{' '}
-                <span className='text-black'>{event.organizer.firstName} {event.organizer.lastName}</span>
+                Created by{' '}
+                <span className='text-black p-bold-16'>@{event.organizer.username}</span>
               </p>
             </div>
           </div>

@@ -1,7 +1,7 @@
 import { iEvent } from '@/lib/database/models/event.model'
 import { formatDateTime } from '@/lib/utils'
 import { auth } from '@clerk/nextjs/server'
-import { SquarePen } from 'lucide-react'
+import { BadgeCheck, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -58,14 +58,20 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                 Sales end {' '} {formatDateTime(event.startDateTime).dateOnly}.
             </p>
 
-            <Link href={`/events/${event._id}`}>
-            <p className='p-bold-20 md:p-bold-24 line-clamp-2 flex-1 text-black'>{event.title}</p>
-            </Link>
+            <div className='flex w-full gap-1 items-center'>
+              <BadgeCheck className='w-6 min-w-6 text-black justify-items-start'></BadgeCheck>
+              <Link href={`/events/${event._id}`}>
+                <p className='p-bold-20 md:p-bold-24 line-clamp-1 flex-1 text-black'>{event.title}</p>
+              </Link>
+            </div>
             
             <div className='flex-between w-full'>
-                <p className='p-medium-14 md:p-medium-16 text-muted-foreground'>
-                  {event.organizer.firstName} {event.organizer.lastName}
-                </p>
+                <div className='flex gap-1'>
+                  <p className='p-medium-14 md:p-medium-16 text-muted-foreground p-bold-14'>
+                    @{event.organizer.username}
+                  </p>
+                  {/* <BadgeCheck className='w-5 text-muted-foreground'></BadgeCheck> */}
+                </div>
 
                 {hasOrderLink && (
                     <Link href={`/orders?eventId=${event._id}`} className='flex gap-2'>
