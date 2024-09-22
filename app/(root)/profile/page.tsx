@@ -16,8 +16,8 @@ const ProfilePage = async () => {
       {/*MY TICKETS */}
       <section className='bg-white bg-cover bg-center py-5 md:py-10'>
         <div className='wrapper flex items-left justify-left sm:justify-between'>
-            <h3 className='h3-bold text-left sm:text-left'>Purchased Tickets</h3>
-            <Button asChild size="lg" className='bg-blue-700 rounded-sm hidden sm:flex'>
+            <h3 className='h3-medium text-left sm:text-left'>Purchased Tickets</h3>
+            <Button asChild size="lg" className='bg-blue-700 rounded-md hidden sm:flex'>
                 <Link href="/#events">Browse more</Link>
             </Button>
         </div>
@@ -39,8 +39,8 @@ const ProfilePage = async () => {
       {/*EVENTS ORGANIZED */}
       <section className='bg-white bg-cover bg-center py-5 md:py-10'>
         <div className='wrapper flex items-left justify-left sm:justify-between'>
-            <h3 className='h3-bold text-left sm:text-left'>Your listings</h3>
-            <Button asChild size="lg" className='bg-blue-700 rounded-sm hidden sm:flex'>
+            <h3 className='h3-medium text-left sm:text-left'>Your Listings</h3>
+            <Button asChild size="lg" className='bg-blue-700 rounded-md hidden sm:flex'>
                 <Link href="/events/create">Create new Ticket</Link>
             </Button>
         </div>

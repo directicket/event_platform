@@ -274,3 +274,15 @@ body {
 .react-datepicker__time-list-item--selected {
   background-color: #624cf5 !important;
 }
+
+
+.sticky-header {
+  position: sticky;
+  top: 0;
+  background-color: rgba(255, 255, 255, 0.825); /* or any color */
+  z-index: 1000; /* keeps it above other content */
+}
+
+.header-blur {
+  backdrop-filter: blur(20px); /* adjust the blur amount */
+}

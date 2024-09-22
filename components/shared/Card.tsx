@@ -20,7 +20,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (
-    <div className='group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-md bg-white shadow-md transition-all hover:shadow-lg md:min-h-[438px]'>
+    <div className='group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-md bg-white border transition-all hover:shadow-lg md:min-h-[438px]'>
         <Link 
           href={`/events/${event._id}`}
           style={{backgroundImage: `url(${event.imageURL})`}}
@@ -59,10 +59,10 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             </p>
 
             <div className='flex w-full gap-1 items-center'>
-              <BadgeCheck className='w-6 min-w-6 text-black justify-items-start'></BadgeCheck>
               <Link href={`/events/${event._id}`}>
                 <p className='p-bold-20 md:p-bold-24 line-clamp-1 flex-1 text-black'>{event.title}</p>
               </Link>
+              <BadgeCheck className='w-5 min-w-5 text-black justify-items-start'></BadgeCheck>
             </div>
             
             <div className='flex-between w-full'>
