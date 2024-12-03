@@ -25,7 +25,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           <Image
             alt='image'
             src={`${event.imageURL}`}
-            className='object-contain border-[0.25px] border-neutral-700/50'
+            className='object-contain '
             width={650} // Max width constraint
             height={400} // Fixed height
             style={{
