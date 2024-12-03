@@ -20,62 +20,87 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (
-    <div className='group relative flex min-h-[380px] w-full max-w-[400px] flex-col overflow-hidden rounded-md bg-white border transition-all hover:shadow-lg md:min-h-[438px]'>
-        <Link 
-          href={`/events/${event._id}`}
-          style={{backgroundImage: `url(${event.imageURL})`}}
-          className='flex-center flex-grow bg-gray-50 bg-cover bg-center text-grey-500'
-        />
+    <div className='group mt-[-55px] relative flex w-full max-w-[400px] flex-col overflow-hidden rounded-md bg-white md:min-h-[150px]'>
+        <div className='bg-neutral-200 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
+          <Image
+            alt='image'
+            src={`${event.imageURL}`}
+            className='object-contain border-[0.25px] border-neutral-700/50'
+            width={650} // Max width constraint
+            height={400} // Fixed height
+            style={{
+              maxWidth: '650px', // Variable width, max 650px
+              width: 'auto', // Automatically adjusts the width
+              height: '70%', // Stretches the image to fit the height of the container
+            }}
+          />
+        </div>
         { /* IS EVENT CREATOR ... */}
 
         {isEventCreator && !hidePrice && (
-            <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-xl bg-white p-3 shadow-sm transition-all text-black'>
+            <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-full 
+            hover:text-white hover:bg-black bg-white p-3 text-black'>
                 <Link href={`/events/${event._id}/update`}>
-                  <SquarePen width={20} height={20} />
+                  <SquarePen width={18} height={18} />
                 </Link>
 
                 {/* <DeleteConfirmation eventId={event._id}/> */}
             </div>
         )}
 
-        <div
-          className='flex min-h-[230px] flex-col gap-3 p-5 md:gap-4'
-        >
-           {!hidePrice && <div className='flex gap-2'>
-                <span className='p-semibold-14 rounded-sm bg-green-500/10 px-4 py-1 text-green-700'>
-                    {event.isFree ? 'FREE' : `₦${event.price}`}
-                </span>
-                <p className='p-semibold-14 w-flex rounded-sm bg-grey-500/10 px-4 py-1 text-gray-500'>
-                  {event.category.name}
-                </p>
-            </div>}
-
-            <p className='p-medium-14 p-medium-16 text-muted-foreground'>
-                {formatDateTime(event.endDateTime).dateTime}
-            </p>
-
-            <p className='p-medium-14 p-medium-16 text-red-500'>
-                Sales end {' '} {formatDateTime(event.startDateTime).dateOnly}.
-            </p>
+        <div className='flex min-h-[230px] flex-col gap-0.5 pt-2 md:gap-1'>
 
             <div className='flex w-full gap-1 items-center'>
               <Link href={`/events/${event._id}`}>
-                <p className='p-bold-20 md:p-bold-24 line-clamp-1 flex-1 text-black'>{event.title}</p>
+                <p className='p-medium-16 md:p-medium-18 line-clamp-1 flex-1 text-black'>{event.title}</p>
               </Link>
-              <BadgeCheck className='w-5 min-w-5 text-black justify-items-start'></BadgeCheck>
+              <BadgeCheck className='w-4 text-black justify-items-start'></BadgeCheck>
             </div>
+
+            <p className='p-medium-14 p-medium-16 text-black'>
+                {formatDateTime(event.endDateTime).dateTime}
+            </p>
+
+
+            {!hidePrice && 
+                <div className='flex pt-0.5 gap-2'>
+                <span className='p-medium-14 text-neutral-600'>
+                    {event.isFree ? 'FREE' : `₦${event.price}`}
+                </span>
+                {/* <p className='p-semibold-14 w-flex rounded-sm bg-grey-500/10 px-4 py-1 text-gray-500'>
+                  {event.category.name}
+                </p> */}
+                </div>}
+              
+              {/* <p className='p-medium-14 p-medium-16 text-red-500'>
+              Sales end {' '} {formatDateTime(event.startDateTime).dateOnly}.
+              </p> */}
             
             <div className='flex-between w-full'>
-                <div className='flex gap-1'>
+                {/* <div className='flex gap-1'>
                   <p className='p-medium-14 md:p-medium-16 text-muted-foreground p-bold-14'>
                     @{event.organizer.username}
-                  </p>
+                  </p> */}
                   {/* <BadgeCheck className='w-5 text-muted-foreground'></BadgeCheck> */}
-                </div>
+                {/* </div> */}
+            </div>
 
-                {hasOrderLink && (
-                    <Link href={`/orders?eventId=${event._id}`} className='flex gap-2'>
-                        <p className='text-blue-600 underline'>Order Details</p>
+            <div className='w-full pt-2'>
+            <Link href={`/events/${event._id}`}>
+              <button className='p-semibold-14 h-10 w-full w-flex rounded-lg
+              bg-white text-neutral-600 border border-neutral-300/70
+              hover:bg-black px-4 py-1 hover:text-white hover:border-black'>
+                  Get {event.category.name} ticket
+              </button>
+            </Link>
+            </div>
+
+            <div className='w-full'>
+            {hasOrderLink && (
+                    <Link href={`/orders?eventId=${event._id}`}>
+                        <button className='pb-8 underline p-semibold-14 h-10 w-full w-flex rounded-sm bg-white px-4 py-1 text-gray-500'>
+                          View buyers
+                        </button>
                     </Link>
                 )}
             </div>

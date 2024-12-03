@@ -31,7 +31,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
             alt="hero image"
             width={1000}
             height={1000}
-            className="min-h-[300px] max-h-[2500px] rounded-md h-fit w-full md:rounded-md object-cover object-center"
+            className="min-h-[300px] border max-h-[2500px] rounded-md h-fit w-full md:rounded-md object-cover object-center"
           />
         </div>
 
@@ -105,7 +105,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
     {/* EVENTS FROM THE SAME CATEGORY */}
     <section className='wrapper my-8 flex flex-col gap-8 md:gap-12'>
-      <h3 className='h3-medium mb-[-15px] text-wrap'>Other {' '}{event.category.name}{' '} Tickets</h3>
+      <h3 className='h3-medium mb-[45px] text-center text-wrap'>You might like these too.</h3>
 
       <Collection 
           data={relatedEvents?.data}

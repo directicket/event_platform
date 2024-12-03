@@ -2,6 +2,7 @@ import Collection from '@/components/shared/Collection'
 import { Button } from '@/components/ui/button'
 import { getEventsByUser } from '@/lib/actions/event.actions'
 import { auth } from '@clerk/nextjs'
+import { CirclePlus } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
 
@@ -15,9 +16,9 @@ const ProfilePage = async () => {
     <>
       {/*MY TICKETS */}
       <section className='bg-white bg-cover bg-center py-5 md:py-10'>
-        <div className='wrapper flex items-left justify-left sm:justify-between'>
-            <h3 className='h3-medium text-left sm:text-left'>Purchased Tickets</h3>
-            <Button asChild size="lg" className='bg-blue-700 rounded-md hidden sm:flex'>
+        <div className='wrapper flex items-left justify-left sm:justify-between align-middle'>
+            <h3 className='p-medium-20 md:p-medium-24 text-left sm:text-left align-middle'>Your Purchases</h3>
+            <Button asChild size="sm" className='bg-white text-black hover:text-white hover:bg-black p-medium-12 border border-black rounded-full hidden sm:flex'>
                 <Link href="/#events">Browse more</Link>
             </Button>
         </div>
@@ -37,11 +38,12 @@ const ProfilePage = async () => {
       </section> */}
 
       {/*EVENTS ORGANIZED */}
-      <section className='bg-white bg-cover bg-center py-5 md:py-10'>
-        <div className='wrapper flex items-left justify-left sm:justify-between'>
-            <h3 className='h3-medium text-left sm:text-left'>Your Listings</h3>
-            <Button asChild size="lg" className='bg-blue-700 rounded-md hidden sm:flex'>
-                <Link href="/events/create">Create new Ticket</Link>
+      <section className='bg-white bg-cover bg-center py-16 md:py-24'>
+        <div className='wrapper flex items-left justify-left sm:justify-between align-middle'>
+          <h3 className='p-medium-20 md:p-medium-24 text-left sm:text-left'>Your Tickets</h3>
+            <Button size="sm" className='flex-row bg-white text-black hover:text-white hover:bg-black p-medium-12 border border-black rounded-full hidden sm:flex'>
+                <CirclePlus height={18} width={18} className='pr-1'/>
+                <Link href="/events/create">New Ticket</Link>
             </Button>
         </div>
       </section>

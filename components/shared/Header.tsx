@@ -7,11 +7,11 @@ import MobileNav from "./MobileNav"
 
 const Header = () => {
   return (
-    <header className="w-full sticky-header header-blur">
-      <div className="wrapper flex items-center justify-between">
+    <div className="w-full sticky-header border-b pb-[-20] bg-white bg-opacity-90 header-blur absolute text-black">
+      <div className="wrapper flex items-center align-middle justify-between py-[-20]">
         <Link href="/" className="w-36">
           <Image 
-            src="/assets/images/logo.svg" width={128} height={38}
+            src="/assets/images/logo.svg" width={110} height={38}
             alt="Directicket Logo"
           />
         </Link>
@@ -28,15 +28,15 @@ const Header = () => {
             <MobileNav />
           </SignedIn>
           <SignedOut>
-            <Button asChild className="rounded-sm bg-white border text-blue-600 border-blue-600 md:hover:bg-blue-500 hover:text-white h-30">
-              <Link href="/sign-in">
-              Sign in
+            <Button asChild className="h-fit min-w-fit px-3 rounded-3xl p-1 bg-black cursor-pointer">
+              <Link href="/sign-in" className="p-medium-12 text-white cursor-pointer">
+              Try now
               </Link>
             </Button>
           </SignedOut>
         </div>
       </div>
-    </header>
+    </div>
   )
 }
 

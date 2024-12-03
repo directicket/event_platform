@@ -35,8 +35,8 @@ const Search = ({ placeholder = 'Search Directicket...'}: { placeholder?: string
   }, [query, searchParams, router])
 
   return (
-    <div className='flex-center min-h-[54px] w-full overflow-hidden rounded-md bg-grey-50 px-4 py-2'>
-        <Image src="/assets/icons/search.svg" alt='search' width={24} height={24}/>
+    <div className='flex-center min-h-[54px] w-full overflow-hidden rounded-lg bg-grey-50 px-4 py-2'>
+        <Image src="/assets/icons/search.svg" alt='search' width={20} height={20}/>
         <Input 
           type='text'
           placeholder={placeholder}

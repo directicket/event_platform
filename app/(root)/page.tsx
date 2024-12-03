@@ -27,9 +27,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
   return (
     <>
-      <section className="bg-white bg-contain py-5 md:py-10
-      ">
-        <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
+      <section className="bg-white bg-contain py-5 md:py-10">
+        {/* <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
           <div className="flex flex-col justify-center gap-8">
             <h1 className="h1-bold space sm:text-center md:text-left">
               Create and buy tickets to <span className="text-blue-700">
@@ -58,16 +57,33 @@ export default async function Home({ searchParams }: SearchParamProps) {
             height={1000}
             className="max-h-[70vh] object-contain object-center 2xl:max-h-[50vh]"
           />
-        </div>
+        </div> */}
       </section>
+
+      <div className="wrapper flex flex-col items-center justify-center
+       h-fit mx-auto w-fit gap-2
+      px-4 p-3 focus:top-0">
+        <h3 className='h3-medium mb-2 max-w-[300px] md:max-w-[600px] text-center text-wrap'>
+          Get tickets to exciting events happening all around the city.
+        </h3>
+
+          <Search />
+
+          <p 
+      className="bg-white pt-2 text-neutral-600 hover:bg-white
+      md:w-fit w-fit sm:items-center h-[25px] text-center rounded-lg max-w-[260px] md:max-w-[400px] p-regular-14">
+          Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
+          <a href="/events/create" className="underline text-blue-500">Sell now &#8250;</a>
+          </p>
+      </div>
+
+      
+
 
       <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
 
-        <div className="flex w-full flex-col gap-5 md:flex-row">
-          <Search />
-        </div>
 
-        <h3 className="h3-medium mt-10 mb-[-15px]">Browse Tickets</h3>
+        <h3 className="p-medium-20 md:p-medium-24 py-12 md:py-16">Highlighted tickets</h3>
 
 
         <Collection 
@@ -81,14 +97,16 @@ export default async function Home({ searchParams }: SearchParamProps) {
         />
       </section>
 
-      <section className="wrapper my-8 flex flex-col gap-8 md:gap-12
+      <hr/>
+      <section id="#questions" className="wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
       ">
         <div className="flex flex-col gap-5">
-          <h3 className="h3-medium">Questions & answers</h3>
+          <h3 className="h3-medium">Frequently Asked <br/>Questions</h3>
+          <hr/>
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="p-regular-20">Why choose Directicket?</AccordionTrigger>
+                <AccordionTrigger className="p-semibold-16">Why choose Directicket?</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground p-semibold-14 md:max-w-[500px]">
                   Directicket is a first-of-its-kind ticket-focused platform. With Directicket, 
                   you can manage each ticket on its own page with lots of customization options. 
@@ -103,8 +121,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="p-regular-20 text-left text-wrap">Are there any limits on the amount of tickets that can be sold?</AccordionTrigger>
-                <AccordionContent className="text-muted-foreground p-semibold-14 md:max-w-[500px]">
+                <AccordionTrigger className="p-semibold-16 text-left text-wrap">Are there any limits on the amount of tickets that can be sold?</AccordionTrigger>
+                <AccordionContent className="text-muted-foreground p-semibold-14 max-w[300px] md:max-w-[500px]">
                   On Directicket, you can sell as many tickets as you want. We&apos;re ready for crowds of every size.
                 </AccordionContent>
               </AccordionItem>
@@ -114,7 +132,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="p-regular-20 text-left text-wrap">Are there any fees associated with using Directicket?</AccordionTrigger>
+                <AccordionTrigger className="p-semibold-16 text-left text-wrap">Are there any fees associated with using Directicket?</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground p-semibold-14 md:max-w-[500px]">
                   Directicket charges a service fee of 15% of the ticket price to ticket buyers. 
                   The only money we make is from the service fee we charge and the rest is yours.
@@ -126,7 +144,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="p-regular-20 text-left text-wrap">How fast do I get paid using Directicket?</AccordionTrigger>
+                <AccordionTrigger className="p-semibold-16 text-left text-wrap">How fast do I get paid using Directicket?</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground p-semibold-14 md:max-w-[500px]">
                   You can expect to recieve the money you've made from ticket sales in 2-5 working days. As time goes, on we expect this time span to shorten.
                 </AccordionContent>
@@ -137,15 +155,17 @@ export default async function Home({ searchParams }: SearchParamProps) {
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
-                <AccordionTrigger className="p-regular-20 text-left text-wrap">How can I get in contact with customer support?</AccordionTrigger>
+                <AccordionTrigger className="p-semibold-16 text-left text-wrap">How can I get in contact with customer support?</AccordionTrigger>
                 <AccordionContent className="text-muted-foreground p-semibold-14 md:max-w-[500px]">
-                  You can text us on Snapchat @directicket or call either 09025771255 or 09035960581.
+                  You can DM us on Snapchat @directicket or call either 09025771255 or 09035960581.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
           </div>
         </div>
       </section>
+
+      
     </>
   );
 }

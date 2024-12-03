@@ -108,7 +108,7 @@ body {
   }
 
   .h2-medium {
-    @apply font-medium text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
+    @apply font-semibold tracking-tight text-[32px]  leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
   }
 
   /* 36 */
@@ -117,12 +117,12 @@ body {
   }
 
   .h3-medium {
-    @apply font-medium text-[28px] leading-[36px] md:text-[36px] md:leading-[44px];
+    @apply font-semibold tracking-tight text-[28px] leading-[36px] md:text-[36px] md:leading-[44px];
   }
 
   /* 32 */
   .h4-medium {
-    @apply font-medium text-[32px] leading-[40px];
+    @apply font-semibold tracking-tight text-[32px] leading-[40px];
   }
 
   /* 28 */
