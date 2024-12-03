@@ -3,8 +3,12 @@ import Footer from "@/components/shared/Footer";
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { SearchParamProps } from "@/types";
 
-export async function generateMetadata({ params: { id } }: SearchParamProps): Promise<Metadata> {
-    const event = await getEventById(id);
+export async function generateMetadata({
+    params,
+  }: {
+    params: { id: string };
+  }): Promise<Metadata> {
+    const event = await getEventById(params.id);
 
     return {
         title: `${event.title} - ${event.category.name} - Directicket`, // Dynamically set the title
@@ -15,15 +19,6 @@ export async function generateMetadata({ params: { id } }: SearchParamProps): Pr
     };
 }
 
-const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
-    const event = await getEventById(id);
-  
-    const relatedEvents = await getRelatedEventsByCategory({
-        categoryId: event.category._id,
-        eventId: event._id,
-        page: searchParams.page as string,
-    });
-}
 
 export default function RootLayout({
     children,
