@@ -22,12 +22,12 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
   return (
     <div className='group relative flex w-full max-w-[400px] flex-col overflow-hidden 
-    p-2 rounded-xl bg-neutral-100 border border-neutral-300/40'>
-        <div className='bg-neutral-200 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
+    p-2 rounded-xl bg-neutral-100 '>
+        <div className='bg-neutral-100 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
           <Image
             alt='image'
             src={`${event.imageURL}`}
-            className='object-contain border-[0.25px] border-neutral-700/50'
+            className='object-contain border-[0.25px] border-muted-foreground shadow-sm shadow-black'
             width={650} // Max width constraint
             height={400} // Fixed height
             style={{
@@ -40,8 +40,9 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         { /* IS EVENT CREATOR ... */}
 
         {isEventCreator && !hidePrice && (
-            <div className='absolute right-1 top-1 flex flex-row gap-2 rounded-md 
-           bg-neutral-100 text-black hover:underline p-3 p-medium-14 rounded-bl-xl
+            <div className='absolute right-2 top-2 flex flex-row gap-2 rounded-lg 
+           bg-white text-black hover:underline p-3 p-medium-14
+           border border-neutral-300/70
             '>
                 <Link href={`/events/${event._id}/update`}>
                   <SquarePen width={18} height={18}/>
@@ -53,6 +54,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
         <div className='flex flex-col gap-0.5 pt-2 md:gap-1'>
 
+          <hr className='pb-2'/>
             <div className='flex w-full gap-1 items-center'>
               <Link href={`/events/${event._id}`}>
                 <p className='p-medium-16 md:p-medium-18 line-clamp-1 flex-1 text-black'>{event.title}</p>
@@ -90,7 +92,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
             <div className='w-full pt-2'>
             <Link href={`/events/${event._id}`}>
-              <button className='p-semibold-14 h-10 w-full w-flex rounded-lg
+              <button className='p-semibold-14 h-12 w-full w-flex rounded-lg
               bg-white text-neutral-600 border border-neutral-300/70
               hover:bg-black px-4 py-1 hover:text-white hover:border-black'>
                   Get {event.category.name} ticket
