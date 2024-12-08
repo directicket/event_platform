@@ -6,6 +6,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
+import { Button } from '../ui/button'
 
 type CardProps = {
     event: iEvent,
@@ -20,7 +21,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (
-    <div className='group mt-[-55px] relative flex w-full max-w-[400px] flex-col overflow-hidden rounded-md bg-white md:min-h-[150px]'>
+    <div className='group relative flex w-full max-w-[400px] flex-col overflow-hidden 
+    p-2 rounded-xl bg-neutral-100 border border-neutral-300/40'>
         <div className='bg-neutral-200 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
           <Image
             alt='image'
@@ -38,17 +40,18 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         { /* IS EVENT CREATOR ... */}
 
         {isEventCreator && !hidePrice && (
-            <div className='absolute right-2 top-2 flex flex-col gap-4 rounded-full 
-            hover:text-white hover:bg-black bg-white p-3 text-black'>
+            <div className='absolute right-1 top-1 flex flex-row gap-2 rounded-md 
+           bg-neutral-100 text-black hover:underline p-3 p-medium-14 rounded-bl-xl
+            '>
                 <Link href={`/events/${event._id}/update`}>
-                  <SquarePen width={18} height={18} />
+                  <SquarePen width={18} height={18}/>
                 </Link>
 
                 {/* <DeleteConfirmation eventId={event._id}/> */}
             </div>
         )}
 
-        <div className='flex min-h-[230px] flex-col gap-0.5 pt-2 md:gap-1'>
+        <div className='flex flex-col gap-0.5 pt-2 md:gap-1'>
 
             <div className='flex w-full gap-1 items-center'>
               <Link href={`/events/${event._id}`}>
@@ -98,7 +101,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             <div className='w-full'>
             {hasOrderLink && (
                     <Link href={`/orders?eventId=${event._id}`}>
-                        <button className='pb-8 underline p-semibold-14 h-10 w-full w-flex rounded-sm bg-white px-4 py-1 text-gray-500'>
+                        <button className='pb-4 underline p-semibold-14 h-8 w-full w-flex rounded-sm bg-neutral-100 px-4 py-1 text-gray-500'>
                           View buyers
                         </button>
                     </Link>

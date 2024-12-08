@@ -60,31 +60,55 @@ export default async function Home({ searchParams }: SearchParamProps) {
         </div> */}
       </section>
 
+      
+
       <div className="wrapper flex flex-col items-center justify-center
        h-fit mx-auto w-fit gap-2
       px-4 p-3 focus:top-0">
         <h3 className='h3-medium mb-2 max-w-[300px] md:max-w-[600px] text-center text-wrap'>
-          Get tickets to exciting events happening all around the city.
+          Buy & sell tickets to events happening all around Abuja.
         </h3>
 
           <Search />
 
+          <div className='w-full py-0'>
+            <Link href='/events/create'>
+              <button className='p-semibold-14 h-10 w-full w-flex rounded-lg
+              text-blue-500 bg-white
+             underline md:hidden'>
+                  Create your own Tickets to sell &rarr;
+              </button>
+            </Link>
+      </div>
+
           <p 
       className="bg-white pt-2 text-neutral-600 hover:bg-white
-      md:w-fit w-fit sm:items-center h-[25px] text-center rounded-lg max-w-[260px] md:max-w-[400px] p-regular-14">
+      md:w-fit w-fit sm:items-center h-[25px] text-center rounded-lg max-w-[260px] md:max-w-[400px]
+       p-regular-14 pb-20 md:block hidden">
           Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
           <a href="/events/create" className="underline text-blue-500">Sell now &#8250;</a>
+          </p>
+
+          <p 
+      className="bg-white pt-2 text-neutral-600 hover:bg-white
+      md:w-fit w-fit sm:items-center h-[25px] text-center rounded-lg max-w-[260px] md:max-w-[400px]
+       p-regular-14 pb-20 md:hidden block">
+          Giving you 100% of ticket sales profit 
+          means you earn up to 20% more per ticket on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
+          <a href="#questions" className="underline text-black">Learn More &#8250;</a>
           </p>
       </div>
 
       
 
 
-      <section id="events" className="wrapper my-8 flex flex-col gap-8 md:gap-12">
+      <section id="events" className="wrapper bg-white my-8 flex flex-col gap-8 md:gap-12">
+     
 
 
-        <h3 className="p-medium-20 md:p-medium-24 py-12 md:py-16">Highlighted tickets</h3>
+        {/* <h3 className="p-medium-20 md:p-medium-24 mx-auto">Get tickets now</h3> */}
 
+        
 
         <Collection 
           data={events?.data}
@@ -98,7 +122,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
       </section>
 
       <hr/>
-      <section id="#questions" className="wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
+      <section id="questions" className="wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
       ">
         <div className="flex flex-col gap-5">
           <h3 className="h3-medium">Frequently Asked <br/>Questions</h3>
@@ -164,6 +188,18 @@ export default async function Home({ searchParams }: SearchParamProps) {
           </div>
         </div>
       </section>
+
+      {/* <div className='wrapper flex flex-col items-center justify-center
+       h-fit mx-auto w-fit'>
+            <Link href='/events/create'>
+              <button className='p-semibold-14 h-10 
+              w-fit w-flex rounded-lg text-white
+              bg-blue-500 px-4 py-1 hover:underline  
+              fixed bottom-3 right-3 md:bottom-4 md:right-4 md:hidden'>
+                  Create your Ticket &rarr;
+              </button>
+            </Link>
+        </div> */}
 
       
     </>
