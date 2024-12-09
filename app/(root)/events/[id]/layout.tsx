@@ -14,7 +14,16 @@ export async function generateMetadata({
         title: `${event.title} - ${event.category.name} - Directicket`, // Dynamically set the title
         description: "Buy and sell tickets to events on Directicket.",
         icons: {
-            icon: "/favicon.ico"
+            icon: `${event.imageURL}`
+        },
+        openGraph: {
+            title: `${event.title} - ${event.category.name}`,
+            description: "Buy and sell tickets to events on Directicket.",
+            images:`${event.imageURL}`
+        },
+        twitter: {
+            card: 'summary_large_image',
+            images: `${event.imageURL}`
         }
     };
 }
@@ -26,7 +35,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex h-screen flex-col">
+        <div className="flex h-screen flex-col bg-white">
             <main className="flex-1">{children}</main>
             <Footer />
         </div>
