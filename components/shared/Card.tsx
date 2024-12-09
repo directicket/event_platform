@@ -54,21 +54,22 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
         <div className='flex flex-col gap-0.5 pt-2 md:gap-1'>
 
-          <hr className='pb-2'/>
-            <div className='flex w-full gap-1 items-center'>
+          {/* <hr className='pb-2'/> */}
+
+            <div className='flex w-full gap-1 items-center justify-center'>
               <Link href={`/events/${event._id}`}>
-                <p className='p-medium-16 md:p-medium-18 line-clamp-1 flex-1 text-black'>{event.title}</p>
+                <p className='p-medium-16 md:p-medium-18 line-clamp-1 text-center flex-1 text-black'>{event.title}</p>
               </Link>
-              <BadgeCheck className='w-4 text-black justify-items-start'></BadgeCheck>
+              
             </div>
 
-            <p className='p-medium-14 p-medium-16 text-black'>
+            <p className='p-medium-14 p-medium-16 text-black text-center w-full justify-center'>
                 {formatDateTime(event.endDateTime).dateTime}
             </p>
 
 
             {!hidePrice && 
-                <div className='flex pt-0.5 gap-2'>
+                <div className='flex pt-0.5 gap-2 items-center justify-center'>
                 <span className='p-medium-14 text-neutral-600'>
                     {event.isFree ? 'FREE' : `₦${event.price}`}
                 </span>
