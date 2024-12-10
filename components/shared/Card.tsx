@@ -21,13 +21,15 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const isEventCreator = userId === event.organizer._id.toString();
 
   return (
+    
     <div className='group relative flex w-full max-w-[400px] flex-col overflow-hidden 
     p-2 rounded-xl bg-neutral-100 '>
+      <Link href={`/events/${event._id}`}>
         <div className='bg-neutral-100 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
           <Image
             alt='image'
             src={`${event.imageURL}`}
-            className='object-contain border-[0.25px] border-muted-foreground shadow-sm shadow-black'
+            className='object-contain border-[0.25px] border-neutral-800/70 shadow-sm shadow-black'
             width={650} // Max width constraint
             height={400} // Fixed height
             style={{
@@ -37,6 +39,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             }}
           />
         </div>
+        </Link>
         { /* IS EVENT CREATOR ... */}
 
         {isEventCreator && !hidePrice && (
@@ -58,20 +61,22 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
             <div className='flex w-full gap-1 items-center justify-center'>
               <Link href={`/events/${event._id}`}>
-                <p className='p-medium-16 md:p-medium-18 line-clamp-1 text-center flex-1 text-black'>{event.title}</p>
+                <p className='p-semibold-14 md:p-semibold-16 line-clamp-1 text-center hover:underline
+                 flex-1 text-black'>{event.title}</p>
               </Link>
               
             </div>
 
-            <p className='p-medium-14 p-medium-16 text-black text-center w-full justify-center'>
+            <p className='p-regular-14 p-medium-16 text-black text-center w-full justify-center'>
                 {formatDateTime(event.endDateTime).dateTime}
             </p>
 
 
             {!hidePrice && 
-                <div className='flex pt-0.5 gap-2 items-center justify-center'>
-                <span className='p-medium-14 text-neutral-600'>
+                <div className='flex pt-0.5 gap-2 items-center justify-center pb-9'>
+                <span className='p-regular-14 text-neutral-600'>
                     {event.isFree ? 'FREE' : `₦${event.price}`}
+                     {/* - {event.category.name} */}
                 </span>
                 {/* <p className='p-semibold-14 w-flex rounded-sm bg-grey-500/10 px-4 py-1 text-gray-500'>
                   {event.category.name}
@@ -91,7 +96,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                 {/* </div> */}
             </div>
 
-            <div className='w-full pt-2'>
+            {/* <div className='w-full pt-2'>
             <Link href={`/events/${event._id}`}>
               <button className='p-semibold-14 h-12 w-full w-flex rounded-lg
               bg-white text-neutral-600 border border-neutral-300/70
@@ -99,7 +104,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                   Get {event.category.name} ticket
               </button>
             </Link>
-            </div>
+            </div> */}
 
             <div className='w-full'>
             {hasOrderLink && (
