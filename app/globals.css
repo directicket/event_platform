@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+html, body {
+  background-color: black;
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -188,7 +192,7 @@ body {
 
   /* 14 */
   .p-semibold-14 {
-    @apply text-[14px] font-semibold leading-[20px];
+    @apply text-[14px] font-semibold leading-[20px] tracking-tight;
   }
 
   .p-bold-14 {
@@ -283,7 +287,7 @@ body {
 .sticky-header {
   position: sticky;
   top: 0;
-  background-color: rgba(255, 255, 255, 0.825); /* or any color */
+  background-color: rgba(#333333, 0.625); /* or any color */
   z-index: 1000; /* keeps it above other content */
 }
 

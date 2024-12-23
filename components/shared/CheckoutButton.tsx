@@ -6,6 +6,20 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
 import Checkout from './Checkout'
+import { SearchParamProps } from '@/types'
+import { formatDateTime } from '@/lib/utils';
+import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
+import { trusted } from 'mongoose'
+
+const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
+  const event = await getEventById(id);
+
+  const relatedEvents = await getRelatedEventsByCategory({
+    categoryId: event.category._id,
+    eventId: event._id,
+    page: searchParams.page as string,
+  })
+}
 
 const CheckoutButton = ({ event }: { event: iEvent}) => {
   const { user } = useUser();
@@ -15,15 +29,21 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
   return (
     <div className='flex items-center gap-3'>
         {hasEventFinished ? (
-          <Button className='rounded-sm text-grey-400 bg-grey-50 text-center w-full hover:bg-red-500 hover:text-white' size="lg">
-            <p className='text-grey-400 hover:text-white'>This Ticket is no longer on sale.</p>
+          <Button className=' text-center rounded-none
+           w-full bg-neutral-800' size="lg" disabled={true}>
+            <p className='text-white p-medium-16 md:p-medium-20 text-wrap p-3'>
+              Access to this ticket has been limited by its creator.
+            </p>
           </Button>
         ): (
             <>
               <SignedOut>
-                <Button asChild className='rounded-sm bg-blue-600' size="lg">
+                <Button asChild className='text-center rounded-none
+           w-full bg-white hover:bg-white' size="lg">
                     <Link href="/sign-in">
-                      Get Ticket
+                      <p className='text-black p-medium-16 md:p-medium-20 text-wrap p-3'>
+                        Get Ticket for {event.isFree ? 'free' : `₦${event.price}`}
+                      </p>
                     </Link>
                 </Button>
               </SignedOut>

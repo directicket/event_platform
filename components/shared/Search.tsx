@@ -29,19 +29,21 @@ const Search = ({ placeholder = 'Search for Tickets...'}: { placeholder?: string
         }
 
         router.push(newUrl, { scroll: false});
-    }, 300)
+    }, 50)
 
     return () => clearTimeout(delayDebounceFn);
   }, [query, searchParams, router])
 
   return (
-    <div className='flex-center min-h-[54px] w-full overflow-hidden rounded-lg bg-grey-50 px-4 py-2'>
+    <div className='flex-center min-h-[54px] w-full overflow-hidden border border-b-neutral-700/40
+    border-r-0 border-l-0 border-t-0
+    bg-black px-2 py-2'>
         <Image src="/assets/icons/search.svg" alt='search' width={20} height={20}/>
         <Input 
           type='text'
           placeholder={placeholder}
           onChange={(e) => setQuery(e.target.value)}
-          className='p-regular-16 border-0 bg-grey-50 outline-offset-0 placeholder:text-grey-500 focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0'
+          className='p-regular-16 p-2 border-0 text-white bg-black outline-offset-0 placeholder:text-grey-500 focus:text-white focus:border-0 focus-visible:ring-0 focus-visible:ring-offset-0'
         />
     </div>
   )

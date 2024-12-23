@@ -27,7 +27,7 @@ const Collection = ({
     <>
       {data.length > 0 ? (
         <div className='flex flex-col items-center gap-10'>
-            <ul className='grid w-full grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10'>
+            <ul className='grid w-full grid-cols-1 gap-0 sm:grid-cols-2 lg:grid-cols-3 xl:gap-10'>
                 {data.map((event) => {
                     const hasOrderLink = collectionType === 'Events_Organized';
                     const hidePrice = collectionType === 'My_Tickets';
@@ -45,9 +45,10 @@ const Collection = ({
             )} */}
         </div>
       ): (
-        <div className='text-muted-foreground flex-left wrapper min-h-[200px] text-left w-full flex-col gap-3 rounded-[14px] bg-white py-28'>
-            <h3 className='p-bold-20 md:h5-bold'>{emptyTitle}</h3>
-            <p className='p-regular-14'>{emptyStateSubtext}</p>
+        <div className='text-muted-foreground flex-left wrapper
+         text-left text-neutral-700 w-full flex-col gap-1 rounded-[14px] py-28'>
+            <h3 className='p-medium-20 md:h4-medium'>{emptyTitle}</h3>
+            <p className='p-regular-14 md:p-regular-20'>{emptyStateSubtext}</p>
         </div>
       )}
     </>

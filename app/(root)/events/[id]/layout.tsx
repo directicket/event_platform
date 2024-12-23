@@ -35,7 +35,7 @@ export default function RootLayout({
     children: React.ReactNode;
 }>) {
     return (
-        <div className="flex h-screen flex-col bg-white">
+        <div className="flex h-screen flex-col">
             <main className="flex-1">{children}</main>
             <Footer />
         </div>

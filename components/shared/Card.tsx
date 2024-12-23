@@ -20,20 +20,24 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
   const isEventCreator = userId === event.organizer._id.toString();
 
+  // if (isEventCreator) return null
   return (
     
-    <div className='group relative flex w-full max-w-[400px] flex-col overflow-hidden 
-    p-2 rounded-xl bg-neutral-100 '>
+    <div className='group relative flex w-full max-w-[400px] flex-row overflow-hidden 
+    p-2 border-b-neutral-500/30 border-r-0 border-l-0 border-t-0 border bg-black'>
+
       <Link href={`/events/${event._id}`}>
-        <div className='bg-neutral-100 flex justify-center rounded-lg items-center' style={{ height: '220px' }}>
+        <div className=' flex justify-center items-center' 
+        style={{ height: '100px' }}
+        >
           <Image
             alt='image'
             src={`${event.imageURL}`}
-            className='object-contain border-[0.25px] border-neutral-800/70 shadow-sm shadow-black'
+            className='object-cover border-[0.25px] border-neutral-800/70'
             width={650} // Max width constraint
             height={400} // Fixed height
             style={{
-              maxWidth: '650px', // Variable width, max 650px
+              maxWidth: '40px', // Variable width, max 650px
               width: 'auto', // Automatically adjusts the width
               height: '70%', // Stretches the image to fit the height of the container
             }}
@@ -43,9 +47,9 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         { /* IS EVENT CREATOR ... */}
 
         {isEventCreator && !hidePrice && (
-            <div className='absolute right-2 top-2 flex flex-row gap-2 rounded-lg 
-           bg-white text-black hover:underline p-3 p-medium-14
-           border border-neutral-300/70
+            <div className='absolute right-2 top-2 flex flex-row gap-2 rounded-full 
+           bg-black text-white hover:underline p-3 p-medium-14
+           border border-neutral-300/30 mt-6
             '>
                 <Link href={`/events/${event._id}/update`}>
                   <SquarePen width={18} height={18}/>
@@ -55,33 +59,40 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             </div>
         )}
 
-        <div className='flex flex-col gap-0.5 pt-2 md:gap-1'>
+        <div className='pt-4 pl-1'>
+        <div className='flex flex-col gap-0.5 pt-2.5 md:gap-1 pl-2'>
 
           {/* <hr className='pb-2'/> */}
 
-            <div className='flex w-full gap-1 items-center justify-center'>
+            <div className='flex max-w-56 gap-1 items-left justify-left'>
               <Link href={`/events/${event._id}`}>
-                <p className='p-semibold-14 md:p-semibold-16 line-clamp-1 text-center hover:underline
-                 flex-1 text-black'>{event.title}</p>
+                <p className='p-semibold-14 md:p-semibold-16 line-clamp-1 text-left hover:underline
+                 flex-1 text-white'>{event.title}</p>
               </Link>
               
             </div>
 
-            <p className='p-regular-14 p-medium-16 text-black text-center w-full justify-center'>
-                {formatDateTime(event.endDateTime).dateTime}
-            </p>
-
-
+            <p className='p-regular-14 p-medium-16 text-neutral-600 text-left 
+            w-full justify-center pb-[-20px]'>
             {!hidePrice && 
-                <div className='flex pt-0.5 gap-2 items-center justify-center pb-9'>
                 <span className='p-regular-14 text-neutral-600'>
                     {event.isFree ? 'FREE' : `₦${event.price}`}
                      {/* - {event.category.name} */}
-                </span>
+                </span>}
+                {' '}| {formatDateTime(event.endDateTime).dateOnly}
+            </p>
+
+
+            {/* {!hidePrice &&  */}
+                {/* <div className='flex pt-0.5 gap-2 items-left justify-left pb-9'> */}
+                {/* <span className='p-regular-14 text-neutral-600'> */}
+                    {/* {event.isFree ? 'FREE' : `₦${event.price}`} */}
+                     {/* - {event.category.name} */}
+                {/* </span> */}
                 {/* <p className='p-semibold-14 w-flex rounded-sm bg-grey-500/10 px-4 py-1 text-gray-500'>
                   {event.category.name}
                 </p> */}
-                </div>}
+                {/* </div>} */}
               
               {/* <p className='p-medium-14 p-medium-16 text-red-500'>
               Sales end {' '} {formatDateTime(event.startDateTime).dateOnly}.
@@ -108,13 +119,15 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
             <div className='w-full'>
             {hasOrderLink && (
-                    <Link href={`/orders?eventId=${event._id}`}>
-                        <button className='pb-4 underline p-semibold-14 h-8 w-full w-flex rounded-sm bg-neutral-100 px-4 py-1 text-gray-500'>
+                    <Link href={`/orders?eventId=${event._id}`} 
+                    className='underline p-semibold-14 w-full 
+                     text-gray-500'>
+                        
                           View buyers
-                        </button>
                     </Link>
                 )}
             </div>
+        </div>
         </div>
     </div>
   )
