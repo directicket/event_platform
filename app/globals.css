@@ -140,7 +140,7 @@ body {
   }
 
   .p-medium-24 {
-    @apply font-medium text-[24px] leading-[36px];
+    @apply font-medium text-[24px] leading-[28px];
   }
 
   .p-regular-24 {
@@ -182,8 +182,12 @@ body {
     @apply text-[16px] font-bold leading-[24px];
   }
 
+  .p-semibold-16 {
+    @apply text-[16px] font-semibold leading-[22px] tracking-[-2%];
+  }
+
   .p-medium-16 {
-    @apply text-[16px] font-medium leading-[24px];
+    @apply text-[16px] font-medium leading-[22px];
   }
 
   .p-regular-16 {

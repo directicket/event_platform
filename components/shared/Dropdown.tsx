@@ -52,7 +52,7 @@ const Dropdown = ({value, onChangeHandler }: DropdownProps) => {
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
       <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select a Tag" />
+        <SelectValue placeholder="Select a Category" />
       </SelectTrigger>
       <SelectContent>
         {categories.length > 0 && categories.map((category) => (
@@ -65,7 +65,7 @@ const Dropdown = ({value, onChangeHandler }: DropdownProps) => {
           <AlertDialogTrigger className="p-medium-14 flex w-full rounded-sm py-3 pl-8 text-blue-500 hover:bg-blue-200 focus:text-blue-500">Create a Ticket Tag</AlertDialogTrigger>
           <AlertDialogContent className="bg-white">
               <AlertDialogHeader>
-                <AlertDialogTitle>Custom Tag</AlertDialogTitle>
+                <AlertDialogTitle>Custom Category</AlertDialogTitle>
                 <AlertDialogDescription>
                 <Input type="text" placeholder="Custom category name" className="mt-3" onChange={(e) => setNewCategory(e.target.value)}/>
                 </AlertDialogDescription>

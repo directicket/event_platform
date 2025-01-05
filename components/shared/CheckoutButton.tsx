@@ -32,7 +32,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
           <Button className=' text-center rounded-none
            w-full bg-neutral-800' size="lg" disabled={true}>
             <p className='text-white p-medium-16 md:p-medium-20 text-wrap p-3'>
-              Access to this ticket has been limited by its creator.
+              Access to this ticket has been <br className='md:hidden'/> limited by its creator.
             </p>
           </Button>
         ): (
@@ -42,7 +42,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
            w-full bg-white hover:bg-white' size="lg">
                     <Link href="/sign-in">
                       <p className='text-black p-medium-16 md:p-medium-20 text-wrap p-3'>
-                        Get Ticket for {event.isFree ? 'free' : `₦${event.price}`}
+                        Get Ticket
                       </p>
                     </Link>
                 </Button>

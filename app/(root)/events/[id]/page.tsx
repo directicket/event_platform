@@ -26,7 +26,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
     <>
     <section className="flex justify-center bg-contain">
       <div className="grid grid-cols-1 2xl:max-w-7xl w-full">
-        <div className=" flex mb-[-15px] min-h-96 bg-neutral-900/70 justify-center items-center overflow-hidden" 
+        <div className=" flex mb-[-15px] min-h-96 bg-black justify-center items-center overflow-hidden" 
         style={{ height: '100px' }}>
           <Image 
             src={event.imageURL}
@@ -39,52 +39,65 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
         </div>
 
         <div className='flex w-full flex-col wrapper gap-8 md:py-10 py-5 text-white'>
-          <div className='flex flex-col gap-6'>
+          <div className='flex flex-col gap-1.5'>
 
             {/* hm1 */}
-            <div className='flex flex-col gap-1'>
-              <p className='p-medium-14 text-neutral-700 pt-3 md:py-0'>
-                Home / {event.category.name} tickets
+            <div className='flex flex-col gap-0.5'>
+            <hr className="opacity-15 mb-[6px]"/>
+              <h2 className='p-medium-24'>{event.title}</h2>
+              <p className='p-semibold-16 md:p-medium-20 text-white md:py-0'>
+                {event.isFree ? 'Free' : `₦${event.price}`} {' '}
+                {/* <span className='text-neutral-700'>&#8226; @{event.organizer.username}</span> */}
               </p>
-              <h2 className='h2-medium'>{event.title}</h2>
             </div>
+
+            <div className='flex flex-col '>
+            {/* <p className='p-regular-14 md:p-regular-16 text-neutral-700 md:py-0'>Ticket description</p> */}
+            <p className='p-regular-14 md:p-regular-20'>{event.description}</p>
+          </div>
 
 
             {/* hm1 */}
            <div className='grid grid-cols-2 gap-2'>
             <div className='flex flex-col gap-0'>
-              <p className='p-medium-14 md:p-medium-16 text-neutral-700 pt-3 md:py-0'>
+              <p className='p-regular-14 md:p-regular-16 text-neutral-700 pt-3 md:py-0'>
                 Location
               </p>
-              <p className='p-medium-16 md:p-medium-20'>{event.location}</p>
+              <p className='p-regular-14 md:p-regular-20'>{event.location}</p>
             </div>
 
 
             <div className='flex flex-col gap-0'>
-              <p className='p-medium-14 md:p-medium-16 text-neutral-700 pt-3 md:py-0'>
+              <p className='p-regular-14 md:p-regular-16 text-neutral-700 pt-3 md:py-0'>
                 Date & Time
               </p>
-              <p className='p-medium-16 md:p-medium-20'>{formatDateTime(event.endDateTime).dateOnly}. <br/>
+              <p className='p-regular-14 md:p-regular-20'>{formatDateTime(event.endDateTime).dateOnly}. <br/>
                 {formatDateTime(event.endDateTime).timeOnly}</p>
             </div>
            </div>
 
+           <div className='mt-4'>
+           <CheckoutButton event={event} />
+           </div>
+
            <div className='grid-cols-1 flex gap-1 text-white'>
            {/* <p className='p-medium-14 md:p-medium-16 text-neutral-700 mb-1 md:py-0'>Stay updated</p> */}
-            <p className='p-medium-16 md:p-medium-20 text-white mt-[-5px] border rounded-full
+            {/* <p className='p-medium-16 md:p-medium-20 text-white mt-[-5px] border rounded-full
             bg-black py-2 w-fit px-2'>
               <a href={`${event.url}`} className="text-wrap">
                 Contact @{event.organizer.username}
                 <span className='md:hidden'>&#8599;</span>
               </a>
-            </p>
+            </p> */}
                 {/* <Image
                 src='/assets/icons/blue-black-check.svg'
                 width={5} height={5} alt='checkmark' className='w-4'>
                 </Image> */}
             </div>
 
-           <hr className='wrapper border-neutral-700/40 mb-[-35px]'/>
+           {/* <hr className='wrapper border-neutral-700/40 mb-[-35px]'/> */}
+
+           
 
             
 {/* hidden */}
@@ -128,16 +141,9 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
             {/* </div> */}
           {/* </div> */}
 
-          <div className='flex flex-col gap-3'>
-            <p className='p-medium-14 md:p-medium-16 text-neutral-700 md:py-0'>Ticket description</p>
-            <p className='p-regular-16 lg:p-regular-18 mt-[-5px]'>{event.description}</p>
+          
 
-            
-            
-          </div>
-
-          <div className='flex-row gap-0'>
-            <CheckoutButton event={event} />
+          {/* <div className='flex-row gap-0'>
             <div className='p-medium-16 lg:p-regular-20 flex w-full items-center bg-neutral-900'>
               <p className='text-white ml-1 text-center w-full p-4'>Ticket access closes: <br/> {' '} 
                 <span className='text-red-500 p-semibold-16'>
@@ -145,7 +151,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
                   {formatDateTime(event.startDateTime).timeOnly}
               </span>.</p>
             </div>
-          </div>
+          </div> */}
 
 
 
@@ -154,8 +160,13 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
     </section>
 
     {/* EVENTS FROM THE SAME CATEGORY */}
-    <section className='wrapper my-8 flex flex-col gap-8 md:gap-12'>
-      <h3 className='h3-medium text-center text-wrap text-white'>You might like these {event.category.name} tickets.</h3>
+    <section className='wrapper my-8 flex flex-col gap-1 md:gap-2'>
+      <div className='gap-0'>
+      <p className='p-regular-14 md:p-regular-16 text-white pt-3 md:py-0'>
+          {event.category.name} tickets
+        </p>
+        <h3 className='h3-medium text-left text-wrap text-white'>Get similar tickets</h3>
+      </div>
 
       {/* <Search /> */}
 
@@ -170,12 +181,12 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
         />
     </section>
 
-    <hr className="opacity-15"/>
+    {/* <hr className="opacity-15"/> */}
       <section id="questions" className=" text-white wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
       ">
         <div className="flex flex-col gap-5">
           <h3 className="h3-medium">Frequently Asked <br/>Questions</h3>
-          <hr/>
+          <hr className="border-neutral-800"/>
           <div className="flex flex-col justify-center gap-8 mt-[-20px]">
             <Accordion type="single" collapsible>
               <AccordionItem value="item-1">
