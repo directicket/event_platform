@@ -66,7 +66,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
        h-fit mx-auto w-fit gap-2 text-white
        focus:top-0 bg-black">
         <h3 className='h2-medium mb-2 md:max-w-[600px] text-center md:text-center text-wrap'>
-          A community-driven, curated collection of event Tickets.
+          A community-driven, curated storefront for event Tickets.
         </h3>
 
           

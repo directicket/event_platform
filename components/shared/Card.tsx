@@ -23,12 +23,13 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   // if (isEventCreator) return null
   return (
     
-    <div className='group relative flex w-full max-w-[400px] flex-row overflow-hidden 
-    p-2 border-b-neutral-500/30 border-r-0 border-l-0 border-t-0 border bg-black'>
+    <div className='group relative flex w-full max-w-[400px] md:max-w-[700px] 
+    flex-row overflow-hidden min-w-[300px]
+    p-2 pb-0 pl-0 pt-0 border-neutral-700/50 border bg-black'>
 
       <Link href={`/events/${event._id}`}>
-        <div className=' flex justify-center items-center' 
-        style={{ height: '100px' }}
+        <div className=' flex justify-center items-center bg-neutral-900/30 min-w-[80px] px-4' 
+        style={{ height: '80px' }}
         >
           <Image
             alt='image'
@@ -46,21 +47,10 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
         </Link>
         { /* IS EVENT CREATOR ... */}
 
-        {isEventCreator && !hidePrice && (
-            <div className='absolute right-2 top-2 flex flex-row gap-2 rounded-full 
-           bg-black text-white hover:underline p-3 p-medium-14
-           border border-neutral-300/30 mt-6
-            '>
-                <Link href={`/events/${event._id}/update`}>
-                  <SquarePen width={18} height={18}/>
-                </Link>
-
-                {/* <DeleteConfirmation eventId={event._id}/> */}
-            </div>
-        )}
+        
 
         <div className='pt-4 pl-1'>
-        <div className='flex flex-col gap-0.5 pt-2.5 md:gap-1 pl-2'>
+        <div className='flex flex-col gap-0.5 mt-0.5 md:gap-1 pl-2'>
 
           {/* <hr className='pb-2'/> */}
 
@@ -79,44 +69,21 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     {event.isFree ? 'FREE' : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
-                {' '}| {formatDateTime(event.endDateTime).dateOnly}
+                {' '}&#8226; {formatDateTime(event.endDateTime).dateOnly}
             </p>
-
-
-            {/* {!hidePrice &&  */}
-                {/* <div className='flex pt-0.5 gap-2 items-left justify-left pb-9'> */}
-                {/* <span className='p-regular-14 text-neutral-600'> */}
-                    {/* {event.isFree ? 'FREE' : `₦${event.price}`} */}
-                     {/* - {event.category.name} */}
-                {/* </span> */}
-                {/* <p className='p-semibold-14 w-flex rounded-sm bg-grey-500/10 px-4 py-1 text-gray-500'>
-                  {event.category.name}
-                </p> */}
-                {/* </div>} */}
-              
-              {/* <p className='p-medium-14 p-medium-16 text-red-500'>
-              Sales end {' '} {formatDateTime(event.startDateTime).dateOnly}.
-              </p> */}
             
-            <div className='flex-between w-full'>
-                {/* <div className='flex gap-1'>
-                  <p className='p-medium-14 md:p-medium-16 text-muted-foreground p-bold-14'>
-                    @{event.organizer.username}
-                  </p> */}
-                  {/* <BadgeCheck className='w-5 text-muted-foreground'></BadgeCheck> */}
-                {/* </div> */}
+            {isEventCreator && !hidePrice && (
+            <div className='absolute right-2 top-2 flex flex-col gap-2 rounded-none 
+           bg-black text-white hover:underline p-3 p-medium-14
+            mt-3
+            '>
+                <Link href={`/events/${event._id}/update`}>
+                  <SquarePen width={18} height={18}/>
+                </Link>
+
+                {/* <DeleteConfirmation eventId={event._id}/> */}
             </div>
-
-            {/* <div className='w-full pt-2'>
-            <Link href={`/events/${event._id}`}>
-              <button className='p-semibold-14 h-12 w-full w-flex rounded-lg
-              bg-white text-neutral-600 border border-neutral-300/70
-              hover:bg-black px-4 py-1 hover:text-white hover:border-black'>
-                  Get {event.category.name} ticket
-              </button>
-            </Link>
-            </div> */}
-
+        )}
             <div className='w-full'>
             {hasOrderLink && (
                     <Link href={`/orders?eventId=${event._id}`} 
@@ -128,6 +95,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                 )}
             </div>
         </div>
+
+        
         </div>
     </div>
   )

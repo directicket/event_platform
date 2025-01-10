@@ -3,7 +3,7 @@ import Collection from '@/components/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
-import { BadgeCheck, Calendar, MapPin } from 'lucide-react';
+import { BadgeCheck, Calendar, DivideIcon, MapPin, UserRound } from 'lucide-react';
 import Image from 'next/image';
 import {
   Accordion,
@@ -24,28 +24,26 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
   return (
     <>
-    <section className="flex justify-center bg-contain">
-      <div className="grid grid-cols-1 2xl:max-w-7xl w-full">
-        <div className=" flex mb-[-15px] min-h-96 bg-black justify-center items-center overflow-hidden" 
-        style={{ height: '100px' }}>
-          <Image 
-            src={event.imageURL}
-            alt="hero image"
-            width={100}
-            height={100}
-            className="min-h-fit border border-0.5 border-neutral-800/40 max-h-fit 
-            h-fit object-contain object-center w-fit"
-          />
-        </div>
+    <div className='md:grid md:grid-cols-2 lg:wrapper md:gap-8'>
 
-        <div className='flex w-full flex-col wrapper gap-8 md:py-10 py-5 text-white'>
-          <div className='flex flex-col gap-1.5'>
+    <div className='lg:flex lg:flex-col lg:wrapper lg:max-w-[500px] md:min-w-sm
+    md:overflow-hidden'>
+      
+    <section className="flex justify-center lg:max-w-[500px] bg-clip-content wrapper
+     bg-neutral-950/85 md:min-w-fit">
+
+      <div className=" grid grid-cols-1 lg:max-w-[500px] w-full border
+       border-neutral-800/70 md:min-w-sm">
+        
+
+        <div className='flex w-full flex-col wrapper gap-8 lg:py-10 py-5 text-white'>
+          <div className='flex flex-col gap-1.5 md:px-2  lg:pt-0 lg:p-8'>
 
             {/* hm1 */}
-            <div className='flex flex-col gap-0.5'>
-            <hr className="opacity-15 mb-[6px]"/>
-              <h2 className='p-medium-24'>{event.title}</h2>
-              <p className='p-semibold-16 md:p-medium-20 text-white md:py-0'>
+            <div className='flex flex-col gap-1.5 mt-[-3px]'>
+            {/* <hr className="opacity-15 mb-[6px]"/> */}
+              <h2 className='h2-medium'>{event.title}</h2>
+              <p className='p-medium-20 md:p-medium-18 text-white md:py-0'>
                 {event.isFree ? 'Free' : `₦${event.price}`} {' '}
                 {/* <span className='text-neutral-700'>&#8226; @{event.organizer.username}</span> */}
               </p>
@@ -53,7 +51,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
             <div className='flex flex-col '>
             {/* <p className='p-regular-14 md:p-regular-16 text-neutral-700 md:py-0'>Ticket description</p> */}
-            <p className='p-regular-14 md:p-regular-20'>{event.description}</p>
+            <p className='p-regular-14 md:p-regular-18'>{event.description}</p>
           </div>
 
 
@@ -63,7 +61,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
               <p className='p-regular-14 md:p-regular-16 text-neutral-700 pt-3 md:py-0'>
                 Location
               </p>
-              <p className='p-regular-14 md:p-regular-20'>{event.location}</p>
+              <p className='p-regular-14 md:p-regular-18'>{event.location}</p>
             </div>
 
 
@@ -71,7 +69,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
               <p className='p-regular-14 md:p-regular-16 text-neutral-700 pt-3 md:py-0'>
                 Date & Time
               </p>
-              <p className='p-regular-14 md:p-regular-20'>{formatDateTime(event.endDateTime).dateOnly}. <br/>
+              <p className='p-regular-14 md:p-regular-18'>{formatDateTime(event.endDateTime).dateOnly}. <br/>
                 {formatDateTime(event.endDateTime).timeOnly}</p>
             </div>
            </div>
@@ -156,16 +154,58 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
 
         </div>
+
+        <div className=" flex mb-0 min-h-96 lg:mt-[-35px] bg-black justify-center items-center overflow-hidden" 
+        style={{ height: '100px' }}>
+          <Image 
+            src={event.imageURL}
+            alt="hero image"
+            width={100}
+            height={100}
+            className="min-h-fit border border-0.5 border-neutral-800/40 max-h-fit 
+            h-fit object-contain object-center w-fit"
+          />
+        </div>
       </div>
     </section>
 
+
+
+    <section id="#organizer" className='wrapper lg:max-w-[500px]'>
+      <div className='text-left rounded-none items-center
+        w-full bg-black flex flex-row border border-neutral-800/70 p-3 border-b-0'>
+          <UserRound width={22} height={22} className='text-neutral-700 mr-1.5 rounded-full p-0.5'/>
+            <p className='text-neutral-700 p-regular-16 line-clamp-1'>
+              {event.organizer.username}
+            </p>
+      </div>
+
+      <hr className='border border-dashed border-neutral-800/70'/>
+
+      <div className='text-left rounded-none items-center
+        w-full bg-black flex flex-row border border-neutral-800/70 p-3 border-t-0'>
+            <p className='text-neutral-700 p-regular-16 text-wrap'>
+              To learn more about this Ticket please click this link{' '}
+              <a href={`${event.url}`}>
+                <span className='underline'>here</span>
+              </a>
+              . Sales for this ticket close on {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+              {formatDateTime(event.startDateTime).timeOnly}.
+            </p>
+      </div>
+    </section>
+</div>
+
+
+
+<div className='md:flex md:flex-col'>
     {/* EVENTS FROM THE SAME CATEGORY */}
-    <section className='wrapper my-8 flex flex-col gap-1 md:gap-2'>
+    <section className='wrapper my-0 flex flex-col gap-1 md:gap-2'>
       <div className='gap-0'>
-      <p className='p-regular-14 md:p-regular-16 text-white pt-3 md:py-0'>
-          {event.category.name} tickets
+      <p className='p-regular-14 md:p-regular-16 text-neutral-700 pt-3 md:py-0'>
+          More {event.category.name} tickets
         </p>
-        <h3 className='h3-medium text-left text-wrap text-white'>Get similar tickets</h3>
+        {/* <h3 className='h3-medium text-left text-wrap text-white'>We think you'll like</h3> */}
       </div>
 
       {/* <Search /> */}
@@ -248,6 +288,9 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
           </div>
         </div>
       </section>
+  </div>
+
+      </div>
     </>
   )
 }
