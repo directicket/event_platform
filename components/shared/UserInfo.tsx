@@ -14,7 +14,7 @@ type CardProps = {
     hidePrice?: boolean,
 }
 
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+const UserInfo = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   const {sessionClaims} = auth();
   const userId = sessionClaims?.userId as string;
 
@@ -28,8 +28,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
     p-2 pb-0 pl-0 pt-0 border-neutral-700/50 border bg-black'>
 
       <Link href={`/events/${event._id}`}>
-        <div className=' flex justify-center items-center bg-black min-w-[80px] px-0 
-        border border-dashed border-l-0 border-b-0 border-t-0 border-neutral-700/65' 
+        <div className=' flex justify-center items-center bg-neutral-900/30 min-w-[80px] px-4' 
         style={{ height: '80px' }}
         >
           <Image
@@ -103,4 +102,4 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   )
 }
 
-export default Card
+export default UserInfo

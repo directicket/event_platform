@@ -118,9 +118,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="title"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Ticket Name</FormLabel>
+                <FormLabel className="text-white">Ticket Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Eg: Main Town City Party" {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
+                  <Input placeholder="Main Town City Party" {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,7 +131,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="categoryId"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel><span className="text-orange-600">(New) {' '}</span>Ticket Tag</FormLabel>
+                <FormLabel><span className="text-orange-600">(New) {' '}</span>Category</FormLabel>
                 <p className="text-muted-foreground p-medium-12 flex mt-[-20px]">
                   Ticket Tags are a new way to let buyers know what kind of ticket you're selling without having to include it in your Ticket Name.</p>
                 <FormControl>

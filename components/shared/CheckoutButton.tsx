@@ -49,7 +49,9 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
               </SignedOut>
 
               <SignedIn>
-                <Checkout />
+                <div className='w-full justify-center items-center'>
+                  <Checkout event={event} userId={userId}/>
+                </div>
               </SignedIn>
             </>
         )}

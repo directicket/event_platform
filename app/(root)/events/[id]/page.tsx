@@ -3,7 +3,7 @@ import Collection from '@/components/shared/Collection';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { formatDateTime } from '@/lib/utils';
 import { SearchParamProps } from '@/types'
-import { BadgeCheck, Calendar, DivideIcon, MapPin, UserRound } from 'lucide-react';
+import { BadgeCheck, Calendar, DivideIcon, MapPin, Ticket, UserRound } from 'lucide-react';
 import Image from 'next/image';
 import {
   Accordion,
@@ -12,6 +12,7 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion"
 import Search from '@/components/shared/Search';
+import Faq from '@/components/shared/Faq';
 
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
@@ -30,7 +31,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
     md:overflow-hidden'>
       
     <section className="flex justify-center lg:max-w-[500px] bg-clip-content wrapper
-     bg-neutral-950/85 md:min-w-fit">
+     bg-black md:min-w-fit">
 
       <div className=" grid grid-cols-1 lg:max-w-[500px] w-full border
        border-neutral-800/70 md:min-w-sm">
@@ -155,16 +156,21 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
         </div>
 
-        <div className=" flex mb-0 min-h-96 lg:mt-[-35px] bg-black justify-center items-center overflow-hidden" 
+        <hr className='border border-dashed border-neutral-800/70'/>
+
+        <div className=" flex mb-0 min-h-96 lg:mt-[-35px] bg-black 
+        justify-center items-center overflow-hidden " 
         style={{ height: '100px' }}>
+          <div className="box">
           <Image 
             src={event.imageURL}
             alt="hero image"
             width={100}
             height={100}
             className="min-h-fit border border-0.5 border-neutral-800/40 max-h-fit 
-            h-fit object-contain object-center w-fit"
+            h-fit object-contain object-center w-fit spin"
           />
+          </div>
         </div>
       </div>
     </section>
@@ -173,14 +179,13 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
     <section id="#organizer" className='wrapper lg:max-w-[500px]'>
       <div className='text-left rounded-none items-center
-        w-full bg-black flex flex-row border border-neutral-800/70 p-3 border-b-0'>
-          <UserRound width={22} height={22} className='text-neutral-700 mr-1.5 rounded-full p-0.5'/>
-            <p className='text-neutral-700 p-regular-16 line-clamp-1'>
-              {event.organizer.username}
+        w-full bg-black flex flex-row border border-neutral-800/70 p-3'>
+          <Ticket width={22} height={22} className='text-neutral-700 mr-1.5 -rotate-45 rounded-full p-0.5'/>
+            <p className='text-neutral-700 p-regular-16 line-clamp-1'>by @{event.organizer.username}
             </p>
       </div>
 
-      <hr className='border border-dashed border-neutral-800/70'/>
+      {/* <hr className='border border-neutral-800/70'/> */}
 
       <div className='text-left rounded-none items-center
         w-full bg-black flex flex-row border border-neutral-800/70 p-3 border-t-0'>
@@ -221,72 +226,13 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
         />
     </section>
 
+
+
+
     {/* <hr className="opacity-15"/> */}
       <section id="questions" className=" text-white wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
       ">
-        <div className="flex flex-col gap-5">
-          <h3 className="h3-medium">Frequently Asked <br/>Questions</h3>
-          <hr className="border-neutral-800"/>
-          <div className="flex flex-col justify-center gap-8 mt-[-20px]">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="p-semibold-16">Why choose Directicket?</AccordionTrigger>
-                <AccordionContent className="text-neutral-500 p-semibold-14 md:max-w-[500px]">
-                  Directicket is a first-of-its-kind ticket-focused platform. With Directicket, 
-                  you can manage each ticket on its own page with lots of customization options. 
-                  Directicket also pays more on average than its closest competing platform and is the 
-                  top choice for a wide range of users seeking intelligent control over the 
-                  ticketing experience for their events.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 mt-[-20px]">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="p-semibold-16 text-left text-wrap">Are there any limits on the amount of tickets that can be sold?</AccordionTrigger>
-                <AccordionContent className="text-neutral-500 p-semibold-14 max-w[300px] md:max-w-[500px]">
-                  On Directicket, you can sell as many tickets as you want. We&apos;re ready for crowds of every size.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 mt-[-20px]">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="p-semibold-16 text-left text-wrap">Are there any fees associated with using Directicket?</AccordionTrigger>
-                <AccordionContent className="text-neutral-500 p-semibold-14 md:max-w-[500px]">
-                  Directicket charges a service fee of 15% of the ticket price to ticket buyers. 
-                  The only money we make is from the service fee we charge and the rest is yours.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 mt-[-20px]">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="p-semibold-16 text-left text-wrap">How fast do I get paid using Directicket?</AccordionTrigger>
-                <AccordionContent className="text-neutral-500 p-semibold-14 md:max-w-[500px]">
-                  You can expect to recieve the money you've made from ticket sales in 2-5 working days. As time goes, on we expect this time span to shorten.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-
-          <div className="flex flex-col justify-center gap-8 mt-[-20px]">
-            <Accordion type="single" collapsible>
-              <AccordionItem value="item-1">
-                <AccordionTrigger className="p-semibold-16 text-left text-wrap">How can I get in contact with customer support?</AccordionTrigger>
-                <AccordionContent className="text-neutral-500 p-semibold-14 md:max-w-[500px]">
-                  You can DM us on Snapchat @directicket or call either 09025771255 or 09035960581.
-                </AccordionContent>
-              </AccordionItem>
-            </Accordion>
-          </div>
-        </div>
+        <Faq />
       </section>
   </div>
 

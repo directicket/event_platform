@@ -1,24 +1,30 @@
 import Collection from '@/components/shared/Collection'
+import UserInfo from '@/components/shared/UserInfo'
 import { Button } from '@/components/ui/button'
 import { getEventsByUser } from '@/lib/actions/event.actions'
-import { auth } from '@clerk/nextjs'
+import { iEvent } from '@/lib/database/models/event.model'
+import { auth, UserButton } from '@clerk/nextjs'
 import { CirclePlus } from 'lucide-react'
 import Link from 'next/link'
 import React from 'react'
+
 
 const ProfilePage = async () => {
     const { sessionClaims } = auth();
     const userId  = sessionClaims?.userId as string;
 
     const organizedEvents = await getEventsByUser({ userId, page: 1 })
+    
 
   return (
     <>
+    {/* <UserInfo event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} /> */}
+
       {/*MY TICKETS */}
-      <section className='bg-white bg-cover bg-center py-5 md:py-10'>
+      <section className='bg-black bg-cover bg-center py-5 md:py-10'>
         <div className='wrapper flex items-left justify-left sm:justify-between align-middle'>
-            <h3 className='p-medium-20 md:p-medium-24 text-left sm:text-left align-middle'>Your Purchases</h3>
-            <Button asChild size="sm" className='bg-white text-black hover:text-white hover:bg-black p-medium-12 border border-black rounded-full hidden sm:flex'>
+            <h3 className='p-regular-16 md:p-regular-18 text-left sm:text-left align-middle text-white'>Your Collection</h3>
+            <Button asChild size="sm" className='bg-black text-white hover:text-black hover:bg-white p-medium-12 underline rounded-full hidden sm:flex'>
                 <Link href="/#events">Browse more</Link>
             </Button>
         </div>
@@ -38,11 +44,11 @@ const ProfilePage = async () => {
       </section> */}
 
       {/*EVENTS ORGANIZED */}
-      <section className='bg-white bg-cover bg-center py-16 md:py-24'>
+      <section className='bg-black bg-cover bg-center py-16 md:py-2'>
         <div className='wrapper flex items-left justify-left sm:justify-between align-middle'>
-          <h3 className='p-medium-20 md:p-medium-24 text-left sm:text-left'>Your Tickets</h3>
-            <Button size="sm" className='flex-row bg-white text-black hover:text-white hover:bg-black p-medium-12 border border-black rounded-full hidden sm:flex'>
-                <CirclePlus height={18} width={18} className='pr-1'/>
+          <h3 className='p-regular-16 md:p-regular-18 text-left sm:text-left text-white'>Your Tickets</h3>
+            <Button size="sm" className='flex-row bg-black text-white hover:text-black hover:bg-white p-medium-12 underline rounded-full hidden sm:flex'>
+                {/* <CirclePlus height={18} width={18} className='pr-1'/> */}
                 <Link href="/events/create">New Ticket</Link>
             </Button>
         </div>

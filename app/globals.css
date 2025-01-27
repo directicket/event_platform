@@ -298,3 +298,23 @@ body {
 .header-blur {
   backdrop-filter: blur(20px); /* adjust the blur amount */
 }
+
+.box {
+  transform-style: preserve-3d;
+  perspective: 1000px;
+}
+
+.spin {
+  animation: spin 10s linear infinite;
+  transform-origin: center;
+}
+
+@keyframes spin {
+  from {
+    transform: rotateY(0deg) ;
+  }
+  to {
+    transform: rotateY(360deg) ;
+  }
+}
+

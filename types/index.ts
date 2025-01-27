@@ -14,6 +14,13 @@ export type CreateUserParams = {
     username: string
     photo: string
   }
+
+  export type createBanksParams = {
+    userId: string
+    accountNumber: string
+    bankName: string
+    accountName?: string 
+  }
   
   // ====== EVENT PARAMS
   export type CreateEventParams = {
@@ -147,4 +154,5 @@ export type CreateUserParams = {
     params: { id: string }
     searchParams: { [key: string]: string | string[] | undefined }
   }
+  
   
