@@ -86,8 +86,8 @@ const Page = ({ params }: { params: { id: string } }) => {
     },
     publicKey,
     text: "Complete Order",
-    onSuccess: () => alert("Payment Successful!"),
-    onClose: () => alert("Payment cancelled."),
+    onSuccess: () => alert("We love money. Thanks!"),
+    onClose: () => alert("You're broke aren't you?"),
   };
 
   {console.log(fees)} {/* log the fees data */}
@@ -99,9 +99,9 @@ const Page = ({ params }: { params: { id: string } }) => {
     <>
     {/* <div className='text-white'>{JSON.stringify(fees)}</div> */}
 
-    <div className="wrapper md:max-w-4xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center">
+    <div className="wrapper md:max-w-4xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
       <div className="flex flex-auto justify-between">
-        <h2 className="p-regular-20 md:p-regular-20 text-wrap self-center">Express Ticket Checkout</h2>
+        <h2 className="p-regular-20 md:p-regular-20 text-wrap self-center">Checkout</h2>
         <Link href={`/events/${event._id}`}>
           <CircleX width={22} height={22} className="text-white self-center h-full" />
         </Link>
@@ -134,9 +134,53 @@ const Page = ({ params }: { params: { id: string } }) => {
             <p className="flex p-regular-14 md:p-regular-16 self-end">₦{fees.paymentProcessingFee}</p>
           </div>
         </div>
+
+        <hr className="border border-dashed border-neutral-800 mt-2"/>
+
+        <div className="flex flex-auto justify-between mt-2">
+          <div className="flex flex-col">
+          <p className="p-semibold-14 md:p-medium-16">No refunds* &mdash; All Ticket sales are final.</p>
+          <p className="p-regular-14 text-neutral-600 mt-1">
+            * Exceptions may apply, see our refund policy. <br/>
+          By clicking 'Complete Order' you also agree to our Terms of Use and Refund Policy.
+          </p>
+          </div>
+        </div>
       </div>
 
-      <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-row">
+      <div className='flex flex-col mb-3 md:mt-0 mt-2'>
+        <p className="p-regular-14 md:p-regular-16 mb-2 text-neutral-600">Select a Delivery method</p>
+          <div className="p-4 px-5 md:px-4 bg-neutral-900/50 md:bg-neutral-950 border border-neutral-800 flex flex-col">
+            <div className="flex flex-col md:px-1">
+              <div className='flex flex-auto justify-between'>
+                <p className='p-semibold-14 md:p-regular-16 mb-1'>Mobile Delivery</p>
+                <p className="p-semibold-14 md:p-regular-16 mb-1">FREE</p>
+              </div>
+              <p className='p-regular-14 md:p-regular-16 text-neutral-600'>
+                Use your phone as your Ticket. Your Ticket will be sent to {user.email}.</p>
+            </div>
+          </div>
+      </div>
+
+      <div className='flex flex-col mb-4 md:mt-0'>
+        <p className="p-regular-14 md:p-regular-16 mb-2 text-neutral-600">Select a Payment option</p>
+          <div className="p-4 px-5 md:px-4 bg-neutral-900/50 md:bg-neutral-950 border border-neutral-800 flex flex-col">
+            <div className="flex flex-col md:px-1">
+              <p className='p-semibold-14 md:p-regular-16 mb-0.5'>Paystack Checkout</p>
+              <p className='p-regular-14 md:p-regular-16 text-neutral-600'>
+                Pay with your card, bank transfer, USSD and more.</p>
+            </div>
+          </div>
+
+          <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-col mt-2">
+            <div className="flex flex-col md:px-1">
+              <p className='p-semibold-14 md:p-regular-16 mb-0.5'>Redeem a code</p>
+              
+            </div>
+          </div>
+      </div>
+
+      <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-row mb-2">
         <div
           className="sm:flex mb-0 min-h-fit bg-black mr-4 self-center justify-center items-center overflow-hidden align-middle hidden md:block"
           style={{ height: "20px" }}

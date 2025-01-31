@@ -85,7 +85,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
       md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
        p-regular-14 pb-20 md:block hidden">
           Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
-          <a href="/events/create" className="underline text-blue-500">Sell now &#8250;</a>
+          <Link href="/events/create" className="underline text-blue-500">Sell now &#8250;</Link>
           </p>
 
           <p 

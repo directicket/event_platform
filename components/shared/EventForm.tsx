@@ -112,15 +112,21 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
   return (
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
-        <div className="flex flex-col gap-5 md:flex-row">
+        <div className="flex flex-col gap-5">
           <FormField
             control={form.control}
             name="title"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className="text-white">Ticket Name</FormLabel>
+                <FormLabel className="text-neutral-600">Ticket Name</FormLabel>
                 <FormControl>
-                  <Input placeholder="Main Town City Party" {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
+                  <Input placeholder="My Party - VIP Ticket" {...field} 
+                  className="p-regular-16 text-white
+                  rounded-none border border-neutral-800
+                  bg-black 
+                  outline-offset-0 
+                  focus-visible:ring-white 
+                  focus-visible:ring-offset-0"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -131,9 +137,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="categoryId"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel><span className="text-orange-600">(New) {' '}</span>Category</FormLabel>
-                <p className="text-muted-foreground p-medium-12 flex mt-[-20px]">
-                  Ticket Tags are a new way to let buyers know what kind of ticket you're selling without having to include it in your Ticket Name.</p>
+                <FormLabel className='text-neutral-600'>Category</FormLabel>
                 <FormControl>
                   <Dropdown onChangeHandler={field.onChange} value={field.value} />
                 </FormControl>
@@ -143,15 +147,21 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
           />
         </div>
 
-        <div className="flex flex-col gap-5 md:flex-row">
+        <div className="flex flex-col gap-5">
         <FormField
             control={form.control}
             name="description"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Description</FormLabel>
+                <FormLabel className='text-neutral-600'>Description</FormLabel>
                 <FormControl className="h-70">
-                  <Textarea placeholder="Describe the benefits of getting this ticket to buyers & give additional info about your event." {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
+                  <Textarea placeholder="Describe the benefits of getting this ticket to buyers & give additional info about your event." {...field} 
+                  className="p-regular-16 text-white
+                  rounded-none border border-neutral-800
+                  bg-black 
+                  outline-offset-0 
+                  focus-visible:ring-white 
+                  focus-visible:ring-offset-0"/>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -162,7 +172,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="imageUrl"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Event Poster</FormLabel>
+                <FormLabel className='text-neutral-600'>Ticket Artwork &bull; 1080 &times; 1920</FormLabel>
                 <FormControl className="h-70">
                   <FileUploader 
                     onFieldChange={field.onChange}
@@ -182,12 +192,15 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               name="location"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Event Location</FormLabel>
+                  <FormLabel className='text-neutral-600'>Event Location</FormLabel>
                   <FormControl>
-                    <div className="flex-center h-[55px] w-full overflow-hidden rounded-sm justify-between ">
-                      <MapPinIcon className="text-gray-500"/>
-                      <Input placeholder="Enter the exact location" {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
-                    </div>
+                      <Input placeholder="Enter the exact location" {...field} 
+                      className="p-regular-16 text-white
+                      rounded-none border border-neutral-800
+                      bg-black 
+                      outline-offset-0 
+                      focus-visible:ring-white 
+                      focus-visible:ring-offset-0"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -195,23 +208,20 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             />
         </div>
 
-        <div className="flex flex-col gap-5 md:flex-row">
+        <div className="flex flex-row gap-5">
           <FormField
             control={form.control}
             name="endDateTime"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Event Date & Time</FormLabel>
+                <FormLabel className='text-neutral-600'>Event Date & Time</FormLabel>
                 <FormControl>
-                  <div className="flex-center h-[55px] w-full overflow-hidden rounded-sm justify-between">
-                    <Calendar className="text-blue-500 h-[55px] w-[55]"/>
                     <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
                     showTimeSelect
                     timeInputLabel="Time:"
                     dateFormat="dd/MM/yyyy h:mm aa"
-                    wrapperClassName="datePicker text-blue-500"
+                    wrapperClassName="datePicker text-white p-0"
                     />
-                  </div>
                 </FormControl>
                 <FormMessage />
               </FormItem>
@@ -223,36 +233,41 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="startDateTime"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Sales Deadline</FormLabel>
-                <p className="text-muted-foreground p-medium-12 flex mt-[-20px]">Add a date & time for sales of this Ticket to stop. You can update this later.</p>
+                <FormLabel className='text-neutral-600'>Sales Deadline</FormLabel>
+                
                 <FormControl >
-                  <div className="flex-center mt-[-20px] h-[55px] w-full overflow-hidden rounded-sm justify-between">
-                    <Calendar className="text-red-500 h-[55px] w-[55]"/>
                     <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
                     showTimeSelect
                     timeInputLabel="Time:"
                     dateFormat="dd/MM/yyyy h:mm aa"
-                    wrapperClassName="datePicker text-red-500"
+                    wrapperClassName="datePicker text-orange-500 p-0"
                     />
-                  </div>
                 </FormControl>
+
+                <p className="text-neutral-600 p-regular-14 flex text-wrap">
+                  You can update this later.</p>
                 <FormMessage />
               </FormItem>
             )}
           />
         </div>
 
-        <div className="flex flex-col gap-5 md:flex-row">
+        <div className="flex flex-col gap-5">
           <FormField
             control={form.control}
             name="price"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel>Ticket Price</FormLabel>
+                <FormLabel className='text-neutral-600'>Ticket Price</FormLabel>
                 <FormControl>
-                  <div className="flex-center h-[55px] w-full overflow-hidden rounded-sm justify-between">
-                    <Banknote className="text-gray-500 h-[52px] w-[52px]"/>
-                    <Input type="number" placeholder="5000" {...field} className="p-regular-16 border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
+                  <div className="flex-center h-[55px] w-full gap-4 overflow-hidden rounded-sm justify-between">
+                    <Input type="number" placeholder="5000" {...field} 
+                    className="p-regular-16 text-white
+                    rounded-none border border-neutral-800
+                    bg-black 
+                    outline-offset-0 
+                    focus-visible:ring-white 
+                    focus-visible:ring-offset-0"/>
                     <FormField
                       control={form.control}
                       name="isFree"
@@ -260,11 +275,11 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                         <FormItem>
                           <FormControl>
                             <div className="flex items-center">
-                              <label htmlFor="isFree" className="whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
+                              <label htmlFor="isFree" className="text-white whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
                               <Checkbox 
                               onCheckedChange={field.onChange} 
                               checked={field.value}
-                              id="isFree" className="mr-2 h-5 w-5 border-2 border-blue-600" />
+                              id="isFree" className="mr-2 rounded-none h-5 w-5 border-2 border-yellow-500" />
                             </div>
                           </FormControl>
                           <FormMessage />
@@ -282,12 +297,15 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               name="url"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel>Social Media Link (Copy &amp; Paste)</FormLabel>
+                  <FormLabel className='text-neutral-600'>Social Media Link (Copy &amp; Paste)</FormLabel>
                   <FormControl>
-                    <div className="flex-center h-[55px] w-full overflow-hidden rounded-sm justify-between ">
-                      <Link className="text-gray-500"/>
-                      <Input placeholder="https://website.com/yourusername" {...field} className="p-regular-16 rounded-sm border-0 outline-offset-0 focus-visible:ring-blue-600 focus-visible:ring-offset-0"/>
-                    </div>
+                      <Input placeholder="https://website.com/yourusername" {...field} 
+                      className="p-regular-16 text-white
+                      rounded-none border border-neutral-800
+                      bg-black 
+                      outline-offset-0 
+                      focus-visible:ring-white 
+                      focus-visible:ring-offset-0"/>
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -298,8 +316,8 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         
         <Button 
           type="submit" 
-          size="lg" 
-          className="bg-blue-700 col-span-2 w-full"
+          size="default" 
+          className=" w-full mb-4 min-h-3 bg-white hover:bg-white text-black"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? (

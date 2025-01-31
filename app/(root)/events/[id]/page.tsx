@@ -13,6 +13,7 @@ import {
 } from "@/components/ui/accordion"
 import Search from '@/components/shared/Search';
 import Faq from '@/components/shared/Faq';
+import Link from 'next/link';
 
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
@@ -191,9 +192,9 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
         w-full bg-black flex flex-row border border-neutral-800/70 p-3 border-t-0'>
             <p className='text-neutral-700 p-regular-16 text-wrap'>
               To learn more about this Ticket please click this link{' '}
-              <a href={`${event.url}`}>
+              <Link href={`${event.url}`}>
                 <span className='underline'>here</span>
-              </a>
+              </Link>
               . Sales for this ticket close on {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
               {formatDateTime(event.startDateTime).timeOnly}.
             </p>

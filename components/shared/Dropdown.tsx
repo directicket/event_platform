@@ -51,8 +51,8 @@ const Dropdown = ({value, onChangeHandler }: DropdownProps) => {
 
   return (
     <Select onValueChange={onChangeHandler} defaultValue={value}>
-      <SelectTrigger className="w-full">
-        <SelectValue placeholder="Select a Category" />
+      <SelectTrigger className="w-full text-white rounded-none border border-neutral-800">
+        <SelectValue placeholder="Select a Category" className="text-white"/>
       </SelectTrigger>
       <SelectContent>
         {categories.length > 0 && categories.map((category) => (
