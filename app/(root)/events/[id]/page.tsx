@@ -162,14 +162,18 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
         <div className=" flex mb-0 min-h-96 lg:mt-[-35px] bg-black 
         justify-center items-center overflow-hidden " 
         style={{ height: '100px' }}>
-          <div className="box">
+          <div className="box 
+          h-[205px] max-w-[150px]
+          md:max-h-[305px] md:max-w-[250px]
+          lg:max-h-[405px] lg:max-w-[350px]
+          flex items-center justify-center">
           <Image 
             src={event.imageURL}
-            alt="hero image"
+            alt="Ticket artwork"
             width={100}
             height={100}
-            className="min-h-fit border border-0.5 border-neutral-800/40 max-h-fit 
-            h-fit object-contain object-center w-fit spin"
+            className="h-full border border-0.5 border-neutral-800/40 
+            object-contain w-auto spin"
           />
           </div>
         </div>

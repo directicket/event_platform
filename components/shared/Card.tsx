@@ -67,7 +67,8 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             w-full justify-center pb-[-20px]'>
             {!hidePrice && 
                 <span className='p-regular-14 text-neutral-600'>
-                    {event.isFree ? 'FREE' : `₦${event.price}`}
+                    {event.isFree ? 
+                    <span className='text-yellow-300'>FREE</span> : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
                 {' '}&#8226; {formatDateTime(event.endDateTime).dateOnly}

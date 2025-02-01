@@ -221,6 +221,8 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                     timeInputLabel="Time:"
                     dateFormat="dd/MM/yyyy h:mm aa"
                     wrapperClassName="datePicker text-white p-0"
+                    withPortal={true}
+                    onFocus={(e) => e.target.blur()}
                     />
                 </FormControl>
                 <FormMessage />
@@ -240,7 +242,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                     showTimeSelect
                     timeInputLabel="Time:"
                     dateFormat="dd/MM/yyyy h:mm aa"
-                    wrapperClassName="datePicker text-orange-500 p-0"
+                    wrapperClassName="datePicker text-red-500 p-0"
+                    withPortal={true}
+                    onFocus={(e) => e.target.blur()}
                     />
                 </FormControl>
 
@@ -260,7 +264,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               <FormItem className="w-full">
                 <FormLabel className='text-neutral-600'>Ticket Price</FormLabel>
                 <FormControl>
-                  <div className="flex-center h-[55px] w-full gap-4 overflow-hidden rounded-sm justify-between">
+                  <div className="flex-center w-full gap-4 rounded-none justify-between">
                     <Input type="number" placeholder="5000" {...field} 
                     className="p-regular-16 text-white
                     rounded-none border border-neutral-800
@@ -279,7 +283,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                               <Checkbox 
                               onCheckedChange={field.onChange} 
                               checked={field.value}
-                              id="isFree" className="mr-2 rounded-none h-5 w-5 border-2 border-yellow-500" />
+                              id="isFree" className="mr-2 rounded-none h-5 w-5 border border-yellow-300" />
                             </div>
                           </FormControl>
                           <FormMessage />

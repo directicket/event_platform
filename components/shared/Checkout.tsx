@@ -24,9 +24,9 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
         <Link href='/profile' className='w-full'>
             <Button 
             className='text-center rounded-none w-full
-          bg-white hover:bg-white' size="lg">
+          bg-yellow-300 hover:bg-yellow-300' size="lg">
                 <p className='text-black p-medium-16 md:p-medium-20 p-3'>
-                    + Add to Collection
+                    + Collect Ticket
                 </p>
             </Button>
         </Link>
