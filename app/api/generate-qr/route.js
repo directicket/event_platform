@@ -6,8 +6,7 @@ import path from 'path';
 import fs from 'fs';
 
 // Load Google Sheets credentials
-const keyPath = path.join(process.cwd(), "config", "directicket-qr-2da9dfd5da00.json");
-const credentials = JSON.parse(fs.readFileSync(keyPath, "utf8"));
+const credentials = JSON.parse(process.env.GOOGLE_CLOUD_CREDENTIALS);
 
 const authClient = new google.auth.GoogleAuth({
   credentials,
