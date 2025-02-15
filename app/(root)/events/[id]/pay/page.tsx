@@ -2,12 +2,13 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import Image from "next/image";
-import Link from "next/link";
-import { CircleX } from "lucide-react";
-import { getEventById } from "@/lib/actions/event.actions";
-import { formatDateTime } from "@/lib/utils";
 import { useAuth, useUser } from "@clerk/nextjs";
+import { useRouter } from "next/navigation"; // For redirection
+import Image from "next/image";
+import { formatDateTime } from "@/lib/utils";
+import { CircleX } from "lucide-react";
+import Link from "next/link";
+import { getEventById } from "@/lib/actions/event.actions";
 
 const PaystackButton = dynamic(
   () => import("react-paystack").then((mod) => mod.PaystackButton),
@@ -24,6 +25,7 @@ const Page = ({ params }: { params: { id: string } }) => {
   });
   const [user, setUser] = useState({ name: "", email: "" });
   const { user: authUser } = useUser();
+  const router = useRouter(); // Initialize router for redirection
 
   useEffect(() => {
     const fetchEvent = async () => {
@@ -50,7 +52,7 @@ const Page = ({ params }: { params: { id: string } }) => {
 
     if (authUser) {
       setUser({
-        name: authUser.firstName || "", 
+        name: authUser.firstName || "",
         email: authUser.primaryEmailAddress?.emailAddress || "",
       });
     }
@@ -65,6 +67,31 @@ const Page = ({ params }: { params: { id: string } }) => {
   }
 
   const publicKey = "pk_live_cdcd30416956c25bd6a01347da6b88bee450c8c1";
+
+  const handlePaymentSuccess = async (reference: string) => {
+    try {
+      // Call your server to verify payment with Paystack API
+      const response = await fetch("/api/verify-payment", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ reference, eventId: id }),
+      });
+
+      const data = await response.json();
+
+      if (data.status === "success") {
+        // If payment is verified, redirect to success page
+        router.push(`/events/${event._id}/payment-success?reference=${reference}`); // Replace with your actual success page path
+      } else {
+        alert("Payment verification failed!");
+      }
+    } catch (error) {
+      console.error("Payment verification error:", error);
+      alert("Something went wrong with payment verification!");
+    }
+  };
 
   const componentProps = {
     email: user.email,
@@ -86,13 +113,11 @@ const Page = ({ params }: { params: { id: string } }) => {
     },
     publicKey,
     text: "Complete Order",
-    onSuccess: () => alert("We love money. Thanks!"),
-    onClose: () => alert("You're broke aren't you?"),
+    onSuccess: (paymentData: { reference: string; }) => {
+      handlePaymentSuccess(paymentData.reference);
+    },
+    onClose: () => alert("Payment process was canceled."),
   };
-
-  {console.log(fees)} {/* log the fees data */}
-  {/* temporarily display fees data */}
-
 
 
   return (

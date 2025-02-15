@@ -1,29 +1,44 @@
-import { NextResponse } from "next/server"
+// app/api/verify-payment/route.js
+
+import { NextResponse } from 'next/server';
+
+const PAYSTACK_SECRET_KEY = process.env.PAYSTACK_SECRET_KEY;
 
 export async function POST(req) {
-    try {
-        const { reference } = await req.json() //extract reference from request body
+  try {
+    const body = await req.json();
+    console.log("Received request body:", body); // log the incoming request data
 
-        if (!reference) {
-            return NextResponse.json({ error: "Transaction reference is required" }, { status: 400 })
-        }
+    const { reference, eventId } = body;
 
-        const response = await fetch(`https;??api.paystack.co/transaction/verify/${reference}`, {
-            method: "GET",
-            headers: {
-                Authorization: `Bearer ${process.env.PAYSTACK_SECRET_KEY}`,
-                "Content-Type": "application/json",
-            }
-        })
-        
-        const data = await response.json()
-
-        if (data.status && data.data.status === "success") {
-            return NextResponse.json({ success: true, data: data.data }, { status: 200 })
-        } else {
-            return NextResponse.json({ success: false, error: "Transaction verification failed" }, { status: 400 })
-        }
-    } catch (error) {
-        return NextResponse.json({ error: "Something went wrong", details: error.message }, { status: 500 })
+    if (!reference || !eventId) {
+      console.log("Missing reference or eventId"); // log missing data
+      return NextResponse.json({ error: 'Reference and Event ID are required' }, { status: 400 });
     }
+
+    // Paystack verification endpoint
+    const paystackVerificationUrl = `https://api.paystack.co/transaction/verify/${reference}`;
+
+    const response = await fetch(paystackVerificationUrl, {
+      method: 'GET',
+      headers: {
+        Authorization: `Bearer ${PAYSTACK_SECRET_KEY}`,
+        'Content-Type': 'application/json',
+      },
+    });
+
+    const data = await response.json();
+    console.log("Paystack API response:", data); // log the response from Paystack
+
+    if (!response.ok || !data.status) {
+      console.log("Payment verification failed at Paystack API");
+      return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
+    }
+
+    return NextResponse.json({ status: 'success', message: 'Payment verified successfully' });
+
+  } catch (error) {
+    console.error("Payment verification error:", error);
+    return NextResponse.json({ error: 'Internal server error' }, { status: 500 });
+  }
 }
