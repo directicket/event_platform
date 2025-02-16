@@ -40,9 +40,14 @@ export async function POST(req) {
     const rows = sheetData.data.values || [];
 
     // Check if the userID and reference already exist
-    const existingEntry = rows.find(row => row[0] === userId && row[1] === reference);
+    const existingEntry = rows.find(row => row[1] === reference);
 
     if (existingEntry) {
+      if (existingEntry[0] !== userId) {
+        return NextResponse.json({ error: 'Forbidden' }, { status: 403})
+      }
+
+
       // Return the existing QR code
       const storedQRCode = existingEntry[2];
       const qrCodeDataUrl = await QRCode.toDataURL(storedQRCode);
