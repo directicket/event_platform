@@ -10,6 +10,9 @@ import { SearchParamProps } from '@/types'
 import { formatDateTime } from '@/lib/utils';
 import { getEventById, getRelatedEventsByCategory } from '@/lib/actions/event.actions'
 import { trusted } from 'mongoose'
+import { IBM_Plex_Mono } from 'next/font/google';
+
+const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
 const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) => {
   const event = await getEventById(id);
@@ -30,26 +33,33 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
     <div className='flex items-center gap-3'>
         {hasEventFinished ? (
           <Button className=' text-center rounded-none
-           w-full bg-neutral-800' size="lg" disabled={true}>
-            <p className='text-white p-medium-16 md:p-medium-20 text-wrap p-3'>
-              Access to this ticket has been <br className='md:hidden'/> limited by its creator.
+           w-full bg-neutral-800 border border-neutral-800' size="lg" disabled={true}>
+            <p className={`${ibmMono.className}text-neutral-800 p-medium-16 md:p-medium-20 text-wrap p-3`}>
+              SALES ARE CURRENTLY CLOSED FOR THIS TICKET.
             </p>
           </Button>
         ): (
             <>
               <SignedOut>
-                <Button asChild className='text-center rounded-none
-           w-full bg-white hover:bg-white' size="lg">
+                <Button asChild className='text-left rounded-none
+           w-full bg-black hover:bg-black border-white border' size="lg">
                     <Link href="/sign-in">
-                      <p className='text-black p-medium-16 md:p-medium-20 text-wrap p-3'>
-                        Get Ticket
-                      </p>
+                      <div className='flex flex-col w-full'>
+                        <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+                          GET TICKET
+                        </p>
+                        <hr className='hidden md:block border border-dashed border-white my-1'/>
+                        <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+                          Available unitl {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+                          {formatDateTime(event.startDateTime).timeOnly}.
+                        </p>
+                      </div>
                     </Link>
                 </Button>
               </SignedOut>
 
               <SignedIn>
-                <div className='w-full justify-center items-center'>
+                <div className='w-full text-left'>
                   <Checkout event={event} userId={userId}/>
                 </div>
               </SignedIn>

@@ -115,6 +115,10 @@ body {
     @apply font-semibold tracking-tight text-[32px]  leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
   }
 
+  .h2-regular {
+    @apply font-normal tracking-normal text-[32px]  leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
+  }
+
   /* 36 */
   .h3-bold {
     @apply font-bold text-[28px] leading-[36px] md:text-[36px] md:leading-[44px];
@@ -347,4 +351,34 @@ body {
   position: fixed;
   bottom: 0;
   left: 0;
+}
+
+.ibm-12 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: normal;
+  font-size: 12px;
+}
+
+.ibm-10 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: normal;
+  font-size: 10px;
+}
+
+.ibm-14 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: normal;
+  font-size: 15px;
+}
+
+.ibm-16 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: normal;
+  font-size: 16px;
+}
+
+.ibm-20 {
+  font-family: 'IBM Plex Mono', monospace;
+  font-weight: normal;
+  font-size: 20px;
 }

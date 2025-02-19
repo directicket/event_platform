@@ -2,6 +2,10 @@ import Link from 'next/link'
 import React from 'react'
 import { Button } from '../ui/button'
 import { iEvent } from '@/lib/database/models/event.model'
+import { IBM_Plex_Mono } from 'next/font/google';
+import { formatDateTime } from '@/lib/utils';
+
+const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
 
 const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
@@ -20,27 +24,41 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
   return (
     <>
     { event.isFree ? 
-      <div className='flex w-full items-center'>
-        <Link href='/profile' className='w-full'>
-            <Button 
-            className='text-center rounded-none w-full
-          bg-yellow-300 hover:bg-yellow-300' size="lg">
-                <p className='text-black p-medium-16 md:p-medium-20 p-3'>
-                    + Collect Ticket
+      <div className='flex w-full'>
+       
+      <Button asChild className='text-left rounded-none
+       w-full bg-white hover:bg-white border-white border text-black hover:text-black' size="lg">
+         <Link href={`/events/${event._id}/pay`}>
+         <div className='flex flex-col w-full'>
+           <p className={`${ibmMono.className}text-yellow-300 w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+             COLLECT TICKET
+           </p>
+           <hr className='hidden md:block border border-dashed border-black'/>
+           <p className={`${ibmMono.className}text-yellow-300 w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+             Available unitl {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+             {formatDateTime(event.startDateTime).timeOnly}
+           </p>
+         </div>
+         </Link>
+       </Button>
+        </div>
+       : <div className='flex w-full'>
+       
+           <Button asChild className='text-left rounded-none
+            w-full bg-black hover:bg-black border-white border' size="lg">
+              <Link href={`/events/${event._id}/pay`}>
+              <div className='flex flex-col w-full'>
+                <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+                  BUY TICKET
                 </p>
+                <hr className='hidden md:block border border-dashed border-white'/>
+                <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
+                  Available unitl {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+                  {formatDateTime(event.startDateTime).timeOnly}
+                </p>
+              </div>
+              </Link>
             </Button>
-        </Link>
-      </div>
-       : <div className='flex w-full items-center'>
-       <Link href={`/events/${event._id}/pay`} className='w-full'>
-           <Button 
-           className='text-center rounded-none w-full
-         bg-white hover:bg-white' size="lg">
-               <p className='text-black p-medium-16 md:p-medium-20 p-3'>
-                   Buy Ticket
-               </p>
-           </Button>
-       </Link>
      </div> 
      
      }

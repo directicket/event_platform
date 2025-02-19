@@ -7,6 +7,10 @@ import Link from 'next/link'
 import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
 import { Button } from '../ui/button'
+import { IBM_Plex_Mono } from 'next/font/google';
+
+const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
+
 
 type CardProps = {
     event: iEvent,
@@ -23,13 +27,12 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
   // if (isEventCreator) return null
   return (
     
-    <div className='group relative flex w-full max-w-[400px] md:max-w-[700px] 
+    <div className='group relative flex w-full max-w-full md:max-w-full 
     flex-row overflow-hidden min-w-[300px]
-    p-2 pb-0 pl-0 pt-0 border-neutral-700/50 border bg-black'>
+    p-2 py-4 border-neutral-700/50 border border-t-0 border-r-0 border-l-0 bg-black'>
 
       <Link href={`/events/${event._id}`}>
-        <div className=' flex justify-center items-center bg-black min-w-[80px] px-0 
-        border border-dashed border-l-0 border-b-0 border-t-0 border-neutral-700/65' 
+        <div className=' flex justify-center items-center bg-black min-w-[80px] px-0' 
         style={{ height: '80px' }}
         >
           <Image
@@ -57,18 +60,18 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
             <div className='flex max-w-56 gap-1 items-left justify-left'>
               <Link href={`/events/${event._id}`}>
-                <p className='p-semibold-14 md:p-semibold-16 line-clamp-1 text-left hover:underline
+                <p className='p-medium-14 md:p-regular-16 line-clamp-1 text-left hover:underline
                  flex-1 text-white'>{event.title}</p>
               </Link>
               
             </div>
 
             <p className='p-regular-14 p-medium-16 text-neutral-600 text-left 
-            w-full justify-center pb-[-20px]'>
+            w-full justify-center pb-[-20px] mt-[-4px]'>
             {!hidePrice && 
-                <span className='p-regular-14 text-neutral-600'>
+                <span className={`${ibmMono.className} p-regular-14 text-neutral-600`}>
                     {event.isFree ? 
-                    <span className='text-yellow-300'>FREE</span> : `₦${event.price}`}
+                    <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
                 {' '}&#8226; {formatDateTime(event.endDateTime).dateOnly}
