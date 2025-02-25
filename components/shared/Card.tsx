@@ -80,7 +80,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
             {isEventCreator && !hidePrice && (
             <div className='absolute right-2 top-2 flex flex-col gap-2 rounded-none 
            bg-black text-white hover:underline p-3 p-medium-14
-            mt-3
+            mt-4
             '>
                 <Link href={`/events/${event._id}/update`}>
                   <SquarePen width={18} height={18}/>
