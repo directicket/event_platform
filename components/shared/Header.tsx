@@ -1,18 +1,37 @@
-import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs"
-import Image from "next/image"
-import Link from "next/link"
-import { Button } from "../ui/button"
-import NavItems from "./NavItems"
-import MobileNav from "./MobileNav"
-import { IBM_Plex_Mono } from 'next/font/google';
-import { TriangleAlert } from "lucide-react"
+'use client'
 
-const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import Image from "next/image";
+import Link from "next/link";
+import { Button } from "../ui/button";
+import NavItems from "./NavItems";
+import MobileNav from "./MobileNav";
+import { IBM_Plex_Mono } from "next/font/google";
+import { TriangleAlert } from "lucide-react";
+import { useEffect, useState } from "react";
+
+const ibmMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "600"] });
 
 const Header = () => {
+  const [hasAccess, setHasAccess] = useState<boolean | "default">("default");
+
+  useEffect(() => {
+    const checkAccess = async () => {
+      try {
+        const response = await fetch("/api/check-bank-details");
+        const data = await response.json();
+        setHasAccess(data.status === "default" ? "default" : data.hasAccess);
+        console.log("API response:", data);
+      } catch (error) {
+        console.error("Error checking access:", error);
+      }
+    };
+
+    checkAccess();
+  }, []);
+
   return (
-    <div className="w-full sticky-header border-b-white/50 pb-[-20]
-      absolute text-white">
+    <div className="w-full sticky-header border-b-white/50 pb-[-20] absolute text-white">
       <div className="bg-black wrapper flex items-center align-middle justify-between py-[-20]">
         <Link href="/" className="w-36">
           <Image 
@@ -43,17 +62,29 @@ const Header = () => {
         </div>
       </div>
 
-      <div className='gradient wrapper w-full bg-black/100 p-4 border-r-0 border-l-0 border-t-0 mt-[-1px] border-b-neutral-800/50 border flex-col gap-1 flex sticky-header header-blur absolute'>
-              <div className="flex flex-row">
-                <TriangleAlert width={20} height={20} className="text-white mr-2 self-center"/>
-              <p className={`${ibmMono.className} ibm-14 text-white`}>MISSING BANK DETAILS</p>
-              </div>
-              <p className='text-neutral-600 p-regular-12 md:p-regular-16'>
-                You've made your Tickets but no one can pay you. 
-                Add your bank details, it only takes 10 seconds.</p>
+      {hasAccess === false && (
+        <>
+        <SignedIn>
+          <Link href='/profile/bank-details'>
+        <div className='gradient wrapper w-full bg-black/100 p-4 border-r-0 border-l-0 border-t-0 mt-[-1px] border-b-neutral-800/50 border flex-col gap-1 flex sticky-header header-blur absolute'>
+          <div className="flex flex-row">
+            <TriangleAlert width={20} height={20} className="text-white mr-2 self-center"/>
+            <p className={`${ibmMono.className} ibm-14 text-white`}>MISSING BANK DETAILS</p>
           </div>
+          <p className='text-neutral-600 p-regular-12 md:p-regular-16'>
+            You've made your Tickets but no one can pay you.{' '}
+            <span className="underline">Add your bank details, it only takes 10 seconds.</span>
+          </p>
+        </div>
+        </Link>
+        </SignedIn>
+        <SignedOut>
+          <div className="hidden"></div>
+        </SignedOut>
+        </>
+      )}
     </div>
-  )
-}
+  );
+};
 
-export default Header
+export default Header;

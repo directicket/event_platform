@@ -35,7 +35,7 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
            </p>
            <hr className='hidden md:block border border-dashed border-black'/>
            <p className={`${ibmMono.className}text-yellow-300 w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
-             Available unitl {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+             Available until {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
              {formatDateTime(event.startDateTime).timeOnly}
            </p>
          </div>
@@ -53,7 +53,7 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
                 </p>
                 <hr className='hidden md:block border border-dashed border-white'/>
                 <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
-                  Available unitl {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
+                  Available until {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
                   {formatDateTime(event.startDateTime).timeOnly}
                 </p>
               </div>

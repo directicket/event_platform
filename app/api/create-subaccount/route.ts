@@ -1,5 +1,11 @@
 import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
+import { Redis } from "@upstash/redis";
+
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL!,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN!,
+});
 
 export async function POST(req: Request) {
   try {
@@ -17,7 +23,7 @@ export async function POST(req: Request) {
     const userResponse = await fetch(`https://api.clerk.dev/v1/users/${userId}`, {
       headers: { Authorization: `Bearer ${process.env.CLERK_SECRET_KEY}` },
     });
-    
+
     if (!userResponse.ok) {
       return NextResponse.json({ error: "Failed to fetch user details" }, { status: 500 });
     }
@@ -43,15 +49,23 @@ export async function POST(req: Request) {
     });
 
     const paystackData = await paystackResponse.json();
-    
+
     if (!paystackResponse.ok) {
       return NextResponse.json({ error: paystackData.message || "Failed to create subaccount" }, { status: 500 });
     }
 
-    return NextResponse.json({
-      subaccountId: paystackData.data.subaccount_code,
-      userId,
-    });
+    const subaccountId = paystackData.data.subaccount_code;
+
+    // Store in Redis
+    await redis.set(`user:${userId}:subaccount`, JSON.stringify({
+      subaccountId,
+      accountNumber,
+      bankCode,
+      bankName,
+      createdAt: new Date().toISOString(),
+    }));
+
+    return NextResponse.json({ subaccountId, userId });
   } catch (error) {
     console.error("Error creating subaccount:", error);
     return NextResponse.json({ error: "Internal server error" }, { status: 500 });

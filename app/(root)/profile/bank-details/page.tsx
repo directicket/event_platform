@@ -94,7 +94,7 @@ export default function BankDetailsPage() {
       console.log("Subaccount creation response:", data);
 
       if (response.ok) {
-        router.push("/profile"); // Redirect after success
+        router.push("/profile?reload=true"); // Redirect after success
       }
 
     } catch (error) {
