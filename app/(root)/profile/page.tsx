@@ -1,10 +1,11 @@
 import Collection from '@/components/shared/Collection';
 import { getEventsByUser } from '@/lib/actions/event.actions';
 import { auth, currentUser } from '@clerk/nextjs';
-import ProfileClient from '@/components/shared/ProfileClient';
 import { Button } from '@/components/ui/button';
 import Link from 'next/link';
 import { IBM_Plex_Mono } from 'next/font/google';
+import { useEffect, useState } from "react";
+import BankDetailsStatus from '@/components/shared/BankDetailsStates'
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -21,7 +22,6 @@ export default async function ProfilePage() {
 
   return (
     <>
-      <ProfileClient /> {/* This handles search params & router */}
 
       {/* USER INFO */}
       <section className='wrapper text-white'>
@@ -35,8 +35,8 @@ export default async function ProfilePage() {
               <p className={`${ibmMono.className} font-normal p-regular-14`}>{userEmail}</p>
             </div>
             <div className='flex flex-col'>
-              <p className='p-regular-12 text-neutral-600'>Sales Status</p>
-              <p className={`${ibmMono.className} font-normal p-regular-14 text-neutral-500`}>Inactive</p>
+              <p className='p-regular-12 text-neutral-600'>Bank details</p>
+              <BankDetailsStatus />
             </div>
           </div>
         </div>

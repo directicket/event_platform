@@ -14,6 +14,7 @@ import {
 } from "@/components/ui/accordion"
 import Faq from "@/components/shared/Faq";
 import { IBM_Plex_Mono } from 'next/font/google';
+import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -75,14 +76,30 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
           
 
+        <SignedOut>
           <div className='w-fit py-0'>
-            <Link href='/events/create'>
+            <Link href='/sign-in'>
+              <span className=''></span>
               <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
               text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
                   CREATE & SELL YOURS &rarr;
               </button>
             </Link>
-      </div>
+          </div>
+        </SignedOut>
+        <SignedIn>
+        <div className='w-fit py-0'>
+            <Link href='/events/create'>
+              <span className=''></span>
+              <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
+              text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
+                  CREATE & SELL YOURS &rarr;
+              </button>
+            </Link>
+          </div>
+        </SignedIn>
+
+
 
           <p 
       className="bg-black pt-2 text-neutral-600 

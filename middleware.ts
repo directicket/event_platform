@@ -7,7 +7,6 @@ export default authMiddleware({
         '/api/webhook/clerk',
         '/api/webhook/stripe',
         '/api/uploadthing',
-        '/api/check-bank-details'
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
