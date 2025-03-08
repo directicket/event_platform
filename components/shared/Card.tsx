@@ -60,7 +60,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
             <div className='flex max-w-56 gap-1 items-left justify-left'>
               <Link href={`/events/${event._id}`}>
-                <span className='absolute inset-0 hover:bg-neutral-900/20'></span>
+                <span className='absolute inset-0 hover:bg-neutral-900/50'></span>
                 <p className='p-medium-14 md:p-regular-16 line-clamp-1 text-left hover:underline
                  flex-1 text-white'>{event.title}</p>
               </Link>
