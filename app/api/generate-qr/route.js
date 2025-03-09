@@ -1,21 +1,12 @@
 import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 import QRCode from 'qrcode';
-import { google } from 'googleapis';
-import path from 'path';
-import fs from 'fs';
+import { Redis } from '@upstash/redis';
 
-// Load Google Sheets credentials
-const credentials = JSON.parse(process.env.GOOGLE_CLOUD_CREDENTIALS);
-
-const authClient = new google.auth.GoogleAuth({
-  credentials,
-  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+const redis = new Redis({
+  url: process.env.UPSTASH_REDIS_REST_URL,
+  token: process.env.UPSTASH_REDIS_REST_TOKEN,
 });
-const sheets = google.sheets({ version: "v4", auth: authClient });
-
-const SPREADSHEET_ID = "1UVwYZQ4wbvP3wIQz5HmRmxcWXO9YuwO0BQuYABavLDY"; // Replace with your actual Sheet ID
-const SHEET_NAME = "qr-codes"; // Update if your sheet is named differently
 
 export async function POST(req) {
   try {
@@ -31,34 +22,17 @@ export async function POST(req) {
       return NextResponse.json({ error: 'Reference is required' }, { status: 400 });
     }
 
-    // Fetch existing entries from Google Sheets
-    const sheetData = await sheets.spreadsheets.values.get({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A:C`,
-    });
+    const userKey = `qr:${userId}`;
+    
+    // Fetch user's existing QR codes
+    const existingQRs = await redis.hgetall(userKey) || {};
 
-    const rows = sheetData.data.values || [];
-
-    // Check if the userID and reference already exist
-    const existingEntry = rows.find(row => row[1] === reference);
-
-    if (existingEntry) {
-      if (existingEntry[0] !== userId) {
-        return NextResponse.json({ error: 'Forbidden' }, { status: 403})
-      }
-
-
-      // Return the existing QR code
-      const storedQRCode = existingEntry[2];
-      const qrCodeDataUrl = await QRCode.toDataURL(storedQRCode);
+    if (existingQRs[reference]) {
+      // Return existing QR code
+      const qrCodeDataUrl = await QRCode.toDataURL(existingQRs[reference]);
       const base64Data = qrCodeDataUrl.split(',')[1];
       const imageBuffer = Buffer.from(base64Data, 'base64');
-
-      return new Response(imageBuffer, {
-        headers: {
-          'Content-Type': 'image/png',
-        },
-      });
+      return new Response(imageBuffer, { headers: { 'Content-Type': 'image/png' } });
     }
 
     // Verify payment status from Paystack
@@ -72,7 +46,6 @@ export async function POST(req) {
     });
 
     const data = await response.json();
-
     if (!response.ok || !data.status || data.data.status !== 'success') {
       return NextResponse.json({ error: 'Payment verification failed' }, { status: 400 });
     }
@@ -81,27 +54,15 @@ export async function POST(req) {
     const randomCode = Math.random().toString(36).substring(2, 12).toUpperCase();
     const finalCode = `${userId}-${randomCode}`;
 
-    // Generate QR code as a data URL
+    // Generate QR code
     const qrCodeDataUrl = await QRCode.toDataURL(finalCode);
     const base64Data = qrCodeDataUrl.split(',')[1];
     const imageBuffer = Buffer.from(base64Data, 'base64');
 
-    // Store in Google Sheets
-    await sheets.spreadsheets.values.append({
-      spreadsheetId: SPREADSHEET_ID,
-      range: `${SHEET_NAME}!A1:C1`, // Assuming first three columns are used
-      valueInputOption: "USER_ENTERED",
-      requestBody: {
-        values: [[userId, reference, finalCode]],
-      },
-    });
+    // Store in Redis atomically
+    await redis.hset(userKey, { [reference]: finalCode });
 
-    return new Response(imageBuffer, {
-      headers: {
-        'Content-Type': 'image/png',
-      },
-    });
-
+    return new Response(imageBuffer, { headers: { 'Content-Type': 'image/png' } });
   } catch (error) {
     console.error('QR Code generation error:', error);
     return NextResponse.json({ error: 'Internal server error' }, { status: 500 });

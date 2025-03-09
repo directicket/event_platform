@@ -19,8 +19,8 @@ export async function GET(req) {
     const price = Number(event.price);
 
     // Calculate fees
-    const serviceFee = Math.ceil(price * 0.15); // 15% service fee
-    const paymentProcessingFee = Math.ceil(price * 0.015 + 100); // 1.5% + flat fee (e.g., 100 Naira)
+    const serviceFee = Math.ceil(price * 0.08); // 8% service fee
+    const paymentProcessingFee = Math.ceil(price * 0.015); // 1.5% + no flat fee anymore!
     const totalPrice = price + serviceFee + paymentProcessingFee;
 
     return NextResponse.json({
