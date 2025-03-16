@@ -9,122 +9,131 @@ import { formatDateTime } from "@/lib/utils";
 import { CircleX } from "lucide-react";
 import Link from "next/link";
 import { getEventById } from "@/lib/actions/event.actions";
-import { Redis } from "@upstash/redis";
+import { getUserById } from "@/lib/actions/user.actions";
 
 const PaystackButton = dynamic(
-  () => import("react-paystack").then((mod) => mod.PaystackButton),
-  { ssr: false }
-);
-
-const redis = new Redis({ url: process.env.UPSTASH_REDIS_REST_URL, token: process.env.UPSTASH_REDIS_REST_TOKEN });
-
-const Page = ({ params }: { params: { id: string } }) => {
-  const { id } = params;
-  const [event, setEvent] = useState<any>(null);
-  const [fees, setFees] = useState({
-    serviceFee: 0,
-    paymentProcessingFee: 0,
-    totalPrice: 0,
-  });
-  const [user, setUser] = useState({ name: "", email: "" });
-  const [subaccountId, setSubaccountId] = useState<string | null>(null);
-  const [errorMessage, setErrorMessage] = useState("");
-  const { user: authUser } = useUser();
-  const router = useRouter();
-
-  useEffect(() => {
-    const fetchEvent = async () => {
-      const eventData = await getEventById(id);
-      setEvent(eventData);
-
-      if (eventData?.organizerId) {
-        const subaccountData = await redis.get(`user:${eventData.organizerId}:subaccount`);
-        
-      if (!subaccountData || typeof subaccountData !== "string") {
-        setErrorMessage("The organizer hasn't started accepting payments yet.");
-      } else {
-        setSubaccountId(subaccountId);
+    () => import("react-paystack").then((mod) => mod.PaystackButton),
+    { ssr: false }
+  );
+  
+  const Page = ({ params }: { params: { id: string } }) => {
+    const { id } = params;
+    const [event, setEvent] = useState<any>(null);
+    const [fees, setFees] = useState({
+      serviceFee: 0,
+      paymentProcessingFee: 0,
+      totalPrice: 0,
+    });
+    const [user, setUser] = useState({ name: "", email: "" });
+    const [errorMessage, setErrorMessage] = useState("");
+    const { user: authUser } = useUser();
+    const router = useRouter();
+  
+    useEffect(() => {
+      const fetchEvent = async () => {
+        const eventData = await getEventById(id);
+        setEvent(eventData);
+      };
+  
+      const fetchFees = async () => {
+        const feeResponse = await fetch(
+          `${process.env.NEXT_PUBLIC_SERVER_URL}/api/paystack?eventId=${id}`,
+          { cache: "no-store" }
+        );
+  
+        if (feeResponse.ok) {
+          const { serviceFee, paymentProcessingFee, totalPrice } = await feeResponse.json();
+          setFees({ serviceFee, paymentProcessingFee, totalPrice });
+        }
+      };
+  
+      fetchEvent();
+      fetchFees();
+  
+      if (authUser) {
+        setUser({
+          name: authUser.firstName || "",
+          email: authUser.primaryEmailAddress?.emailAddress || "",
+        });
       }
-      }
-    };
-
-    const fetchFees = async () => {
-      const feeResponse = await fetch(
-        `${process.env.NEXT_PUBLIC_SERVER_URL}/api/paystack?eventId=${id}`,
-        { cache: "no-store" }
+    }, [id, authUser]);
+  
+    if (!event) {
+      return (
+        <div className="wrapper flex w-full h-screen justify-center items-center">
+          <p className="self-center text-white p-medium-16 md:p-semibold-20">Loading Checkout...</p>
+        </div>
       );
-
-      if (feeResponse.ok) {
-        const { serviceFee, paymentProcessingFee, totalPrice } = await feeResponse.json();
-        setFees({ serviceFee, paymentProcessingFee, totalPrice });
+    }
+  
+    if (errorMessage) {
+      return (
+        <div className="wrapper flex w-full h-screen justify-center items-center">
+          <p className="text-white p-medium-16 md:p-semibold-20">{errorMessage}</p>
+        </div>
+      );
+    }
+  
+    const handlePaymentSuccess = async (reference: string) => {
+      try {
+        const response = await fetch("/api/verify-payment", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ reference, eventId: id }),
+        });
+        const data = await response.json();
+        if (data.status === "success") {
+          router.push(`/events/${event._id}/payment-success?reference=${reference}`);
+        } else {
+          alert("Payment verification failed!");
+        }
+      } catch (error) {
+        console.error("Payment verification error:", error);
+        alert("Something went wrong with payment verification!");
       }
     };
-
-    fetchEvent();
-    fetchFees();
-
-    if (authUser) {
-      setUser({
-        name: authUser.firstName || "",
-        email: authUser.primaryEmailAddress?.emailAddress || "",
-      });
-    }
-  }, [id, authUser]);
-
-  if (!event) {
-    return (
-      <div className="wrapper flex w-full h-screen justify-center items-center">
-        <p className="self-center text-white p-medium-16 md:p-semibold-20">Loading Checkout...</p>
-      </div>
-    );
-  }
-
-  if (errorMessage) {
-    return (
-      <div className="wrapper flex w-full h-screen justify-center items-center">
-        <p className="text-white p-medium-16 md:p-semibold-20">{errorMessage}</p>
-      </div>
-    );
-  }
-
-  const publicKey = "pk_live_cdcd30416956c25bd6a01347da6b88bee450c8c1";
-
-  const handlePaymentSuccess = async (reference: string) => {
-    try {
-      const response = await fetch("/api/verify-payment", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ reference, eventId: id }),
-      });
-      const data = await response.json();
-      if (data.status === "success") {
-        router.push(`/events/${event._id}/payment-success?reference=${reference}`);
-      } else {
-        alert("Payment verification failed!");
-      }
-    } catch (error) {
-      console.error("Payment verification error:", error);
-      alert("Something went wrong with payment verification!");
-    }
-  };
-
-  const componentProps = {
-    email: user.email,
-    amount: fees.totalPrice * 100,
-    metadata: {
-      name: user.name,
-      custom_fields: [
-        { display_name: "Customer Name", variable_name: "customer_name", value: user.name || "Anonymous" },
-        { display_name: "Event ID", variable_name: "event_id", value: event._id },
-      ],
-      subaccount: subaccountId,
-    },
-    publicKey,
-    text: "Complete Order",
-    onSuccess: (paymentData: { reference: string }) => handlePaymentSuccess(paymentData.reference),
-    onClose: () => alert("Payment process was canceled."),
-  };
-
+  
+    console.log("Sending to API:", {
+      email: user.email,
+      amount: fees.totalPrice * 100,
+      eventId: event._id,
+    });
+  
+    const handlePayment = async () => {
+        try {
+          const response = await fetch("/api/initialize-payments", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              email: user.email,
+              amount: fees.totalPrice * 100,
+              eventId: event._id,
+            }),
+          });
+      
+          const data = await response.json();
+      
+          if (!response.ok) {
+            alert(data.error || "Payment initialization failed");
+            return;
+          }
+      
+          console.log("Payment API response:", data);
+      
+          const authorizationUrl = data?.data?.authorization_url;
+          
+          if (!authorizationUrl) {
+            alert("Payment initialization failed. No authorization URL.");
+            return;
+          }
+      
+          window.location.href = authorizationUrl; // Redirect to Paystack payment page
+        } catch (error) {
+          console.error("Payment error:", error);
+          alert("Something went wrong. Please try again.");
+        }
+      };
+      
 
   return (
     <>
@@ -245,10 +254,12 @@ const Page = ({ params }: { params: { id: string } }) => {
         </div>
       </div>
 
-      <PaystackButton
-        {...componentProps}
+      <button 
+        onClick={handlePayment} 
         className="w-full p-4 paystack-button text-black md:p-semibold-18"
-      />
+        >
+        Complete Order
+       </button>
       </div>
     </>
   );

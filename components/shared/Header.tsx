@@ -19,11 +19,24 @@ const Header = () => {
   useEffect(() => {
     if (!isLoaded || !userId) return; // Wait for Clerk to load
 
+    // Check if bank details status is cached in localStorage
+    const cachedAccess = localStorage.getItem(`bank-details-${userId}`);
+    if (cachedAccess) {
+      setHasAccess(JSON.parse(cachedAccess)); // Set from cache
+      return; // Skip the API call if cached
+    }
+
+    // Fetch from the API if not cached
     const checkAccess = async () => {
       try {
         const response = await fetch("/api/check-bank-details");
         const data = await response.json();
-        setHasAccess(data.status === "default" ? "default" : data.hasAccess);
+        const status = data.status === "default" ? "default" : data.hasAccess;
+
+        // Cache the response for future checks
+        localStorage.setItem(`bank-details-${userId}`, JSON.stringify(status));
+        
+        setHasAccess(status); // Set the state based on the API response
         console.log("API response:", data);
       } catch (error) {
         console.error("Error checking access:", error);

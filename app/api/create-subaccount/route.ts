@@ -43,7 +43,7 @@ export async function POST(req: Request) {
         business_name: userName,
         settlement_bank: bankCode,
         account_number: accountNumber,
-        percentage_charge: 8,
+        percentage_charge: 8.256880733944953,
         primary_contact_email: userEmail,
       }),
     });

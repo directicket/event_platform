@@ -28,7 +28,7 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
        
       <Button asChild className='text-left rounded-none
        w-full bg-white hover:bg-white border-white border text-black hover:text-black' size="lg">
-         <Link href={`/events/${event._id}/pay`}>
+         <Link href={`/events/${event._id}/collect-ticket`}>
          <div className='flex flex-col w-full'>
            <p className={`${ibmMono.className}text-yellow-300 w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
              COLLECT TICKET
@@ -46,7 +46,7 @@ const Checkout = ({ event, userId }: { event: iEvent, userId: string }) => {
        
            <Button asChild className='text-left rounded-none
             w-full bg-black hover:bg-black border-white border' size="lg">
-              <Link href={`/events/${event._id}/pay`}>
+              <Link href={`/events/${event._id}/checkout`}>
               <div className='flex flex-col w-full'>
                 <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
                   BUY TICKET

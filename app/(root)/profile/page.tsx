@@ -32,7 +32,7 @@ export default async function ProfilePage() {
           <div className='flex flex-row gap-6 md:gap-24 mt-8'>
             <div className='flex flex-col'>
               <p className='p-regular-12 text-neutral-600'>Email</p>
-              <p className={`${ibmMono.className} font-normal p-regular-14`}>{userEmail}</p>
+              <p className={`${ibmMono.className} font-normal p-regular-14 max-w-44 md:max-w-fit line-clamp-1`}>{userEmail}</p>
             </div>
             <div className='flex flex-col'>
               <p className='p-regular-12 text-neutral-600'>Bank details</p>

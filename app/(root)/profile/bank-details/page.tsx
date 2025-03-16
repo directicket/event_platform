@@ -94,7 +94,11 @@ export default function BankDetailsPage() {
       console.log("Subaccount creation response:", data);
 
       if (response.ok) {
-        router.push("/profile"); // Redirect after success
+        // Assuming `data.hasAccess` is returned as `true` if subaccount is created
+        const status = "true"; // This is the value you want to store
+        localStorage.setItem(`bank-details-${user.id}`, JSON.stringify(status));
+  
+        router.push("/profile");  // Redirect after success
       }
 
     } catch (error) {

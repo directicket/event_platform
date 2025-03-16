@@ -4,6 +4,9 @@ import { headerLinks } from '@/constants'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import React from 'react'
+import { IBM_Plex_Mono } from "next/font/google";
+
+const ibmMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "600"] });
 
 const NavItems = () => {
   const pathname = usePathname();
@@ -14,7 +17,7 @@ const NavItems = () => {
   };
 
   return (
-    <ul className='md:flex-between flex w-full flex-col items-start gap-5 md:flex-row'>
+    <ul className={`${ibmMono.className} ibm-20 md:flex-between flex w-full flex-col items-start gap-5 md:flex-row text-white`}>
       {headerLinks.map((link) => {
         const isActive = pathname === link.route;
 
@@ -25,7 +28,7 @@ const NavItems = () => {
               isActive && 'text-white underline'
             } flex-center p-regular-16 whitespace-nowrap`}
           >
-            <Link 
+            <Link
               href={link.route} 
               onClick={handleRefresh}
             >

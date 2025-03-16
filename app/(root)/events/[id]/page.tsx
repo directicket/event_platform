@@ -105,7 +105,7 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
 
   <div className='md:flex md:flex-col md:mt-0 mt-10'>
       {/* EVENTS FROM THE SAME CATEGORY */}
-      <section className='my-0 flex flex-col gap-1 md:gap-2'>
+      <section className='my-0 flex flex-col'>
         <div className='gap-0'>
         <p className='p-regular-14 md:p-regular-16 text-white md:py-0 mb-2'>
             See more {event.category.name} tickets
