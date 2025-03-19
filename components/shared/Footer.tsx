@@ -15,7 +15,7 @@ const Footer = () => {
           />
         </Link>
 
-        <p className="opacity-30 lg:opacity-40 text-white">&copy; 2024 Directicket. All rights reserved.</p>
+        <p className="opacity-30 lg:opacity-40 text-white">&copy; 2025 Directicket. All rights reserved.</p>
       </div>
     </footer>
   )

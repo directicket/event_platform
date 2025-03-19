@@ -7,6 +7,7 @@ import { formatDateTime } from '@/lib/utils';
 import { CircleCheck } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
+import { useUser } from "@clerk/nextjs";
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -15,9 +16,53 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     const [event, setEvent] = useState<any | null>(null);
     const searchParams = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
+    const [emailSent, setEmailSent] = useState(false);
+    const { user } = useUser();
   
     useEffect(() => {
         const fetchQRCode = async () => {
+          const hasSentEmail = localStorage.getItem(`emailSent-${id}`);
+    
+        if (!hasSentEmail && user?.primaryEmailAddress) {
+            // Fetch the QR code first
+            const response = await fetch("/api/claim-free-ticket", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ eventId: id }),
+            });
+
+            if (!response.ok) {
+                console.error("Failed to fetch QR code");
+                return;
+            }
+
+            const data = await response.json();
+            const qrCodeDataUrl = data.qrCodeDataUrl;
+            const finalCode = data.finalCode;
+
+            // Store it in localStorage
+            localStorage.setItem(`ticket-${id}`, JSON.stringify(data));
+    
+            // Now send the email with the QR code
+            fetch("/api/send-email", {
+                method: "POST",
+                body: JSON.stringify({
+                    to: user.primaryEmailAddress.emailAddress,
+                    qrCode: finalCode,  // Pass the actual QR code URL
+                    eventId: id,
+                }),
+                headers: { "Content-Type": "application/json" },
+            })
+            .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    localStorage.setItem(`emailSent-${id}`, "true");
+                    setEmailSent(true);
+                }
+            })
+            .catch((err) => console.error("Error sending email:", err));
+        }
+
             const storedTicket = localStorage.getItem(`ticket-${id}`);
           
             if (storedTicket) {
@@ -26,23 +71,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
               return;
             }
           
-            try {
-              const response = await fetch("/api/claim-free-ticket", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ eventId: id }),
-              });
-          
-              if (!response.ok) throw new Error("Failed to fetch QR code");
-          
-              const data = await response.json();
-              setQrCode(data.qrCodeDataUrl);
-          
-              // Store in localStorage to prevent redundant Redis reads
-              localStorage.setItem(`ticket-${id}`, JSON.stringify(data));
-            } catch (error) {
-              console.error("Error fetching QR code:", error);
-            }
+            
           };
           
   
@@ -165,9 +194,9 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             You can also find this Ticket in your email. 
             Ticket is valid until date and time of the event.
           </p>
-          <button onClick={handleDownload} disabled={isDownloading} className={`${ibmMono.className}
+          {/* <button onClick={handleDownload} disabled={isDownloading} className={`${ibmMono.className}
           border border-white hover:text-black hover:bg-white
-          ibm-14 md:ibm-16 mt-2 p-2 bg-black text-white w-full rounded-none`}>{ isDownloading ? 'DOWNLOADING...' : 'DOWNLOAD YOUR TICKET' }</button>
+          ibm-14 md:ibm-16 mt-2 p-2 bg-black text-white w-full rounded-none`}>{ isDownloading ? 'DOWNLOADING...' : 'DOWNLOAD YOUR TICKET' }</button> */}
         </div>
       </div>
     </>

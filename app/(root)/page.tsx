@@ -71,7 +71,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
        h-fit mx-auto w-fit gap-2 text-white
        focus:top-0 bg-black">
         <h3 className=' h2-regular md:h2-regular mb-2 md:max-w-[600px] text-center md:text-center text-wrap'>
-          The community-driven <br className="md:hidden"/> storefront for event Tickets.
+          Keep 100% of your profits <br className="md:hidden"/> when you sell Tickets.
         </h3>
 
           
@@ -89,7 +89,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
         </SignedOut>
         <SignedIn>
         <div className='w-fit py-0'>
-            <Link href='/events/create'>
+            <Link href='/welcome'>
               <span className=''></span>
               <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
               text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
@@ -105,8 +105,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
       className="bg-black pt-2 text-neutral-600 
       md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
        p-regular-14 pb-20 md:block hidden">
-          Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
-          <Link href="/events/create" className="underline text-blue-500">Sell now &#8250;</Link>
+          Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.{' '}
+          <Link href="/welcome" className="underline text-blue-500">Sell now &#8250;</Link>
           </p>
 
           <p 
@@ -114,7 +114,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
       md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
        p-regular-14 pb-20 md:hidden hidden">
           Giving you 100% of ticket sales profit 
-          means you earn up to 20% more per ticket on Directicket.<sup className="p-regular-12 underline">1</sup>{' '}
+          means you earn up to 20% more per ticket on Directicket.{' '}
           <a href="#questions" className="underline text-black">Learn More &#8250;</a>
           </p>
       </div>

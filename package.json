@@ -24,6 +24,7 @@
     "@vercel/analytics": "^1.4.1",
     "@vercel/speed-insights": "^1.1.0",
     "class-variance-authority": "^0.7.0",
+    "cloudinary": "^2.6.0",
     "clsx": "^2.1.1",
     "framer-motion": "^12.0.6",
     "google-auth-library": "^9.15.1",

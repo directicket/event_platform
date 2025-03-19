@@ -13,7 +13,7 @@ import Link from "next/link"
   
 const MobileNav = () => {
   return (
-    <nav className="md:hidden">
+    <nav className="md:hidden hidden">
       <Sheet>
         <SheetTrigger className="align-middle">
             <Image
