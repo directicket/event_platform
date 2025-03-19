@@ -71,7 +71,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
        h-fit mx-auto w-fit gap-2 text-white
        focus:top-0 bg-black">
         <h3 className=' h2-regular md:h2-regular mb-2 md:max-w-[600px] text-center md:text-center text-wrap'>
-          Keep 100% of your profits <br className="md:hidden"/> when you sell Tickets.
+          Keep 100% of your profits when you sell Tickets.
         </h3>
 
           
