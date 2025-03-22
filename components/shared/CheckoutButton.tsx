@@ -43,7 +43,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
               <SignedOut>
                 <Button asChild className='text-left rounded-none
            w-full bg-black hover:bg-black border-white border' size="lg">
-                    <Link href="/sign-in">
+                    <Link href="/maintenance">
                       <div className='flex flex-col w-full'>
                         <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
                           GET TICKET
