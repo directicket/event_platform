@@ -51,7 +51,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
                         <hr className='hidden md:block border border-dashed border-white my-1'/>
                         <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
                           Available until {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
-                          {formatDateTime(event.startDateTime).timeOnly}.
+                          {formatDateTime(event.startDateTime).timeOnly}. 
                         </p>
                       </div>
                     </Link>

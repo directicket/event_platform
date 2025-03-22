@@ -89,7 +89,7 @@ const Header = () => {
               </div>
               <p className='text-neutral-600 p-regular-12 md:p-regular-16'>
                 You've made your Tickets but no one can pay you.{' '}
-                <span className="underline">Add your bank details, it only takes 10 seconds.</span>
+                <span className="underline">Add your bank details, it'll only take 10 seconds.</span>
               </p>
             </div>
           </Link>
