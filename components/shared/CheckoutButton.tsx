@@ -40,7 +40,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
           </Button>
         ): (
             <>
-              <SignedOut>
+              {/* <SignedOut> */}
                 <Button asChild className='text-left rounded-none
            w-full bg-black hover:bg-black border-white border' size="lg">
                     <Link href="/maintenance">
@@ -56,7 +56,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
                       </div>
                     </Link>
                 </Button>
-              </SignedOut>
+              {/* </SignedOut> */}
 
               <SignedIn>
                 <div className='w-full text-left'>
