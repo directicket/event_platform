@@ -34,13 +34,13 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
         {hasEventFinished ? (
           <Button className=' text-center rounded-none
            w-full bg-neutral-800 border border-neutral-800' size="lg" disabled={true}>
-            <p className={`${ibmMono.className}text-neutral-800 p-medium-16 md:p-medium-20 text-wrap p-3`}>
-              SALES ARE CURRENTLY CLOSED FOR THIS TICKET.
+            <p className={`${ibmMono.className}text-neutral-800 ibm-16 md:ibm-20 text-wrap p-3`}>
+              WE ARE MAKING SOME UPDATES TO IMPROVE YOUR EXPERIENCE. PLEASE CHECK BACK SOON!
             </p>
           </Button>
         ): (
             <>
-              {/* <SignedOut> */}
+              <SignedOut>
                 <Button asChild className='text-left rounded-none
            w-full bg-black hover:bg-black border-white border' size="lg">
                     <Link href="/maintenance">
@@ -56,7 +56,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
                       </div>
                     </Link>
                 </Button>
-              {/* </SignedOut> */}
+              </SignedOut>
 
               <SignedIn>
                 <div className='w-full text-left'>
