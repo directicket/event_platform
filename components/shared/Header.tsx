@@ -68,13 +68,13 @@ const Header = () => {
             <UserButton afterSignOutUrl="/" />
             <MobileNav />
           </SignedIn>
-          {/* <SignedOut>
+          <SignedOut>
             <Button asChild className="h-fit min-w-fit px-3 text-black rounded-3xl p-1 bg-white hover:bg-white cursor-pointer">
-              <Link href="/maintenance" className="p-medium-12 px-3 text-black cursor-pointer">
+              <Link href="/sign-in" className="p-medium-12 px-3 text-black cursor-pointer">
                 Sign in
               </Link>
             </Button>
-          </SignedOut> */}
+          </SignedOut>
         </div>
       </div>
 
