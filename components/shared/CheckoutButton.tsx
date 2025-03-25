@@ -33,7 +33,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
     <div className='flex items-center gap-3'>
         {hasEventFinished ? (
           <Button className=' text-left rounded-none
-           w-full bg-black border border-neutral-800' size="lg" disabled={true}>
+           w-full bg-black border border-neutral-700' size="lg" disabled={true}>
             <p className={`${ibmMono.className}text-neutral-800 ibm-16 md:ibm-20 text-wrap p-3`}>
               ACCESS TO THIS TICKET HAS BEEN CLOSED BY ITS CREATOR.
             </p>
