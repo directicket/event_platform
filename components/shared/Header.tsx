@@ -22,8 +22,13 @@ const Header = () => {
     // Check if bank details status is cached in localStorage
     const cachedAccess = localStorage.getItem(`bank-details-${userId}`);
     if (cachedAccess) {
-      setHasAccess(JSON.parse(cachedAccess)); // Set from cache
-      return; // Skip the API call if cached
+      try {
+        setHasAccess(JSON.parse(cachedAccess));
+      } catch (error) {
+        console.error("Failed to parse localStorage data:", error);
+        localStorage.removeItem(`bank-details-${userId}`); // Clear corrupted data
+      }
+      return;
     }
 
     // Fetch from the API if not cached
