@@ -1,7 +1,7 @@
 import Countdown from '@/components/shared/Countdown';
 
 const EventPage = () => {
-  const eventDate = new Date("2025-03-27T00:00:00Z").getTime(); // Set your event date here
+  const eventDate = new Date("2025-03-28T00:00:00Z").getTime(); // Set your event date here
 
   return (
     <div className='text-white flex flex-col items-center justify-center h-screen text-center'>
