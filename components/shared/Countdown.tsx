@@ -28,11 +28,11 @@ interface CountdownProps {
 
   // If countdown is finished, show 'EXPIRED'
   if (timeLeft <= 0) {
-    return <div>EXPIRED</div>;
+    return <div>PLEASE STAND BY</div>;
   }
 
   return (
-    <div className={`${ibmMono.className} text-white`}>
+    <div className={`${ibmMono.className} text-black`}>
       {hours < 10 ? `0${hours}` : hours}:
       {minutes < 10 ? `0${minutes}` : minutes}:
       {seconds < 10 ? `0${seconds}` : seconds}
