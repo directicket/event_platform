@@ -64,7 +64,11 @@ const Header = () => {
 
         <SignedIn>
           <nav className="md:flex-between hidden w-full max-w-xs">
-            {/* <NavItems /> */}
+            <ul className="flex gap-6">
+              <li><Link href="/" className={`${ibmMono.className} ibm-16 hover:underline`}>HOME</Link></li>
+              <li><Link href="/events/create" className={`${ibmMono.className} ibm-16 hover:underline`}>CREATE</Link></li>
+              <li><Link href="/profile" className={`${ibmMono.className} ibm-16 hover:underline`}>DASHBOARD</Link></li>
+            </ul>
           </nav>
         </SignedIn>
 
@@ -85,26 +89,27 @@ const Header = () => {
 
       {hasAccess === false && (
         <>
-        <SignedIn>
-          <Link href='/profile/bank-details'>
-            <div className='gradient wrapper w-full bg-black/100 p-4 border-r-0 border-l-0 border-t-0 mt-[-1px] border-b-neutral-800/50 border flex-col gap-1 flex sticky-header header-blur absolute'>
-              <div className="flex flex-row">
-                <TriangleAlert width={20} height={20} className="text-white mr-2 self-center"/>
-                <p className={`${ibmMono.className} ibm-14 text-white`}>MISSING BANK DETAILS</p>
+          <SignedIn>
+            <Link href='/profile/bank-details'>
+              <div className='gradient wrapper w-full bg-black/100 p-4 border-r-0 border-l-0 border-t-0 mt-[-1px] border-b-neutral-800/50 border flex-col gap-1 flex sticky-header header-blur absolute'>
+                <div className="flex flex-row">
+                  <TriangleAlert width={20} height={20} className="text-white mr-2 self-center"/>
+                  <p className={`${ibmMono.className} ibm-14 text-white`}>MISSING BANK DETAILS</p>
+                </div>
+                <p className='text-neutral-600 p-regular-12 md:p-regular-16'>
+                  You've made your Tickets but no one can pay you.{' '}
+                  <span className="underline">Add your bank details, it'll only take 10 seconds.</span>
+                </p>
               </div>
-              <p className='text-neutral-600 p-regular-12 md:p-regular-16'>
-                You've made your Tickets but no one can pay you.{' '}
-                <span className="underline">Add your bank details, it'll only take 10 seconds.</span>
-              </p>
-            </div>
-          </Link>
-        </SignedIn>
-        <SignedOut>
-          <div></div>
-        </SignedOut>
+            </Link>
+          </SignedIn>
+          <SignedOut>
+            <div></div>
+          </SignedOut>
         </>
       )}
     </div>
+
   );
 };
 

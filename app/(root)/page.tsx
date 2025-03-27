@@ -71,25 +71,25 @@ export default async function Home({ searchParams }: SearchParamProps) {
        h-fit mx-auto w-fit gap-2 text-white
        focus:top-0 bg-black">
         <h3 className=' h2-regular md:h2-regular mb-2 md:max-w-[600px] text-center md:text-center text-wrap'>
-          Keep 100% of your profits when you sell Tickets.
+          Keep 100% of what you earn on ticket sales.
         </h3>
 
           
 
         <SignedOut>
           <div className='w-fit py-0'>
-            <Link href='/sign-in'>
+            <Link href='/sign-up'>
               <span className=''></span>
               <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
               text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
-                  CREATE & SELL YOURS &rarr;
+                  JOIN 100+ SELLERS &rarr;
               </button>
             </Link>
           </div>
         </SignedOut>
         <SignedIn>
         <div className='w-fit py-0'>
-            <Link href='/welcome'>
+            <Link href='/events/create'>
               <span className=''></span>
               <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
               text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
@@ -106,7 +106,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
       md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
        p-regular-14 pb-20 md:block hidden">
           Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.{' '}
-          <Link href="/welcome" className="underline text-blue-500">Sell now &#8250;</Link>
+          <Link href="/events/create" className="underline text-blue-500">Sell now &#8250;</Link>
           </p>
 
           <p 

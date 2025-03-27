@@ -19,7 +19,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
     <>
     <section className="bg-black md:max-w-4xl bg-cover bg-center py-2 wrapper">
       <h2 className="p-regular-20 md:p-regular-20 text-wrap text-white">Edit your Ticket</h2>
-        <p className="text-neutral-600 text-left">Ticket details will be verified by Directicket to help keep our platform safe.</p>
+        <p className="text-neutral-600 text-left">Make sure your Ticket contains accurate details.</p>
         </section>
 
     <div className="wrapper md:max-w-4xl">

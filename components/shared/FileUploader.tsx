@@ -43,8 +43,8 @@ export function FileUploader({ imageUrl, onFieldChange, setFiles }: FileUploader
       ) : (
         <div className="flex-center flex-col py-5 text-neutral-700 ">
           {/* <img src="/assets/icons/upload.svg" width={77} height={77} alt="file upload" /> */}
-          <h3 className="mb-2 mt-2">Drag photo here</h3>
-          <p className="p-medium-12 mb-4">SVG, PNG, JPG</p>
+          <h3 className="mb-2 mt-2">Drag photo here.</h3>
+          <p className="p-medium-12 mb-4">SVG, PNG, JPG &bull; 2MB max.</p>
           <Button type="button" className="rounded-none hover:bg-neutral-800/65 border border-neutral-800 text-white bg-neutral-900/50">
             Select files
           </Button>
