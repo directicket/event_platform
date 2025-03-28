@@ -94,7 +94,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           </div>
 
 
-            <div className='w-full'>
+            {/* <div className='w-full'>
             {hasOrderLink && (
                     <Link href={`/orders?eventId=${event._id}`} 
                     className='underline p-semibold-14 w-full 
@@ -103,7 +103,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                           View buyers
                     </Link>
                 )}
-            </div>
+            </div> */}
         </div>
 
         

@@ -13,26 +13,36 @@ const CreateEvent = () => {
 
   return (
     <>
-    <section className="bg-black md:max-w-4xl bg-cover bg-center py-2 wrapper">
-      <h2 className="p-regular-20 md:p-regular-20 text-wrap text-white">Create a Ticket</h2>
-        <p className="text-neutral-600 text-left">Make sure your Ticket contains accurate details.</p>
+    <section className="bg-black md:max-w-4xl bg-cover bg-center py-2 wrapper gap-4 flex flex-col">
+    <div>
+        <h2 className="p-regular-20 md:p-regular-20 text-wrap text-white">Create a Ticket</h2>
+        <p className="text-neutral-600 text-left p-regular-14 md:p-regular-16">
+          Tickets are unique products. Add a distinct name, description, and artwork for easy identification.
+        </p>
+      </div>
+      
+      <div className="flex flex-col gap-2">
+        
+
+        <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
+          <div className="flex flex-row gap-[5.5px]">
+            <Construction width={20} height={20} className='text-yellow-300'/>
+            <p className={`${ibmMono.className} ibm-14 text-white`}>PAID TICKETS</p>
+          </div>
+          <p className="p-regular-12 md:p-regular-16 text-neutral-600">
+            We're currently rolling out the ability to create paid tickets. You will get access within the next 7 days.</p>
+        </div>
+
+        <Link href='/profile/bank-details'>
+          <p className="p-regular-14 text-yellow-300 underline hover:no-underline">Add your bank details before then &rarr;</p>
+        </Link>
+      </div>
+
+      
     </section> 
 
-    <div className="wrapper md:max-w-4xl gap-2">
-      <Link href='/profile'>
-      <div className="flex flex-col p-4 bg-blue-700 hover:bg-blue-700/80">
-        <p className="p-regular-14 text-black underline">Make sure you've added your bank details to this profile. &rarr;</p>
-      </div>
-      </Link>
-
-      <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50">
-        <div className="flex flex-row gap-1">
-          <Construction width={20} height={20} className='text-yellow-300'/>
-          <p className={`${ibmMono.className} ibm-14`}>PAID TICKETS</p>
-        </div>
-        <p className="p-regular-12 md:p-regular-16 text-neutral-600">We're eliminating fees for all organizers. We will let you know when this feature is available for you within the next week.</p>
-      </div>
-      <EventForm userId={userId} type="Create" />
+    <div className="wrapper md:max-w-4xl">
+     <EventForm userId={userId} type="Create" />
     </div>
 
     <div className="wrapper mt-[-30px] md:max-w-4xl ">

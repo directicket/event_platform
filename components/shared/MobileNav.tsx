@@ -28,9 +28,10 @@ const MobileNav = () => {
         <div className="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center z-50">
           <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-white h1-bold font-normal">✕</button>
           <div className="p-6 rounded-lg shadow-lg flex flex-col gap-4">
-            <Link href="/" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-18 hover:underline`}>HOME</Link>
-            <Link href="/events/create" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-18 hover:underline`}>CREATE</Link>
-            <Link href="/profile" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-18 hover:underline`}>DASHBOARD</Link>
+            <p className='ibm-14 text-neutral-600'>SELECT ONE:</p>
+            <Link href="/" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>1. Home screen</Link>
+            <Link href="/events/create" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>2. Create a ticket</Link>
+            <Link href="/profile" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>3. View Dashboard</Link>
           </div>
         </div>
       )}
