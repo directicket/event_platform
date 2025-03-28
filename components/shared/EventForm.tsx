@@ -265,13 +265,13 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 <FormLabel className='text-neutral-600'>Ticket Price</FormLabel>
                 <FormControl>
                   <div className="flex-center w-full gap-4 rounded-none justify-between">
-                    <Input type="tel" inputMode="numeric" placeholder="5000" {...field} 
+                    {/* <Input type="tel" inputMode="numeric" placeholder="5000" {...field} 
                     className="p-regular-16 text-white
                     rounded-none border border-neutral-800
                     bg-black 
                     outline-offset-0 
                     focus-visible:ring-white 
-                    focus-visible:ring-offset-0"/>
+                    focus-visible:ring-offset-0"/> */}
                     <FormField
                       control={form.control}
                       name="isFree"
