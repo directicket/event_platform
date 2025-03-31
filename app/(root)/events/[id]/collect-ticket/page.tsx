@@ -17,7 +17,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     const searchParams = useSearchParams();
     const [isDownloading, setIsDownloading] = useState(false);
     const [emailSent, setEmailSent] = useState(false);
-    const { user } = useUser();
+    const { user } = useUser(); 
   
     useEffect(() => {
         const fetchQRCode = async () => {

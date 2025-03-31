@@ -42,6 +42,10 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    const siteUrl = process.env.NEXT_PUBLIC_SERVER_URL
+
+    const callbackUrl = `${siteUrl}/events/${eventId}/payment-success`
+
     // Initialize Paystack payment
     const paystackResponse = await fetch("https://api.paystack.co/transaction/initialize", {
       method: "POST",
@@ -52,6 +56,7 @@ export async function POST(req: NextRequest) {
       body: JSON.stringify({
         email,
         amount,
+        callback_url: callbackUrl,
         subaccount: subaccountId,
         metadata: { eventId },
       }),

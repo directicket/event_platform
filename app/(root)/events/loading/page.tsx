@@ -1,39 +1,39 @@
-"use client";
+// "use client";
 
-import { useEffect } from "react";
-import { useRouter, useSearchParams } from "next/navigation";
+// import { useEffect } from "react";
+// import { useRouter, useSearchParams } from "next/navigation";
 
-export const dynamic = "force-dynamic"
+// export const dynamic = "force-dynamic"
 
-export default function LoadingPage() {
-  const router = useRouter();
-  const searchParams = useSearchParams();
-  const reference = searchParams.get("reference");
+// export default function LoadingPage() {
+//   const router = useRouter();
+//   const searchParams = useSearchParams();
+//   const reference = searchParams.get("reference");
 
-  useEffect(() => {
-    if (!reference) return;
+//   useEffect(() => {
+//     if (!reference) return;
 
-    const checkPaymentStatus = async () => {
-      try {
-        const response = await fetch(`/api/payment-status?reference=${reference}`);
-        const data = await response.json();
+//     const checkPaymentStatus = async () => {
+//       try {
+//         const response = await fetch(`/api/payment-status?reference=${reference}`);
+//         const data = await response.json();
 
-        if (data.verified) {
-          router.replace(`/events/${data.eventId}/payment-success?reference=${reference}`);
-        } else {
-          setTimeout(checkPaymentStatus, 2000); // Retry after 2 seconds if not verified
-        }
-      } catch (error) {
-        console.error("Error checking payment status:", error);
-      }
-    };
+//         if (data.verified) {
+//           router.replace(`/events/${data.eventId}/payment-success?reference=${reference}`);
+//         } else {
+//           setTimeout(checkPaymentStatus, 2000); // Retry after 2 seconds if not verified
+//         }
+//       } catch (error) {
+//         console.error("Error checking payment status:", error);
+//       }
+//     };
 
-    checkPaymentStatus();
-  }, [reference, router]);
+//     checkPaymentStatus();
+//   }, [reference, router]);
 
-  return (
-    <div className="flex items-center justify-center min-h-screen text-lg font-semibold text-white">
-      Processing payment, please wait...
-    </div>
-  );
-}
+//   return (
+//     <div className="flex items-center justify-center min-h-screen text-lg font-semibold text-white">
+//       Processing payment, please wait...
+//     </div>
+//   );
+// }
