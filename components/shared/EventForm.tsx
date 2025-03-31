@@ -271,7 +271,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                     bg-black 
                     outline-offset-0 
                     focus-visible:ring-white 
-                    focus-visible:ring-offset-0 pointer-events-none" disabled/>
+                    focus-visible:ring-offset-0 pointer-events-none"/>
                     <FormField
                       control={form.control}
                       name="isFree"
@@ -303,7 +303,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 <FormItem className="w-full">
                   <FormLabel className='text-neutral-600'>Social Media Link (Copy &amp; Paste)</FormLabel>
                   <FormControl>
-                      <Input placeholder="https://website.com/yourusername" {...field} 
+                      <Input placeholder="Instagram, Spotify playlist, etc." {...field} 
                       className="p-regular-16 text-white
                       rounded-none border border-neutral-800
                       bg-black 
