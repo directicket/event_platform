@@ -39,7 +39,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
                 <p className={`${ibmMono.className} ibm-14 text-white`}>PAID TICKETS</p>
               </div>
               <p className="p-regular-12 md:p-regular-16 text-neutral-600">
-              We're currently rolling out the ability to create paid tickets. You will get access within the next 7 days.</p>
+              We're currently rolling out the ability to create paid tickets to more users. You will get access within the next 5 days.</p>
             </div>
     
             <Link href='/profile/bank-details'>
