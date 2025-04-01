@@ -15,7 +15,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [event, setEvent] = useState<any | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [isDownloading, setIsDownloading] = useState(false);
   const searchParams = useSearchParams();
 
   useEffect(() => {
@@ -70,33 +69,47 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
   }, [mounted, searchParams, id]);
 
   const captureRef = useRef(null);
+  const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
     if (!captureRef.current) return;
 
-    setIsDownloading(true); // Show loading state
+    setIsDownloading(true);
 
     try {
       const canvas = await html2canvas(captureRef.current, {
-        backgroundColor: '#000',
-        scale: 1.5,
+        backgroundColor: "#000",
+        scale: 2,
       });
 
-      // Convert the canvas to a Blob (more reliable for downloads)
+      // Convert canvas to Blob
       canvas.toBlob((blob) => {
-      if (blob) { // Null check added here
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob); // Now it's safe to use the blob
-        link.download = 'event-ticket.png';
-        link.click();
-      } else {
-        console.error('Failed to generate blob');
-      }
-    }, 'image/png');
+        if (blob) {
+          // Create Blob URL
+          const url = URL.createObjectURL(blob);
+
+          // Create the <a> tag dynamically
+          const link = document.createElement("a");
+          link.href = url;
+          link.download = "event-ticket.png"; // Name of the downloaded file
+
+          // Append the link to the DOM (sometimes needed for the download to work in some browsers)
+          document.body.appendChild(link);
+
+          // Trigger the download by clicking the link
+          link.click();
+
+          // Cleanup: Remove the link and revoke the Blob URL
+          document.body.removeChild(link);
+          URL.revokeObjectURL(url);
+        } else {
+          console.error("Failed to generate blob");
+        }
+      }, "image/png");
     } catch (error) {
-      console.error('Download failed', String(error));
+      console.error("Download failed", String(error));
     } finally {
-      setIsDownloading(false); // Hide loading state
+      setIsDownloading(false);
     }
   };
 
