@@ -5,12 +5,15 @@ import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
 import { CircleCheck } from 'lucide-react';
+import { useUser } from "@clerk/nextjs";
 
-export default function QRCodePage({ params: { id } }: { params: { id: string } }) {
+export default function PaymentSuccessPage({ params: { id } }: { params: { id: string } }) {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [event, setEvent] = useState<any | null>(null);
   const [mounted, setMounted] = useState(false);
   const searchParams = useSearchParams();
+  const { user } = useUser();
+  const [emailSent, setEmailSent] = useState(false);
 
   useEffect(() => {
     setMounted(true);
@@ -28,21 +31,52 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
 
     const fetchQRCode = async () => {
       try {
-        const response = await fetch('/api/generate-qr', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify({ reference }),
-        });
+        const hasSentEmail = localStorage.getItem(`emailSent-${id}`);
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch QR code');
+        if (!hasSentEmail && user?.primaryEmailAddress) {
+          const response = await fetch('/api/generate-qr', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ reference }),
+          });
+
+          if (!response.ok) {
+            throw new Error('Failed to fetch QR code');
+          }
+
+          const data = await response.json();
+          const finalCode = data.finalCode;
+
+          localStorage.setItem(`ticket-${id}`, JSON.stringify(data));
+
+          // Send email
+          fetch('/api/send-email', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              to: user.primaryEmailAddress.emailAddress,
+              qrCode: finalCode,
+              eventId: id,
+            }),
+          })
+            .then((res) => res.json())
+            .then((data) => {
+              if (data.success) {
+                localStorage.setItem(`emailSent-${id}`, 'true');
+                setEmailSent(true);
+              }
+            })
+            .catch((err) => console.error('Error sending email:', err));
         }
 
-        const blob = await response.blob();
-        const qrCodeUrl = URL.createObjectURL(blob);
-        setQrCode(qrCodeUrl);
+        const storedTicket = localStorage.getItem(`ticket-${id}`);
+
+        if (storedTicket) {
+          const { qrCodeDataUrl } = JSON.parse(storedTicket);
+          setQrCode(qrCodeDataUrl);
+        }
       } catch (error) {
         console.error('Error fetching QR code:', error);
       }
@@ -62,7 +96,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     fetchQRCode();
     fetchEventDetails();
   }, [mounted, searchParams, id]);
-
+  
   return (
     <>
     
