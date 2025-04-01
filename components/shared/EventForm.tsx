@@ -137,7 +137,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="categoryId"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Category</FormLabel>
+                <FormLabel className='text-neutral-600'>Ticket Type</FormLabel>
                 <FormControl>
                   <Dropdown onChangeHandler={field.onChange} value={field.value} />
                 </FormControl>
@@ -271,7 +271,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                     bg-black 
                     outline-offset-0 
                     focus-visible:ring-white 
-                    focus-visible:ring-offset-0 pointer-events-none"/>
+                    focus-visible:ring-offset-0"/>
                     <FormField
                       control={form.control}
                       name="isFree"

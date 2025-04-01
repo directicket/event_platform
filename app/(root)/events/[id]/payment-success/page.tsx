@@ -5,15 +5,12 @@ import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
 import { CircleCheck } from 'lucide-react';
-import { useUser } from "@clerk/nextjs";
 
 export default function QRCodePage({ params: { id } }: { params: { id: string } }) {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [event, setEvent] = useState<any | null>(null);
   const [mounted, setMounted] = useState(false);
-  const [emailSent, setEmailSent] = useState(false);
   const searchParams = useSearchParams();
-  const { user } = useUser();
 
   useEffect(() => {
     setMounted(true);
@@ -30,9 +27,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     }
 
     const fetchQRCode = async () => {
-      const hasSentEmail = localStorage.getItem(`emailSent-${id}`);
-
-      if (!hasSentEmail && user?.primaryEmailAddress) {
+      try {
         const response = await fetch('/api/generate-qr', {
           method: 'POST',
           headers: {
@@ -45,31 +40,11 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           throw new Error('Failed to fetch QR code');
         }
 
-        const data = await response.json();
-        const qrCodeDataUrl = data.qrCodeDataUrl;
-        const finalCode = data.finalCode;
-
-        fetch("/api/send-email", {
-          method: "POST",
-          body: JSON.stringify({
-              to: user.primaryEmailAddress.emailAddress,
-              qrCode: finalCode,  // Pass the actual QR code URL
-              eventId: id,
-          }),
-          headers: { "Content-Type": "application/json" },
-        })
-        .then((res) => res.json())
-          .then((data) => {
-          if (data.success) {
-              localStorage.setItem(`emailSent-${id}`, "true");
-              setEmailSent(true);
-          }
-        })
-        .catch((err) => console.error("Error sending email:", err));
-
         const blob = await response.blob();
         const qrCodeUrl = URL.createObjectURL(blob);
         setQrCode(qrCodeUrl);
+      } catch (error) {
+        console.error('Error fetching QR code:', error);
       }
     };
 
