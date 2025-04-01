@@ -5,87 +5,63 @@ import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
 import { CircleCheck } from 'lucide-react';
-import { useUser } from "@clerk/nextjs";
 
 export default function QRCodePage({ params: { id } }: { params: { id: string } }) {
   const [qrCode, setQrCode] = useState<string | null>(null);
-      const [event, setEvent] = useState<any | null>(null);
-      const searchParams = useSearchParams();
-      const [isDownloading, setIsDownloading] = useState(false);
-      const [emailSent, setEmailSent] = useState(false);
-      const { user } = useUser();
-    
-      useEffect(() => {
-          const fetchQRCode = async () => {
-            const hasSentEmail = localStorage.getItem(`emailSent-${id}`);
-      
-          if (!hasSentEmail && user?.primaryEmailAddress) {
-              // Fetch the QR code first
-              const response = await fetch("/api/claim-free-ticket", {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({ eventId: id }),
-              });
-  
-              if (!response.ok) {
-                  console.error("Failed to fetch QR code");
-                  return;
-              }
-  
-              const data = await response.json();
-              const qrCodeDataUrl = data.qrCodeDataUrl;
-              const finalCode = data.finalCode;
-  
-              // Store it in localStorage
-              localStorage.setItem(`ticket-${id}`, JSON.stringify(data));
-      
-              // Now send the email with the QR code
-              fetch("/api/send-email", {
-                  method: "POST",
-                  body: JSON.stringify({
-                      to: user.primaryEmailAddress.emailAddress,
-                      qrCode: finalCode,  // Pass the actual QR code URL
-                      eventId: id,
-                  }),
-                  headers: { "Content-Type": "application/json" },
-              })
-              .then((res) => res.json())
-              .then((data) => {
-                  if (data.success) {
-                      localStorage.setItem(`emailSent-${id}`, "true");
-                      setEmailSent(true);
-                  }
-              })
-              .catch((err) => console.error("Error sending email:", err));
-          }
-  
-              const storedTicket = localStorage.getItem(`ticket-${id}`);
-            
-              if (storedTicket) {
-                const { qrCodeDataUrl } = JSON.parse(storedTicket);
-                setQrCode(qrCodeDataUrl);
-                return;
-              }
-            
-              
-            };
-            
-    
-        const fetchEventDetails = async () => {
-          try {
-            const eventData = await getEventById(id);
-            if (eventData) {
-              setEvent(eventData);
-            }
-          } catch (error) {
-            console.error("Error fetching event details:", error);
-          }
-        };
-    
-        fetchQRCode();
-        fetchEventDetails();
-      }, [id]);
-  
+  const [event, setEvent] = useState<any | null>(null);
+  const [mounted, setMounted] = useState(false);
+  const searchParams = useSearchParams();
+
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  useEffect(() => {
+    if (!mounted) return;
+
+    const reference = searchParams.get('reference');
+
+    if (!reference) {
+      console.error('Reference not found');
+      return;
+    }
+
+    const fetchQRCode = async () => {
+      try {
+        const response = await fetch('/api/generate-qr', {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({ reference }),
+        });
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch QR code');
+        }
+
+        const blob = await response.blob();
+        const qrCodeUrl = URL.createObjectURL(blob);
+        setQrCode(qrCodeUrl);
+      } catch (error) {
+        console.error('Error fetching QR code:', error);
+      }
+    };
+
+    const fetchEventDetails = async () => {
+      try {
+        const eventData = await getEventById(id);
+        if (eventData) {
+          setEvent(eventData);
+        }
+      } catch (error) {
+        console.error('Error fetching event details:', error);
+      }
+    };
+
+    fetchQRCode();
+    fetchEventDetails();
+  }, [mounted, searchParams, id]);
 
   return (
     <>
