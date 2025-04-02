@@ -68,7 +68,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     fetchEventDetails();
   }, [mounted, searchParams, id]);
 
-  const captureRef = useRef(null);
+    const captureRef = useRef(null);
   const [isDownloading, setIsDownloading] = useState(false);
 
   const handleDownload = async () => {
@@ -93,15 +93,15 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           link.href = url;
           link.download = "event-ticket.png"; // Name of the downloaded file
 
-          // Append the link to the DOM (sometimes needed for the download to work in some browsers)
+          // Append the link to the DOM
           document.body.appendChild(link);
 
-          // Trigger the download by clicking the link
-          link.click();
-
-          // Cleanup: Remove the link and revoke the Blob URL
-          document.body.removeChild(link);
-          URL.revokeObjectURL(url);
+          // Set a slight delay before triggering the download (mobile/browsers like this)
+          setTimeout(() => {
+            link.click(); // Trigger the download
+            document.body.removeChild(link); // Clean up
+            URL.revokeObjectURL(url); // Revoke the Blob URL
+          }, 100); // Small delay for mobile devices
         } else {
           console.error("Failed to generate blob");
         }
