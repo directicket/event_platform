@@ -73,39 +73,67 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
 
   const handleDownload = async () => {
     if (!captureRef.current) return;
-
+  
     setIsDownloading(true);
-
+  
     try {
       const canvas = await html2canvas(captureRef.current, {
         backgroundColor: "#000",
         scale: 2,
       });
-
-      // Convert canvas to Blob
-      canvas.toBlob((blob) => {
-        if (blob) {
-          // Create Blob URL
-          const url = URL.createObjectURL(blob);
-
-          // Create the <a> tag dynamically
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = "event-ticket.png"; // Name of the downloaded file
-
-          // Append the link to the DOM
-          document.body.appendChild(link);
-
-          // Set a slight delay before triggering the download (mobile/browsers like this)
-          setTimeout(() => {
-            link.click(); // Trigger the download
-            document.body.removeChild(link); // Clean up
-            URL.revokeObjectURL(url); // Revoke the Blob URL
-          }, 100); // Small delay for mobile devices
+  
+      // Get data URL
+      const dataUrl = canvas.toDataURL("image/png");
+      
+      // Check if it's a mobile device
+      const isMobile = /iPhone|iPad|iPod|Android/i.test(navigator.userAgent);
+      
+      if (isMobile) {
+        // For mobile: Open image in new tab (user can then save it)
+        const newTab = window.open();
+        if (newTab) {
+          newTab.document.write(`
+            <html>
+              <head>
+                <title>Your Ticket</title>
+                <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                <style>
+                  body { margin: 0; padding: 10px; background: #f0f0f0; text-align: center; }
+                  img { max-width: 100%; height: auto; }
+                  p { font-family: Arial, sans-serif; margin-top: 20px; }
+                </style>
+              </head>
+              <body>
+                <img src="${dataUrl}" alt="Your Ticket" />
+                <p>Press and hold the image to save it to your device.</p>
+              </body>
+            </html>
+          `);
+          newTab.document.close();
         } else {
-          console.error("Failed to generate blob");
+          // If popup blocked, fallback to download approach
+          window.location.href = dataUrl.replace("image/png", "image/octet-stream");
         }
-      }, "image/png");
+      } else {
+        // Desktop approach (original code)
+        canvas.toBlob((blob) => {
+          if (blob) {
+            const url = URL.createObjectURL(blob);
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "event-ticket.png";
+            document.body.appendChild(link);
+            
+            setTimeout(() => {
+              link.click();
+              document.body.removeChild(link);
+              URL.revokeObjectURL(url);
+            }, 100);
+          } else {
+            console.error("Failed to generate blob");
+          }
+        }, "image/png");
+      }
     } catch (error) {
       console.error("Download failed", String(error));
     } finally {
