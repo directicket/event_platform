@@ -33,7 +33,25 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     }
 
     const fetchQRCode = async () => {
-      if ( user?.primaryEmailAddress ) {
+      if (user?.primaryEmailAddress) {
+        fetch("/api/send-email-no-qr", {
+          method: "POST",
+          body: JSON.stringify({
+              to: user.primaryEmailAddress.emailAddress,
+              eventId: id,
+          }),
+          headers: { "Content-Type": "application/json" },
+          cache: "no-store"
+        })
+        .then((res) => res.json())
+            .then((data) => {
+                if (data.success) {
+                    localStorage.setItem(`emailSent-${id}`, "true");
+                }
+            })
+            .catch((err) => console.error("Error sending email:", err));
+      }
+
       try {
         const response = await fetch('/api/generate-qr', {
           method: 'POST',
@@ -53,16 +71,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
       } catch (error) {
         console.error('Error fetching QR code:', error);
       }
-
-      fetch("/api/send-email-no-qr", {
-        method: "POST",
-        body: JSON.stringify({
-            to: user.primaryEmailAddress.emailAddress,
-            eventId: id,
-        }),
-        headers: { "Content-Type": "application/json" },
-    })
-    }
     };
 
     const fetchEventDetails = async () => {
@@ -80,51 +88,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     fetchEventDetails();
   }, [mounted, searchParams, id]);
 
-    const captureRef = useRef(null);
-  const [isDownloading, setIsDownloading] = useState(false);
-
-  const handleDownload = async () => {
-    if (!captureRef.current) return;
-
-    setIsDownloading(true);
-
-    try {
-      const canvas = await html2canvas(captureRef.current, {
-        backgroundColor: "#000",
-        scale: 2,
-      });
-
-      // Convert canvas to Blob
-      canvas.toBlob((blob) => {
-        if (blob) {
-          // Create Blob URL
-          const url = URL.createObjectURL(blob);
-
-          // Create the <a> tag dynamically
-          const link = document.createElement("a");
-          link.href = url;
-          link.download = "event-ticket.png"; // Name of the downloaded file
-
-          // Append the link to the DOM
-          document.body.appendChild(link);
-
-          // Set a slight delay before triggering the download (mobile/browsers like this)
-          setTimeout(() => {
-            link.click(); // Trigger the download
-            document.body.removeChild(link); // Clean up
-            URL.revokeObjectURL(url); // Revoke the Blob URL
-          }, 100); // Small delay for mobile devices
-        } else {
-          console.error("Failed to generate blob");
-        }
-      }, "image/png");
-    } catch (error) {
-      console.error("Download failed", String(error));
-    } finally {
-      setIsDownloading(false);
-    }
-  };
-
   return (
     <>
     
@@ -139,7 +102,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
 
         {qrCode ? (
           <>
-          <div ref={captureRef}>
           <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-col gap-2 md:gap-4">
 
             <p className='h3-regular leading-none'>{event ? event.title : 'Loading Ticket...'}</p>
@@ -193,7 +155,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             </div>
             </div>
           </div>
-          </div>
           </>
         ) : (
           <p className='text-neutral-600 text-left'>Loading your Ticket...</p>
@@ -204,10 +165,6 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             This is ticket will be scanned before entry, store it securely.
             Ticket is valid until date and time of the event.
           </p>
-          <button onClick={handleDownload} disabled={isDownloading} className={`${ibmMono.className}
-          border border-white hover:text-black hover:bg-white
-          ibm-14 md:ibm-16 mt-2 p-2 bg-black text-white w-full rounded-none`}>{ isDownloading ? 'DOWNLOADING...' : 'DOWNLOAD YOUR TICKET' }
-          </button>
         </div>
       </div>
     </>
