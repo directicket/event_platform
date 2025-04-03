@@ -29,9 +29,6 @@ export async function POST(req) {
             <p><strong>Time:</strong> ${formatDateTime(event.endDateTime).timeOnly}</p>
             <p><strong>Location:</strong> ${event.location}</p>
             <p><strong>Organizer:</strong> @${event.organizer.username}</p>
-            <hr />
-            <p>Scan this QR Code at the entrance:</p>
-            <img src="${qrCodeUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
         </div>
       `;
   
