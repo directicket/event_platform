@@ -1,6 +1,6 @@
 'use client'
 
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useState } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
@@ -9,65 +9,59 @@ import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useUser } from "@clerk/nextjs";
 
-const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
+const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
 export default function QRCodePage({ params: { id } }: { params: { id: string } }) {
   const [qrCode, setQrCode] = useState<string | null>(null);
   const [event, setEvent] = useState<any | null>(null);
-  const [mounted, setMounted] = useState(false);
   const searchParams = useSearchParams();
   const { user } = useUser();
-
+  
   useEffect(() => {
-    setMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!mounted) return;
-
     const reference = searchParams.get('reference');
-
     if (!reference) {
       console.error('Reference not found');
       return;
     }
 
-    const fetchQRCode = async () => {
+    const sendEmail = async () => {
       if (user?.primaryEmailAddress) {
-        fetch("/api/send-email-no-qr", {
-          method: "POST",
-          body: JSON.stringify({
+        const timestamp = new Date().getTime(); // Prevent caching issues
+
+        try {
+          const response = await fetch(`/api/send-email-no-qr?ts=${timestamp}`, {
+            method: "POST",
+            body: JSON.stringify({
               to: user.primaryEmailAddress.emailAddress,
               eventId: id,
-          }),
-          headers: { "Content-Type": "application/json" },
-          cache: "no-store"
-        })
-        .then((res) => res.json())
-            .then((data) => {
-                if (data.success) {
-                    localStorage.setItem(`emailSent-${id}`, "true");
-                }
-            })
-            .catch((err) => console.error("Error sending email:", err));
-      }
+            }),
+            headers: { "Content-Type": "application/json" },
+          });
 
+          const data = await response.json();
+          if (data.success) {
+            console.log("✅ Email sent successfully");
+          } else {
+            console.error("❌ Email failed:", data);
+          }
+        } catch (err) {
+          console.error("Error sending email:", err);
+        }
+      }
+    };
+
+    const fetchQRCode = async () => {
       try {
         const response = await fetch('/api/generate-qr', {
           method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
+          headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ reference }),
         });
 
-        if (!response.ok) {
-          throw new Error('Failed to fetch QR code');
-        }
+        if (!response.ok) throw new Error('Failed to fetch QR code');
 
         const blob = await response.blob();
-        const qrCodeUrl = URL.createObjectURL(blob);
-        setQrCode(qrCodeUrl);
+        setQrCode(URL.createObjectURL(blob));
       } catch (error) {
         console.error('Error fetching QR code:', error);
       }
@@ -76,17 +70,16 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     const fetchEventDetails = async () => {
       try {
         const eventData = await getEventById(id);
-        if (eventData) {
-          setEvent(eventData);
-        }
+        if (eventData) setEvent(eventData);
       } catch (error) {
         console.error('Error fetching event details:', error);
       }
     };
 
+    sendEmail();
     fetchQRCode();
     fetchEventDetails();
-  }, [mounted, searchParams, id]);
+  }, [searchParams, id]);
 
   return (
     <>
