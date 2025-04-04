@@ -76,7 +76,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
-                {' '}&#8226; {formatDateTime(event.endDateTime).dateOnly}
+                {' '}&#8226; {event.category.name}
             </p>
             
             {isEventCreator && !hidePrice && (

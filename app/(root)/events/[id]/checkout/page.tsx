@@ -193,11 +193,11 @@ const PaystackButton = dynamic(
           <div className="p-4 px-5 md:px-4 bg-neutral-900/50 md:bg-neutral-950 border border-neutral-800 flex flex-col">
             <div className="flex flex-col md:px-1">
               <div className='flex flex-auto justify-between'>
-                <p className='p-semibold-14 md:p-regular-16 mb-1'>Download Ticket</p>
+                <p className='p-semibold-14 md:p-regular-16 mb-1'>View in web</p>
                 <p className="p-semibold-14 md:p-regular-16 mb-1">FREE</p>
               </div>
               <p className='p-regular-14 md:p-regular-16 text-neutral-600'>
-                Your Ticket will be available for download immediately after purchase.</p>
+                Your Ticket will be available in the web to view immediately after purchase.</p>
             </div>
           </div>
       </div>

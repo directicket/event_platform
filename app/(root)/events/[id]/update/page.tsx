@@ -1,7 +1,7 @@
 import EventForm from "@/components/shared/EventForm"
 import { getEventById } from "@/lib/actions/event.actions"
 import { auth } from "@clerk/nextjs"
-import { Construction } from 'lucide-react'
+import { Construction, IdCard } from 'lucide-react'
 import Link from "next/link";
 import { IBM_Plex_Mono } from 'next/font/google';
 
@@ -31,19 +31,17 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
           </div>
           
           <div className="flex flex-col gap-2">
-            
-    
             <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
               <div className="flex flex-row gap-[5.5px]">
-                <Construction width={20} height={20} className='text-yellow-300'/>
-                <p className={`${ibmMono.className} ibm-14 text-white`}>PAID TICKETS</p>
+                <IdCard width={20} height={20} className='text-blue-700'/>
+                <p className={`${ibmMono.className} ibm-14 text-white`}>BANK DETAILS</p>
               </div>
               <p className="p-regular-12 md:p-regular-16 text-neutral-600">
-              We're currently rolling out the ability to create paid tickets to more users. You will get access within the next 5 days.</p>
+                If you haven't, add your bank details so you can get paid. You won't get paid until you do so.</p>
             </div>
     
             <Link href='/profile/bank-details'>
-              <p className="p-regular-14 text-yellow-300 underline hover:no-underline">Add your bank details before then &rarr;</p>
+              <p className="p-regular-14 text-blue-700 underline hover:no-underline">Add your bank details &rarr;</p>
             </Link>
           </div>
     
