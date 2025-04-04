@@ -29,7 +29,7 @@ const UpdateEvent = async ({ params: { id } }: UpdateEventProps) => {
               Tickets are unique products. Use distinct a name, description, and artwork for easy identification.
             </p>
           </div>
-          
+           
           <div className="flex flex-col gap-2">
             <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
               <div className="flex flex-row gap-[5.5px]">

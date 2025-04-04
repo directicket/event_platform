@@ -15,7 +15,7 @@ const CreateEvent = () => {
     <>
     <section className="bg-black md:max-w-4xl bg-cover bg-center py-2 wrapper gap-4 flex flex-col">
     <div>
-        <h2 className="p-medium-20 md:p-regular-20 text-wrap text-white">Create a Ticket</h2>
+        <h2 className="p-regular-20 md:p-regular-20 text-wrap text-white">Create a Ticket</h2>
         <p className="text-white text-left p-regular-14 md:p-regular-16">
           Tickets are unique products. Add a distinct name, description, and artwork for easy identification.
         </p>
