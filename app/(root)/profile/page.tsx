@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from "react";
 import BankDetailsStatus from '@/components/shared/BankDetailsStates'
+import { TrendingUp } from 'lucide-react';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -24,7 +25,7 @@ export default async function ProfilePage() {
     <>
 
       {/* USER INFO */}
-      <section className='wrapper text-white'>
+      <section className='wrapper text-white flex flex-col gap-3'>
         <div className='w-full bg-neutral-950/60 border border-neutral-800/50 p-4'>
           <h1 className='text-xl font-normal'>{userFullName}</h1>
           <p className='text-sm text-neutral-600'>@{userName}</p>
@@ -38,6 +39,17 @@ export default async function ProfilePage() {
               <p className='p-regular-12 text-neutral-600'>Bank details</p>
               <BankDetailsStatus />
             </div>
+          </div>
+        </div>
+
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
+            <div className="flex flex-row gap-[5.5px]">
+              <TrendingUp width={20} height={20} className='text-white'/>
+              <p className={`${ibmMono.className} ibm-14 text-white`}>SALES INSIGHTS</p>
+            </div>
+            <p className="p-regular-12 md:p-regular-16 text-neutral-600">
+              You'll soon be able to track all your ticket sales right from this page.</p>
           </div>
         </div>
       </section>
