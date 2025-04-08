@@ -19,7 +19,7 @@ export const headerLinks = [
     location: '',
     imageUrl: '',
     startDateTime: new Date(),
-    endDateTime: new Date(),
+    quantity: 1,
     categoryId: '',
     price: '',
     isFree: false,

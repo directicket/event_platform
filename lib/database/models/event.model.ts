@@ -8,12 +8,13 @@ export interface iEvent extends Document {
     createdAt: Date;
     imageURL: string;
     startDateTime: Date;
-    endDateTime: Date;
+    quantity: number;
+    amountSold: number;
     price: string;
     isFree: boolean;
     url?: string;
-    category: { _id: string, name: string }
-    organizer: { _id: string, firstName: string, lastName: string, username: string}
+    category: { _id: string, name: string };
+    organizer: { _id: string, firstName: string, lastName: string, username: string };
 }
 
 const EventSchema = new Schema({
@@ -23,7 +24,8 @@ const EventSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     imageURL: { type: String, required: true },
     startDateTime: { type: Date, default: Date.now },
-    endDateTime: { type: Date, default: Date.now },
+    quantity: { type: Number, required: true },
+    amountSold: { type: Number, default: 0 },
     price: { type: String },
     isFree: { type: Boolean, default: false },
     url: { type: String },

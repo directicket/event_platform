@@ -31,7 +31,7 @@ export type CreateUserParams = {
       location: string
       imageURL: string
       startDateTime: Date
-      endDateTime: Date
+      quantity: number
       categoryId: string
       price: string
       isFree: boolean
@@ -49,7 +49,7 @@ export type CreateUserParams = {
       description: string
       location: string
       startDateTime: Date
-      endDateTime: Date
+      quantity: number
       categoryId: string
       price: string
       isFree: boolean
@@ -92,7 +92,7 @@ export type CreateUserParams = {
     imageURL: string
     location: string
     startDateTime: Date
-    endDateTime: Date
+    quantity: number
     url: string
     organizer: {
       _id: string

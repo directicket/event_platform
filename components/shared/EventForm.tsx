@@ -44,7 +44,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
     ? {
       ...event, 
       startDateTime: new Date(event.startDateTime),
-      endDateTime: new Date(event.endDateTime)
     }
     : eventDefaultValues;
   const router = useRouter();
@@ -63,7 +62,9 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
       const uploadedImages = await startUpload(files)
 
       if(!uploadedImages) {
-        return
+        return (
+          <div>ADD IMAGES</div>
+        )
       }
 
       uploadedImageUrl = uploadedImages[0].url
@@ -209,26 +210,34 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         </div>
 
         <div className="flex flex-row gap-5">
-          <FormField
-            control={form.control}
-            name="endDateTime"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Event Date & Time</FormLabel>
-                <FormControl>
-                    <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
-                    showTimeSelect
-                    timeInputLabel="Time:"
-                    dateFormat="dd/MM/yyyy h:mm aa"
-                    wrapperClassName="datePicker text-white p-0"
-                    withPortal={true}
-                    onFocus={(e) => e.target.blur()}
-                    />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
+        <FormField
+          control={form.control}
+          name="quantity"
+          render={({ field }) => (
+            <FormItem className="w-full">
+              <FormLabel className="text-neutral-600">Stock</FormLabel>
+              <FormControl>
+              <div className="flex-center w-full gap-4 rounded-none justify-between">
+                <Input
+                  className="p-regular-16 text-white
+                  rounded-none border border-neutral-800
+                  bg-black 
+                  outline-offset-0 
+                  focus-visible:ring-white 
+                  focus-visible:ring-offset-0"
+                  type="number"
+                  min="1"
+                  value={field.value}
+                  onChange={(e) => field.onChange(+e.target.value)}
+                />
+                </div>
+              </FormControl>
+              <FormMessage />
+            </FormItem>
+          )}
+        />
+
+
 
           <FormField
             control={form.control}
@@ -315,6 +324,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 </FormItem>
               )}
             />
+
         </div>
 
         

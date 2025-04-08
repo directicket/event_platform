@@ -24,6 +24,11 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
   const isEventCreator = userId === event.organizer._id.toString();
 
+  const price = Number(event.price)
+  const amountSold = event.amountSold
+
+  const revenue = price * amountSold
+
   // if (isEventCreator) return null
   return (
     
@@ -76,7 +81,7 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
-                {' '}&#8226; {event.category.name}
+                {' '}&#8226; {event.quantity} in stock
             </p>
             
             {isEventCreator && !hidePrice && (
@@ -94,16 +99,33 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
           </div>
 
 
-            {/* <div className='w-full'>
-            {hasOrderLink && (
-                    <Link href={`/orders?eventId=${event._id}`} 
-                    className='underline p-semibold-14 w-full 
-                     text-gray-500'>
-                        
-                          View buyers
-                    </Link>
-                )}
-            </div> */}
+            <div className='w-full mt-[-4px]'>
+              {hasOrderLink && (
+                <div className='flex flex-row gap-4'>
+                  <div className='flex flex-row gap-1'>
+                    <p className='p-semibold-14 
+                      text-neutral-700'>
+                        Sold:
+                    </p>
+                    <p className='p-semibold-14 
+                      text-neutral-700'>
+                        {event.amountSold}
+                    </p>
+                  </div>
+
+                  <div className='flex flex-row gap-1'>
+                    <p className='p-semibold-14 
+                      text-neutral-700'>
+                        Revenue:
+                    </p>
+                    <p className='p-semibold-14 
+                      text-neutral-700'>
+                        ₦{revenue.toLocaleString()}
+                    </p>
+                  </div>
+                </div>
+              )}
+            </div>
         </div>
 
         

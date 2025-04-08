@@ -29,13 +29,15 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
   const userId = user?.publicMetadata.userId as string;
   const hasEventFinished = new Date(event.startDateTime) <= new Date();
 
+  const outOfStock = event.quantity === 0
+
   return (
     <div className='flex items-center gap-3'>
-        {hasEventFinished ? (
+        {outOfStock ? (
           <Button className=' text-left rounded-none
            w-full bg-black border border-neutral-700' size="lg" disabled={true}>
             <p className={`${ibmMono.className}text-neutral-800 ibm-16 md:ibm-20 text-wrap p-3`}>
-              ACCESS TO THIS TICKET HAS BEEN CLOSED BY ITS CREATOR.
+              OUT OF STOCK
             </p>
           </Button>
         ): (
@@ -50,8 +52,7 @@ const CheckoutButton = ({ event }: { event: iEvent}) => {
                         </p>
                         <hr className='hidden md:block border border-dashed border-white my-1'/>
                         <p className={`${ibmMono.className}text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
-                          Available until {formatDateTime(event.startDateTime).dateOnly}, {' '}at{' '}
-                          {formatDateTime(event.startDateTime).timeOnly}. 
+                          ONLY {event.quantity} LEFT.
                         </p>
                       </div>
                     </Link>
