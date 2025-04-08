@@ -69,7 +69,7 @@ const UserInfo = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                     {event.isFree ? 'FREE' : `₦${event.price}`}
                      {/* - {event.category.name} */}
                 </span>}
-                {' '}&#8226; {formatDateTime(event.endDateTime).dateOnly}
+                {' '}&#8226; {formatDateTime(event.startDateTime).dateOnly}
             </p>
             
             {isEventCreator && !hidePrice && (

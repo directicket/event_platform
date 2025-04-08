@@ -236,8 +236,8 @@ const Page = ({ params }: { params: { id: string } }) => {
             {event.title}
           </p>
           <p className="p-regular-16 md:p-regular-18">
-            {formatDateTime(event.endDateTime).dateOnly}, by {" "}
-            {formatDateTime(event.endDateTime).timeOnly}
+            {formatDateTime(event.startDateTime).dateOnly}, by {" "}
+            {formatDateTime(event.startDateTime).timeOnly}
           </p>
           <p className="text-neutral-600 p-regular-16 md:p-regular-18 line-clamp-1">
             {event.location}

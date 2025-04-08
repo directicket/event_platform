@@ -39,8 +39,8 @@ export async function POST(req) {
       const emailHtml = `
         <div style="padding: 20px; border: 1px solid #333; max-width: 600px;">
             <h2>${event.title}</h2>
-            <p><strong>Date:</strong> ${formatDateTime(event.endDateTime).dateOnly}</p>
-            <p><strong>Time:</strong> ${formatDateTime(event.endDateTime).timeOnly}</p>
+            <p><strong>Date:</strong> ${formatDateTime(event.startDateTime).dateOnly}</p>
+            <p><strong>Time:</strong> ${formatDateTime(event.startDateTime).timeOnly}</p>
             <p><strong>Location:</strong> ${event.location}</p>
             <p><strong>Organizer:</strong> @${event.organizer.username}</p>
             <hr />

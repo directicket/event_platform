@@ -111,13 +111,13 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             <div className="flex flex-auto gap-4 justify-between align-baseline">
               <div className='flex flex-col w-full'>
                 <p className="p-regular-14 md:p-regular-18 text-neutral-600">Date</p>
-                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.endDateTime).dateOnly : 'Loading...'}</p>
+                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).dateOnly : 'Loading...'}</p>
               </div>
 
               <div className='flex flex-row gap-3 w-full'>
                 <div className='flex flex-col w-full'>
                   <p className="p-regular-14 md:p-regular-18 text-neutral-600">Time</p>
-                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.endDateTime).timeOnly : 'Loading...'}</p>
+                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).timeOnly : 'Loading...'}</p>
                 </div>
 
                 <div className='flex flex-col w-full'>

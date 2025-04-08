@@ -81,10 +81,10 @@ const EventDetails = async ({ params: { id }, searchParams }: SearchParamProps) 
                 </div>
                 <div className='flex flex-auto gap-4'>
                   <div className='w-full'>
-                    <p className='p-regular-12'>{formatDateTime(event.endDateTime).dateOnly}</p>
+                    <p className='p-regular-12'>{formatDateTime(event.startDateTime).dateOnly}</p>
                   </div>
                   <div className='w-full'>
-                    <p className='p-regular-12 self-end text-right'>{formatDateTime(event.endDateTime).timeOnly}</p>
+                    <p className='p-regular-12 self-end text-right'>{formatDateTime(event.startDateTime).timeOnly}</p>
                   </div>
                 </div>
               </div>
