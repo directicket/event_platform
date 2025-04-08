@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import { connectToDatabase } from '@/lib/database';
-import Event from '@/models/event.model'; // adjust path if needed
+import Event from '@/lib/database/models/event.model'; // adjust path if needed
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
