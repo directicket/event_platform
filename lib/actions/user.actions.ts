@@ -79,3 +79,16 @@ export async function deleteUser(clerkId: string) {
     handleError(error)
   }
 }
+
+export async function getUserByUsername(username: string) {
+  try {
+    await connectToDatabase()
+
+    const user = await User.findOne({ username })
+
+    if (!user) throw new Error('User not found')
+    return JSON.parse(JSON.stringify(user))
+  } catch (error) {
+    handleError(error)
+  }
+}

@@ -8,6 +8,7 @@ import React from 'react'
 import { DeleteConfirmation } from './DeleteConfirmation'
 import { Button } from '../ui/button'
 import { IBM_Plex_Mono } from 'next/font/google';
+import CheckoutButton from './CheckoutButton'
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -16,9 +17,10 @@ type CardProps = {
     event: iEvent,
     hasOrderLink?: boolean,
     hidePrice?: boolean,
+    showStats?: boolean;
 }
 
-const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
+const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
   const {sessionClaims} = auth();
   const userId = sessionClaims?.userId as string;
 
@@ -31,105 +33,75 @@ const Card = ({ event, hasOrderLink, hidePrice }: CardProps) => {
 
   // if (isEventCreator) return null
   return (
-    
-    <div className='group relative flex w-full max-w-full md:max-w-full 
-    flex-row overflow-hidden min-w-[300px]
-    p-2 py-4 border-neutral-700/50 border border-t-0 border-r-0 border-l-0 bg-black'>
-
-      <Link href={`/events/${event._id}`}>
-        <div className=' flex justify-center items-center bg-black min-w-[80px] px-0' 
-        style={{ height: '80px' }}
-        >
-          <Image
-            alt='image'
-            src={`${event.imageURL}`}
-            className='object-cover border-[0.25px] border-neutral-800/70'
-            width={650} // Max width constraint
-            height={400} // Fixed height
-            style={{
-              maxWidth: '40px', // Variable width, max 650px
-              width: 'auto', // Automatically adjusts the width
-              height: '70%', // Stretches the image to fit the height of the container
-            }}
-          />
-        </div>
-        </Link>
-        { /* IS EVENT CREATOR ... */}
-
-        
-
-        <div className='pt-4 pl-1'>
-        <div className='flex flex-col gap-0.5 mt-0.5 md:gap-1 pl-2'>
-
-          {/* <hr className='pb-2'/> */}
-
-          <div className='lg:grid lg:grid-cols-3 lg:gap-16 lg:justify-between lg:self-center lg:mt-2'>
-            <div className='flex max-w-56 lg:w-[1000px] gap-1 items-left justify-left'>
-              <Link href={`/events/${event._id}`}>
-                <span className='absolute inset-0 hover:border'></span>
-                <p className='p-medium-14 md:p-regular-16 line-clamp-1 text-left hover:underline
-                 flex-1 text-white'>{event.title}</p>
-              </Link>
-              
-            </div>
-
-            <p className='p-regular-14 p-medium-16 text-neutral-600 text-left 
-            w-full justify-center pb-[-20px] mt-[-4px] lg:self-center'>
-            {!hidePrice && 
-                <span className={`${ibmMono.className} p-regular-14 text-neutral-600`}>
-                    {event.isFree ? 
-                    <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
-                     {/* - {event.category.name} */}
-                </span>}
-                {' '}&#8226; {event.quantity} in stock
-            </p>
-            
-            {isEventCreator && !hidePrice && (
-            <div className='absolute right-2 top-2 flex flex-col gap-2 rounded-none 
-           bg-black text-white hover:border p-3 p-medium-14
-            mt-5 z-10 isolate self-center
-            '>
+    <div className='text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full'>
+      <div className='flex flex-row w-full p-4 justify-between'>
+        <div className='flex flex-row'>
+        {isEventCreator && !hidePrice && (
+            <div className='w-fit p-0 bg-black text-white hover:text-neutral-800 z-10 right-4 top-4 isolate absolute'>
                 <Link href={`/events/${event._id}/update`}>
-                  <SquarePen width={18} height={18}/>
+                  <SquarePen width={16} height={16}/>
                 </Link>
-
-                {/* <DeleteConfirmation eventId={event._id}/> */}
             </div>
         )}
-          </div>
-
-
-            <div className='w-full mt-[-4px]'>
-              {hasOrderLink && (
-                <div className='flex flex-row gap-4'>
-                  <div className='flex flex-row gap-1'>
-                    <p className='p-semibold-14 
-                      text-neutral-700'>
-                        Sold:
-                    </p>
-                    <p className='p-semibold-14 
-                      text-neutral-700'>
-                        {event.amountSold}
-                    </p>
-                  </div>
-
-                  <div className='flex flex-row gap-1'>
-                    <p className='p-semibold-14 
-                      text-neutral-700'>
-                        Revenue:
-                    </p>
-                    <p className='p-semibold-14 
-                      text-neutral-700'>
-                        ₦{revenue.toLocaleString()}
-                    </p>
-                  </div>
-                </div>
-              )}
-            </div>
+        <p className={`${ibmMono.className} p-regular-14 md:p-regular-14`}>
+          {event.isFree ? 
+            <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> 
+            : 
+            `₦${event.price}`
+          } {' '}&#8226; {event.quantity} in stock
+        </p>
         </div>
+        <p className='p-regular-12 md:p-regular-14'>&rarr;</p>
+      </div>
+
+      <div className='flex flex-col w-full p-4'>
+        <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`}>
+          <span className='absolute inset-0 hover:border'></span>
+          <p className='p-regular-14 md:p-regular-16 font-medium'>
+            {event.title}
+          </p>
+        </Link>
+        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-700/80'>
+          {event.description}
+        </p>
 
         
-        </div>
+      </div>
+
+      
+
+        {/* <div className='w-full'>
+          <CheckoutButton event={event}/>
+        </div> */}
+
+        {hasOrderLink && showStats && (
+        <div className='w-full p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
+            <div className='flex flex-row gap-4'>
+              <div className='flex flex-row gap-1'>
+                <p className='p-semibold-14 text-lime-400'>Sold:</p>
+                <p className='p-semibold-14 text-lime-400'>{event.amountSold}</p>
+              </div>
+
+              <div className='flex flex-row gap-1'>
+                <p className='p-semibold-14 text-lime-400'>Revenue:</p>
+                <p className='p-semibold-14 text-lime-400'>₦{revenue.toLocaleString()}</p>
+              </div>
+            </div>
+            </div>
+          )}
+
+          {!hasOrderLink && !showStats && (
+            <div className='relative w-full flex flex-row gap-1 p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
+            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-700/80'>
+              Created on {formatDateTime(event.startDateTime).dateOnly} by {' '}
+            </p>
+            <Link href={`/${event.organizer.username}`}>
+              <span className='absolute inset-0 hover:bg-neutral-700/30'></span>
+              <p className='p-regular-12 md:p-regular-14 font-medium underline text-neutral-700/80'>/{event.organizer.username}</p>
+            </Link>
+            </div>
+          )}
+
     </div>
   )
 }

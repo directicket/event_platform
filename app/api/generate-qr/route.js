@@ -52,7 +52,7 @@ export async function POST(req) {
 
     // Generate a unique 10-character code
     const randomCode = Math.random().toString(36).substring(2, 12).toUpperCase();
-    const finalCode = `${userId}-${randomCode}`;
+    const finalCode = `https://directicket.live/validate/${userId}-${randomCode}`;
 
     // Generate QR code
     const qrCodeDataUrl = await QRCode.toDataURL(finalCode);

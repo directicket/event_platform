@@ -30,7 +30,7 @@ export async function POST(req) {
     // If QR code doesn't exist, generate a new one
     if (!finalCode) {
       const randomCode = Math.random().toString(36).substring(2, 12).toUpperCase();
-      finalCode = `${userId}-${randomCode}`;
+      finalCode = `https://directicket.live/validate/${userId}-${randomCode}`;
       await redis.hset(userKey, { [eventId]: finalCode });
     }
 

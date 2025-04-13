@@ -11,13 +11,13 @@ export async function generateMetadata({
     const event = await getEventById(params.id);
 
     return {
-        title: `${event.title} - ${event.category.name} - Directicket`, // Dynamically set the title
+        title: `${event.title} - Directicket`, // Dynamically set the title
         description: "Buy and sell tickets to events on Directicket.",
         icons: {
             icon: `${event.imageURL}`
         },
         openGraph: {
-            title: `${event.title} - ${event.category.name}`,
+            title: `${event.title}`,
             description: "Buy and sell tickets to events on Directicket.",
             images:`${event.imageURL}`
         },

@@ -11,7 +11,7 @@ type CollectionProps = {
     page: number | string,
     totalPages?: number,
     urlParamName?: string,
-    collectionType?: 'Events_Organized' | 'My_Tickets' | 'All_Events'
+    collectionType?: 'Events_Organized' | 'My_Tickets' | 'All_Events' | 'Public_Events_Organized'
 }
 
 const Collection = ({
@@ -27,14 +27,24 @@ const Collection = ({
     <>
       {data.length > 0 ? (
         <div className='flex flex-col items-center gap-10'>
-            <ul className='grid w-full grid-cols-1 gap-0 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:gap-0'>
+            <ul className='grid w-full grid-cols-1 gap-2 md:gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:gap-0'>
                 {data.map((event) => {
-                    const hasOrderLink = collectionType === 'Events_Organized';
-                    const hidePrice = collectionType === 'My_Tickets';
+                    const isPrivateOrganizerView = collectionType === 'Events_Organized';
+                    const isPublicOrganizerView = collectionType === 'Public_Events_Organized';
+                    const isMyTickets = collectionType === 'My_Tickets';
+                    
+                    const hasOrderLink = isPrivateOrganizerView;
+                    const hidePrice = isMyTickets;
+                    const showStats = isPrivateOrganizerView;
                     
                     return (
                         <li key={event._id} className='flex justify-center'>
-                            <Card event={event} hasOrderLink={hasOrderLink} hidePrice={hidePrice} />
+                        <Card
+                        event={event}
+                        hasOrderLink={hasOrderLink}
+                        hidePrice={hidePrice}
+                        showStats={showStats}
+                      />
                         </li>
                     )
                 })}

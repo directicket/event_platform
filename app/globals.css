@@ -144,11 +144,11 @@ body {
 
   /* 24 */
   .p-bold-24 {
-    @apply font-bold text-[24px] leading-[36px];
+    @apply font-bold text-[24px] leading-[24px];
   }
 
   .p-semibold-24 {
-    @apply font-semibold text-[24px] leading-[28px];
+    @apply font-semibold text-[24px] leading-[20px];
   }
 
   .p-medium-24 {
