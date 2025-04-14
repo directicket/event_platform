@@ -9,7 +9,7 @@ export default authMiddleware({
         '/api/webhook/paystack',
         '/api/webhook/stripe',
         '/api/uploadthing',
-        '/api/validate-qr',
+        '/api/validate-qr/:code',
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
@@ -17,6 +17,7 @@ export default authMiddleware({
         '/api/webhook/stripe',
         '/api/uploadthing',
         '/api/paystack',
+        '/api/validate-qr/:code',
     ]
 });
 
