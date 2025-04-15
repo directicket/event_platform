@@ -33,7 +33,6 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
   // if (isEventCreator) return null
   return (
-    <div className={`${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
     <div className='text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full'>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
@@ -57,7 +56,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
       <div className='flex flex-col w-full p-4'>
         <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`}>
-          <span className='absolute inset-0 hover:border'></span>
+          <span className={`absolute inset-0 hover:border ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}></span>
           <p className='p-regular-14 md:p-regular-16 font-medium'>
             {event.title}
           </p>
@@ -103,7 +102,6 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             </div>
           )}
 
-    </div>
     </div>
   )
 }
