@@ -33,7 +33,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
   // if (isEventCreator) return null
   return (
-    <div className={`text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
+    <div className={`text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
@@ -47,8 +47,8 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
           {event.isFree ? 
             <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> 
             : 
-            `${event.quantity === 0 ? 'Out of Stock' : `₦${event.price}`}`
-          } {' '}&#8226; {event.quantity} in stock
+            `₦${event.price}`
+          } {' '}&#8226; {`${event.quantity === 0 ? 'Out of Stock' : `${event.quantity} in stock`}`}
         </p>
         </div>
         <p className='p-regular-12 md:p-regular-14'>&rarr;</p>
