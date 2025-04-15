@@ -43,7 +43,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
                 </Link>
             </div>
         )}
-        <p className={`${ibmMono.className} p-regular-14 md:p-regular-14`}>
+        <p className={`${ibmMono.className} p-regular-14 md:p-regular-14 ${event.quantity === 0 ? 'opacity-50' : ''}`}>
           {event.isFree ? 
             <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> 
             : 
