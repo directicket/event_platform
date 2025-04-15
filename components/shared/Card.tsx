@@ -33,7 +33,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
   // if (isEventCreator) return null
   return (
-    <div className='text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full'>
+    <div className={`text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
@@ -47,15 +47,15 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
           {event.isFree ? 
             <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> 
             : 
-            `₦${event.price}`
+            `${event.quantity === 0 ? 'Out of Stock' : `₦${event.price}`}`
           } {' '}&#8226; {event.quantity} in stock
         </p>
         </div>
         <p className='p-regular-12 md:p-regular-14'>&rarr;</p>
       </div>
 
-      <div className='flex flex-col w-full p-4'>
-        <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`}>
+      <div className={`flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
+        <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`} className={`${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
           <span className={`absolute inset-0 hover:border ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}></span>
           <p className='p-regular-14 md:p-regular-16 font-medium'>
             {event.title}
