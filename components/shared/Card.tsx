@@ -49,7 +49,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             <span className='text-yellow-300'>FREE</span> 
             : 
             `₦${event.price}`
-          } {' '}&#8226; 
+          } {' '}&#8226;{' '}
             <span className={`${
                 event.quantity < 10
                   ? 'text-red-600'
