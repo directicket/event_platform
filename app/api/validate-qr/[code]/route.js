@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
 import { Redis } from "@upstash/redis";
-import { getUserById } from "../../../lib/actions/user.actions"; // Import your user fetching function
+import { getUserById } from "@/lib/actions/user.actions"; // Import your user fetching function
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
