@@ -71,7 +71,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             {event.title}
           </p>
         </Link>
-        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-700/80'>
+        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-600/80'>
           {event.description}
         </p>
 
@@ -102,12 +102,12 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
           {!hasOrderLink && !showStats && (
             <div className='relative w-full flex flex-row gap-1 p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
-            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-700/80'>
-              Created on {formatDateTime(event.startDateTime).dateOnly} by {' '}
+            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-600/80'>
+              Sales end {formatDateTime(event.startDateTime).dateOnly}. By {' '}
             </p>
             <Link href={`/${event.organizer.username}`}>
               <span className='absolute inset-0 hover:bg-neutral-700/30'></span>
-              <p className='p-regular-12 md:p-regular-14 font-medium underline text-neutral-700/80'>/{event.organizer.username}</p>
+              <p className='p-regular-12 md:p-regular-14 font-medium underline text-neutral-600/80'>/{event.organizer.username}</p>
             </Link>
             </div>
           )}
