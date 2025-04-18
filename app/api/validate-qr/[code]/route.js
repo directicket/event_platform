@@ -16,7 +16,12 @@ export async function GET(req, { params }) {
     }
 
     const userKey = `qr:${userId}`;
-    const storedCode = await redis.hget(userKey, randomCode); // Check if the code exists
+    const storedEntries = await redis.hgetall(userKey);
+
+    const storedCode = Object.values(storedEntries).find((code) =>
+      code.endsWith(`${userId}-${randomCode}`)
+    );
+    // Check if the code exists
 
     if (!storedCode) {
       return NextResponse.json({ error: "QR Code is invalid or has already been used" }, { status: 404 });
