@@ -5,7 +5,6 @@ import { BadgeCheck, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { DeleteConfirmation } from './DeleteConfirmation'
 import { Button } from '../ui/button'
 import { IBM_Plex_Mono } from 'next/font/google';
 
@@ -94,7 +93,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
                   <SquarePen width={18} height={18}/>
                 </Link>
 
-                <DeleteConfirmation eventId={event._id}/>
+                
             </div>
         )}
           </div>

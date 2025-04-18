@@ -5,7 +5,6 @@ import { BadgeCheck, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { DeleteConfirmation } from './DeleteConfirmation'
 import { Button } from '../ui/button'
 
 type CardProps = {
@@ -81,7 +80,7 @@ const UserInfo = ({ event, hasOrderLink, hidePrice }: CardProps) => {
                   <SquarePen width={18} height={18}/>
                 </Link>
 
-                {/* <DeleteConfirmation eventId={event._id}/> */}
+              
             </div>
         )}
             <div className='w-full'>

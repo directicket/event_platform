@@ -5,7 +5,6 @@ import { BadgeCheck, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
-import { DeleteConfirmation } from './DeleteConfirmation'
 import { Button } from '../ui/button'
 import { IBM_Plex_Mono } from 'next/font/google';
 import CheckoutButton from './CheckoutButton'
