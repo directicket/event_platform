@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from "react";
 import BankDetailsStatus from '@/components/shared/BankDetailsStates'
-import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise } from 'lucide-react';
+import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus } from 'lucide-react';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -48,13 +48,20 @@ export default async function ProfilePage() {
             <Globe width={16} height={16} className='self-center'/>
           </div>
           </Link>
+
+          <Link href={`/events/create`}>
+          <div className='justify-between flex flex-row p-3 text-black hover:text-black hover:bg-white/85  bg-white mt-4 border border-neutral-900'>
+            <p className='p-regular-14 self-center ml-0.5'>Create Ticket</p>
+            <Plus width={16} height={16} className='self-center'/>
+          </div>
+          </Link>
         </div>
 
         <div className="flex flex-col gap-2">
           <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
             <div className="flex flex-row gap-[7.5px]">
-              <Sunrise width={18} height={18} className='text-lime-400'/>
-              <p className={`${ibmMono.className} ibm-14 text-white`}>DAILY PAYOUTS</p>
+              <HandHeart width={18} height={18} className='text-lime-400'/>
+              <p className={`${ibmMono.className} ibm-14 text-white`}>NO FEES ON PAYOUTS</p>
             </div>
             <p className="p-regular-12 md:p-regular-16 text-neutral-600">
               All your revenue from ticket sales are sent into your bank account every business day.</p>
