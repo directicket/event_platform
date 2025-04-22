@@ -95,7 +95,7 @@ export async function deleteEvent({ eventId, path }: DeleteEventParams) {
 }
 
 // GET ALL EVENTS
-export async function getAllEvents({ query, limit = 6, page, category }: GetAllEventsParams) {
+export async function getAllEvents({ query, limit = 400, page, category }: GetAllEventsParams) {
   try {
     await connectToDatabase()
 
@@ -124,7 +124,7 @@ export async function getAllEvents({ query, limit = 6, page, category }: GetAllE
 }
 
 // GET EVENTS BY ORGANIZER
-export async function getEventsByUser({ userId, limit = 40, page }: GetEventsByUserParams) {
+export async function getEventsByUser({ userId, limit = 400, page }: GetEventsByUserParams) {
   try {
     await connectToDatabase()
 

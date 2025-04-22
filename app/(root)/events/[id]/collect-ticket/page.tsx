@@ -4,10 +4,11 @@ import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
-import { CircleCheck } from 'lucide-react';
+import { CircleCheck, TriangleAlert } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useUser } from "@clerk/nextjs";
+import Image from 'next/image';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -127,10 +128,38 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           </div>
         </div>
 
+        <div className="flex flex-col gap-2">
+          <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
+            <div className="flex flex-row gap-[7.5px]">
+              <TriangleAlert width={18} height={18} className='text-yellow-300'/>
+              <p className={`${ibmMono.className} ibm-14 text-white self-center`}>PROTECT YOUR QR CODE</p>
+            </div>
+            <p className="p-regular-14 md:p-regular-16 text-neutral-600">
+              The QR code on this ticket can only be scanned once and cannot be gotten back afterwards.</p>
+          </div>
+        </div>
+
         {qrCode ? (
           <>
           <div ref={captureRef}>
           <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-col gap-2 md:gap-4">
+
+            <div className='max-w-xl lg:px-10 md:px-8 self-center'> {/* Openning of ticket artwork div */}
+              <div className="flex mt-6 mb-20 md:mb-0 md:mt-0 min-h-96 bg-black 
+                justify-center items-center overflow-hidden" 
+                style={{ height: '100px' }}>
+                <div className="box h-[205px] max-w-[150px] 
+                      md:max-h-[305px] md:max-w-[250px] lg:max-h-[405px]
+                      lg:max-w-[350px] flex items-center justify-center">
+                  <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} alt="Ticket artwork"
+                    width={100} height={100}
+                    className="h-full border border-0.5 
+                    border-neutral-800/40 object-contain 
+                      w-auto spin"
+                  />
+                </div>
+              </div>
+            </div>
 
             <p className='h3-regular leading-none'>{event ? event.title : 'Loading event...'}</p>
 
@@ -138,19 +167,19 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             <div className='flex flex-col gap-4'>
             <div className="flex flex-auto gap-4 justify-between align-baseline">
               <div className='flex flex-col w-full'>
-                <p className="p-regular-14 md:p-regular-18 text-neutral-600">Date</p>
-                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).dateOnly : 'Loading...'}</p>
+                <p className="p-regular-14 md:p-regular-18 text-neutral-600">Created</p>
+                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.createdAt).dateOnly : 'Loading...'}</p>
               </div>
 
               <div className='flex flex-row gap-3 w-full'>
                 <div className='flex flex-col w-full'>
                   <p className="p-regular-14 md:p-regular-18 text-neutral-600">Time</p>
-                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).timeOnly : 'Loading...'}</p>
+                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.createdAt).timeOnly : 'Loading...'}</p>
                 </div>
 
                 <div className='flex flex-col w-full'>
-                  <p className="p-regular-14 md:p-regular-18 text-neutral-600">Organizer</p>
-                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px] line-clamp-1">{event?.organizer?.username ? `@${event.organizer.username}` : 'Loading...'}</p>
+                  <p className="p-regular-14 md:p-regular-18 text-neutral-600">Creator</p>
+                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px] line-clamp-1">{event?.organizer?.username ? `/${event.organizer.username}` : 'Loading...'}</p>
                 </div>
               </div>
             </div>
@@ -175,9 +204,9 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             className="w-20 h-20 self-center" />
 
             <div className='w-48 self-end'>
-              <p className='text-neutral-600 p-regular-12 md:p-regular-14 self-end'>
-                Do not share this code with anyone. 
-                You will be asked to present this Ticket before entry.
+              <p className='text-white p-regular-12 md:p-regular-14 self-end'>
+                This code is for the creator to scan.
+                Ticket is single use only.
               </p>
             </div>
             </div>
@@ -190,7 +219,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
         )}
 
         <div className='gap-2'>
-          <p className='p-regular-14 text-neutral-600 mt-2'>
+          <p className='p-regular-14 text-white mt-2'>
             You can also find this Ticket in your email. 
             Ticket is valid until date and time of the event.
           </p>

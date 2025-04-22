@@ -81,7 +81,7 @@ export default async function PublicProfilePage({ params }: Props) {
                 emptyTitle="No tickets yet"
                 emptyStateSubtext="When they create tickets, they'll show up here."
                 collectionType="Public_Events_Organized"
-                limit={40}
+                limit={400}
                 page={1}
                 urlParamName='eventsPage'
                 totalPages={2}
