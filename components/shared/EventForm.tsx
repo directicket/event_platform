@@ -244,7 +244,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             name="startDateTime"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Sales Deadline</FormLabel>
+                <FormLabel className='text-neutral-600'>Event Date & Time</FormLabel>
                 
                 <FormControl >
                     <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}

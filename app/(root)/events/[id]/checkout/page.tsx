@@ -2,7 +2,7 @@
 
 import { useEffect, useState } from "react";
 import dynamic from "next/dynamic";
-import { useAuth, useUser } from "@clerk/nextjs";
+import { useAuth, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatDateTime } from "@/lib/utils";
@@ -10,6 +10,10 @@ import { CircleX } from "lucide-react";
 import Link from "next/link";
 import { getEventById } from "@/lib/actions/event.actions";
 import { getUserById } from "@/lib/actions/user.actions";
+import { IBM_Plex_Mono } from 'next/font/google';
+import SpotifyPreview from '@/components/shared/SpotifyPreview';
+
+const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
 const PaystackButton = dynamic(
     () => import("react-paystack").then((mod) => mod.PaystackButton),
@@ -61,7 +65,7 @@ const PaystackButton = dynamic(
     if (!event) {
       return (
         <div className="wrapper flex w-full h-screen justify-center items-center">
-          <p className="self-center text-white p-medium-16 md:p-semibold-20">Loading Checkout...</p>
+          <p className="self-center text-white p-medium-16 md:p-semibold-20">Loading...</p>
         </div>
       );
     }
@@ -140,12 +144,116 @@ const PaystackButton = dynamic(
     {/* <div className='text-white'>{JSON.stringify(fees)}</div> */}
 
     <div className="wrapper md:max-w-4xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
-      <div className="flex flex-auto justify-between">
-        <h2 className="p-regular-20 md:p-regular-20 text-wrap self-center">Checkout</h2>
-        <Link href={`/events/${event._id}`}>
-          <CircleX width={22} height={22} className="text-white self-center h-full" />
+    <div className="md:p-4 px-0 md:px-4 md:border md:border-neutral-800 flex flex-col md:mb-2">
+        <div className='max-w-xl lg:px-10 md:px-8 self-center'> {/* Openning of ticket artwork div */}
+          <div className="flex mt-6 mb-20 md:mb-0 md:mt-0 min-h-96 bg-black 
+            justify-center items-center overflow-hidden" 
+            style={{ height: '100px' }}>
+            <div className="box h-[205px] max-w-[150px] 
+                  md:max-h-[305px] md:max-w-[250px] lg:max-h-[405px]
+                  lg:max-w-[350px] flex items-center justify-center">
+              <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} alt="Ticket artwork"
+                width={100} height={100}
+                className="h-full border border-0.5 
+                border-neutral-800/40 object-contain 
+                  w-auto spin"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className='flex flex-col md:self-center md:pr-8 gap-3 bg-black'>
+          {/* <div>
+          <p className='p-semibold-16 text-neutral-500 mb-1'>
+              About this ticket
+          </p>
+          <hr className="border border-neutral-800 border-dashed"/>
+          </div> */}
+
+          <div className='flex flex-auto gap-4 md:gap-6'>
+            <div className='w-full'>
+              <p className='p-regular-16 md:p-medium-16'>{event.title}</p>
+            </div>
+
+            <div>
+              <p className={`${ibmMono.className} ibm-16 md:ibm-16 mt-[-0.4px] text-white`}>
+                {event.isFree ? 
+                <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
+              </p>
+            </div>
+          </div>
+
+          <a href='#buy'>
+          <p className={`${ibmMono.className} text-white p-4 bg-black border hover:bg-white hover:text-black`}>BUY TICKET <br/><br/>ONLY {event.quantity ? event.quantity : '?'} LEFT IN STOCK</p>
+          </a>
+
+          <div className='flex flex-col gap-1'>
+            <p className='p-regular-14 text-neutral-500 mb-10'>
+              {event.description}
+            </p>
+
+            <p className='p-semibold-16 text-neutral-500 mb-1'>
+              Additional Info
+            </p>
+            <hr className="border border-neutral-800 border-dashed"/>
+
+            <div className='flex flex-auto gap-6 mt-2 text-neutral-500'>
+              <div className='w-[50%]'>
+                <p className='p-regular-14'>{event.location}</p>
+              </div>
+              <div className='flex flex-auto gap-4'>
+                <div className='w-full'>
+                  <p className='p-regular-14'>{formatDateTime(event.startDateTime).dateOnly}</p>
+                </div>
+                <div className='w-full'>
+                  <p className='p-regular-14 self-end text-right'>{formatDateTime(event.startDateTime).timeOnly}</p>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className='md:flex md:flex-col gap-8 mt-2 md:mt-0'>
+          <SpotifyPreview playlistUrl={`${event.url}`}/>
+        </div>
+        </div>
+        
+      </div>
+
+
+      <div className="mt-8 gap-1">
+      <div className='flex flex-col'>
+        <h2 className="p-medium-20 md:p-medium-20 text-wrap">Meet the creator</h2>
+        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>You can find all tickets made by a creator on their profile.</p>
+      </div>
+      <div className="relative overflow-hidden mt-2">
+        <div className="w-full overflow-hidden max-h-48 min-h-48">
+          <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} 
+          alt="Ticket Artwork" width={100} height={100}
+          className="w-full object-cover overflow-hidden blur min-h-48"/>
+        </div>
+        <Link href={`/${event.organizer.username}`}>
+        <p className="hover:bg-neutral-950/95 absolute top-0 left-0 inset-0 bg-black/70 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
+          There's more! Explore {event.organizer.username}'s profile.
+        </p>
+        </Link>
+        <Link href={`/${event.organizer.username}`}>
+        <p className="absolute bottom-0 left-0 p-4 pl-5 p-regular-14 line-clamp-3">
+          Check it out &rarr;
+        </p>
         </Link>
       </div>
+      </div>
+      
+      <section id='buy'>
+      <div className="flex flex-auto justify-between mt-8">
+        <div className='flex flex-col'>
+          <h2 className="p-medium-20 md:p-medium-20 text-wrap">Ready to buy this ticket?</h2>
+          <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>You're only one click away from getting it!</p>
+        </div>
+        {/* <Link href={`/events/${event._id}`}>
+          <CircleX width={22} height={22} className="text-white self-center h-full" />
+        </Link> */}
+      </div>
+      </section>
 
       <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-col gap-2 md:gap-4">
         <div className="flex flex-auto justify-between">
@@ -220,46 +328,50 @@ const PaystackButton = dynamic(
           </div>
       </div> */}
 
-      <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-row mb-2">
-        <div
-          className="sm:flex mb-0 min-h-fit bg-black mr-4 self-center justify-center items-center overflow-hidden align-middle hidden md:block"
-          style={{ height: "20px" }}
-        >
-          <div className="box">
-            <Image
-              src={event.imageURL}
-              alt="hero image"
-              width={35}
-              height={35}
-              className="min-h-fit border border-0.5 border-neutral-800/40 max-h-fit h-fit object-contain object-center w-fit spin m-2"
-              style={{
-                maxWidth: "650px",
-                width: "auto",
-                height: "100%",
-              }}
-            />
-          </div>
-        </div>
-        <div className="flex flex-col text-left self-center align-middle h-full">
-          <p className="p-bold-16 md:p-bold-18 tracking-tight line-clamp-1">
-            {event.title}
-          </p>
-          <p className="p-regular-16 md:p-regular-18">
-            {formatDateTime(event.startDateTime).dateOnly}, by {" "}
-            {formatDateTime(event.startDateTime).timeOnly}
-          </p>
-          <p className="text-neutral-600 p-regular-16 md:p-regular-18 line-clamp-1">
-            {event.location}
-          </p>
-        </div>
-      </div>
+      
+      <SignedIn>
+        <button 
+          onClick={handlePayment} 
+          className="w-full p-4 paystack-button text-black md:p-semibold-18"
+          >
+          Get Ticket
+        </button>
+       </SignedIn>
 
-      <button 
-        onClick={handlePayment} 
-        className="w-full p-4 paystack-button text-black md:p-semibold-18"
-        >
-        Complete Order
-       </button>
+       <SignedOut>
+       <Link href='/sign-in'>
+       <button
+          className="w-full p-4 bg-white text-black md:p-semibold-18"
+          >
+          Get Ticket
+        </button>
+        </Link>
+       </SignedOut>
+
+
+       <div className="mt-8 gap-1">
+      <div className='flex flex-col'>
+        <h2 className="p-medium-20 md:p-medium-20 text-wrap">Create & sell your Tickets</h2>
+        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>Create tickets then share your profile to your buyers. And keep a 100% of what you earn on all ticket sales.</p>
+      </div>
+      <div className="relative overflow-hidden mt-2 text-white">
+        <div className="w-full overflow-hidden max-h-48 min-h-48">
+          <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} 
+          alt="Ticket Artwork" width={100} height={100}
+          className="w-full object-cover overflow-hidden min-h-48 blur-lg"/>
+        </div>
+        <Link href='/events/create'>
+        <p className="hover:bg-blue-700/85 absolute top-0 left-0 bg-gradient-to-tr inset-0 bg-blue-700/60 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
+          Join the community of 200+ sellers.
+        </p>
+        </Link>
+        <Link href='/events/create'>
+        <p className="absolute bottom-0 left-0 p-4 pl-5 p-regular-14 line-clamp-3">
+          Create yours now &rarr;
+        </p>
+        </Link>
+      </div>
+      </div>
       </div>
     </>
   );

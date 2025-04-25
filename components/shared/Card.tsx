@@ -61,21 +61,40 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             </span>
         </p>
         </div>
-        <p className='p-regular-12 md:p-regular-14'>&rarr;</p>
+        {/* <p className='p-regular-12 md:p-regular-14 self-center'>See details &rarr;</p> */}
       </div>
 
-      <div className={`flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
-        <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`} className={`${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
-          <span className={`absolute inset-0 hover:border ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}></span>
-          <p className='p-regular-14 md:p-regular-16 font-medium'>
-            {event.title}
-          </p>
-        </Link>
-        <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-600/80'>
-          {event.description}
-        </p>
+                  
 
-        
+      <div className='flex flex-row p-4 -mt-3 mb-2'>
+      <div className='max-w-xl self-center'> {/* Openning of ticket artwork div */}
+          <div className="flex md:mb-0 md:mt-0 min-h-fit bg-black 
+            justify-center items-center overflow-hidden" 
+            style={{ height: '100px' }}>
+            <div className="h-fit max-w-[60px] 
+                  md:max-h-[305px] md:max-w-[250px] lg:max-h-[405px]
+                  lg:max-w-[350px] flex items-center justify-center">
+              <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} alt="Ticket artwork"
+                width={100} height={100}
+                className="h-full border border-0.5 
+                border-neutral-800/40 object-contain 
+                  w-auto"
+              />
+            </div>
+          </div>
+        </div>
+
+        <div className={`self-center flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
+          <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`} className={`${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
+            <span className={`absolute inset-0 hover:border ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}></span>
+            <p className='p-regular-14 md:p-regular-16 font-medium'>
+              {event.title}
+            </p>
+          </Link>
+          <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>
+            {event.description}
+          </p>
+        </div>
       </div>
 
       
@@ -93,7 +112,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
               </div>
 
               <div className='flex flex-row gap-1'>
-                <p className='p-semibold-14 text-lime-400'>Revenue:</p>
+                <p className='p-semibold-14 text-lime-400'>All-time Revenue:</p>
                 <p className='p-semibold-14 text-lime-400'>₦{revenue.toLocaleString()}</p>
               </div>
             </div>
@@ -102,12 +121,12 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
           {!hasOrderLink && !showStats && (
             <div className='relative w-full flex flex-row gap-1 p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
-            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-600/80'>
-              Created {formatDateTime(event.startDateTime).dateOnly} by {' '}
+            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500'>
+              Created {formatDateTime(event.createdAt).dateOnly} by {' '}
             </p>
             <Link href={`/${event.organizer.username}`}>
               <span className='absolute inset-0 hover:bg-neutral-700/30'></span>
-              <p className='p-regular-12 md:p-regular-14 font-medium underline text-neutral-600/80'>/{event.organizer.username}</p>
+              <p className='p-regular-12 md:p-regular-14 font-medium underline text-neutral-500'>{event.organizer.username}</p>
             </Link>
             </div>
           )}

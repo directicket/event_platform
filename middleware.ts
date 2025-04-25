@@ -11,6 +11,7 @@ export default authMiddleware({
         '/api/uploadthing',
         '/api/validate-qr/:code',
         '/validate/:finalCode',
+        '/events/:id/checkout',
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
@@ -20,6 +21,7 @@ export default authMiddleware({
         '/api/paystack',
         '/api/validate-qr/:code',
         '/validate/:finalCode',
+        '/events/:id/checkout',
     ]
 });
 
