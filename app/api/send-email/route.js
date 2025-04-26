@@ -45,11 +45,11 @@ export async function POST(req) {
 
     const qrCodeDataUrl = await QRCode.toDataURL(qrCode);
 
-    // const uploadResponse = await cloudinary.v2.uploader.upload(qrCodeDataUrl, {
-    //   folder: 'tickets',
-    // });
+    const uploadResponse = await cloudinary.v2.uploader.upload(qrCodeDataUrl, {
+      folder: 'tickets',
+    });
 
-    // const qrCodeUrl = uploadResponse.secure_url;
+    const qrCodeUrl = uploadResponse.secure_url;
 
     const emailHtml = `
       <div style="padding: 20px; border: 1px solid #333; max-width: 600px;">
@@ -60,7 +60,7 @@ export async function POST(req) {
         <p><strong>Organizer:</strong> @${event.organizer.username}</p>
         <hr />
         <p>Scan this QR Code at the entrance:</p>
-        <img src="${qrCodeDataUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
+        <img src="${qrCodeUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
       </div>
     `;
 
