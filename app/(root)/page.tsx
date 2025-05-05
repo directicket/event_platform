@@ -197,33 +197,18 @@ export default async function Home({ searchParams }: SearchParamProps) {
           
       
 
-      <section className='wrapper'>
-        <div className="mt-8 gap-1 text-white">
-          <div className="relative overflow-hidden">
-            {/* Background Video */}
-            <video
-              autoPlay
-              muted
-              loop
-              playsInline
-              className="w-full min-h-96 object-cover"
-            >
-              <source src="/assets/videos/launch-party-bg-vid.mp4" type="video/mp4" />
-              Your browser does not support the video tag.
-            </video>
+      <section className='wrapper max-w-screen-md'>
+        <LazyVideo src="/assets/videos/launch-party-bg-vid.mp4"/>
+        <div className='wrapper flex flex-col gap-2 text-left'>
+          <h1 className='h3-medium w-full'>
+            Sights from our last ticketed experience.
+          </h1>
 
-            {/* Foreground Content */}
-            <div className='flex flex-col bottom-0 left-0 self-end'>
-              <p className="hover:bg-black/85 absolute inset-0 bg-black/50 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
-                Sights from our last ticketed experience.
-              </p>
-            </div>
-
-            <p className="absolute bottom-0 left-0 p-4 pl-5 p-regular-14 line-clamp-3 text-white/70">
-              Give guests an experience they'll never forget.
-            </p>
-          </div>
+          <p className='p-regular-16 text-neutral-500 w-full'>
+            Don't just believe the hype, see it.
+          </p>
         </div>
+
       </section>
 
       <div className='wrapper text-white my-52 flex flex-col gap-2 items-center justify-center'>
@@ -260,7 +245,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
           
             <button className={`${ibmMono.className} p-2 px-4 bg-white rounded-sm text-black w-fit`}>
             <Link href='/sign-up'>
-            LET'S GO
+            TRY IT NOW
             </Link>
             </button>
           
