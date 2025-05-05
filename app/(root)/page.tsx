@@ -208,7 +208,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
               playsInline
               className="w-full min-h-96 object-cover"
             >
-              <source src="/assets/videos/ticket-artwork-upload.mp4" type="video/mp4" />
+              <source src="/assets/videos/launch-party-bg-vid.MP4" type="video/mp4" />
               Your browser does not support the video tag.
             </video>
 
