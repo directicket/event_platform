@@ -119,12 +119,12 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
   return (
     <>
     
-      <div className="wrapper md:max-w-xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
+      <div className="mt-16 wrapper md:max-w-xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
         
         <div className='flex flex-col mb-2'>
           <div className='flex flex-row gap-1'>
             <CircleCheck height={18} width={18} className='text-lime-500 self-center'/>
-            <p className='p-semibold-16 text-white self-center'>Ticket collected</p>
+            <p className='p-semibold-16 text-white self-center'>Free Ticket collected</p>
           </div>
         </div>
 
@@ -167,14 +167,14 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             <div className='flex flex-col gap-4'>
             <div className="flex flex-auto gap-4 justify-between align-baseline">
               <div className='flex flex-col w-full'>
-                <p className="p-regular-14 md:p-regular-18 text-neutral-600">Created</p>
-                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.createdAt).dateOnly : 'Loading...'}</p>
+                <p className="p-regular-14 md:p-regular-18 text-neutral-600">Date</p>
+                <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).dateOnly : 'Loading...'}</p>
               </div>
 
               <div className='flex flex-row gap-3 w-full'>
                 <div className='flex flex-col w-full'>
                   <p className="p-regular-14 md:p-regular-18 text-neutral-600">Time</p>
-                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.createdAt).timeOnly : 'Loading...'}</p>
+                  <p className="p-regular-14 md:p-regular-18 text-white mt-[-2px]">{event ? formatDateTime(event.startDateTime).timeOnly : 'Loading...'}</p>
                 </div>
 
                 <div className='flex flex-col w-full'>

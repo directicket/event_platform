@@ -6,6 +6,8 @@ import { Input } from "@/components/ui/input";
 import { useState, useEffect } from "react";
 import { useRouter } from "next/navigation"; // Use Next.js router
 import { IBM_Plex_Mono } from 'next/font/google';
+import Footer from "@/components/shared/Footer";
+import { IdCard } from "lucide-react";
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -98,7 +100,7 @@ export default function BankDetailsPage() {
         const status = "true"; // This is the value you want to store
         localStorage.setItem(`bank-details-${user.id}`, JSON.stringify(status));
   
-        router.push("/profile");  // Redirect after success
+        router.push("/events/create");  // Redirect after success
       }
 
     } catch (error) {
@@ -114,13 +116,24 @@ export default function BankDetailsPage() {
   if (!user) return (<><div className="wrapper w-full h-[100%]"><p className='text-white text-center'>Loading...</p></div></>);
 
   return (
-    <div className="wrapper max-w-4xl mt-10 p-4 text-white flex flex-col items-center justify-center mx-auto">
-      <h2 className="text-xl p-regular-24 mb-4 w-full text-center">Enter Your Bank Details</h2>
+    <>
+    <div className='wrapper p-8 my-40'>
+    <div className="wrapper max-w-4xl mt-10 p-4 text-white flex flex-col items-center justify-center mx-auto bg-neutral-950 border border-neutral-800/70">
+      <div className="flex flex-row gap-[5.5px] self-start">
+            <IdCard width={22} height={22} className='text-blue-700 self-center'/>
+            <p className={`${ibmMono.className} ibm-16 font-medium text-white self-center`}>BANK DETAILS</p>
+          </div>
+      <p className="p-regular-14 text-left text-neutral-500 md:max-w-[55%] mb-4">
+          If you've done this before you do not need to do it again.
+      </p>
+
+      <hr className="border border-dashed border-neutral-800 mb-4 w-full"/>
+
       <div className="w-full flex justify-center items-center">
         <form className="space-y-4 max-w-2xl w-full flex flex-col items-center">
-          <div className="w-full p-regular-16 p-2 text-white rounded-none border border-neutral-800 bg-black ">
+          <div className="w-full p-regular-16 p-2 text-white rounded-none border border-neutral-600/50 bg-neutral-900 ">
             <select
-              className="w-full bg-black outline-none outline-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
+              className="w-full bg-neutral-900 outline-none outline-offset-0 focus-visible:ring-0 focus-visible:ring-offset-0"
               onChange={(e) => {
                 const selectedBank = banks.find((bank) => bank.name === e.target.value);
                 setBankDetails({ ...bankDetails, bankName: e.target.value, bankCode: selectedBank?.code || "" });
@@ -134,27 +147,27 @@ export default function BankDetailsPage() {
             </select>
           </div>
           <Input
-            type="text"
+            type="tel" inputMode="numeric"
             placeholder="Account Number"
             value={bankDetails.accountNumber}
-            className="p-regular-16 text-white rounded-none border border-neutral-800 bg-black outline-offset-0 focus-visible:ring-white focus-visible:ring-offset-0"
+            className="p-regular-16 text-white rounded-none border border-neutral-600/50 bg-neutral-900 outline-offset-0 focus-visible:ring-white focus-visible:ring-offset-0"
             onChange={(e) => {
               setBankDetails({ ...bankDetails, accountNumber: e.target.value });
               resetForm();
             }}
           />
           <Button type="button" size='lg' className={`text-left rounded-none
-           w-full bg-black hover:bg-black border-white border ${ibmMono.className}`} 
+           w-full bg-blue-600 hover:bg-blue-600/80 text-white border-blue-700/70 border ${ibmMono.className}`} 
            onClick={verified ? createSubaccount : verifyAccount}>
             {verified ? 
                 <div className='flex flex-col w-full'>
                 <p className={`${ibmMono.className} text-white w-full text-left ibm-16 md:ibm-16 text-wrap p-3`}>
-                    ADD BANK ACCOUNT:
+                    CONFIRM & ADD:
                 </p>
                 {accountName && (
                 <>
-                <hr className='hidden border border-dashed border-white my-1'/>
-                <p className={`${ibmMono.className} text-blue-700 w-full 
+                <hr className='hidden border border-dashed border-black my-1'/>
+                <p className={`${ibmMono.className} text-white w-full 
                 text-left ibm-16 md:ibm-16 text-wrap p-3 underline`}>{accountName}</p>
                 </>
                 )}
@@ -170,5 +183,11 @@ export default function BankDetailsPage() {
         </form>
       </div>
     </div>
+    </div>
+
+    <div className='text-white wrapper'>
+      <Footer />
+      </div>
+    </>
   );
 }

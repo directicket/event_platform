@@ -12,6 +12,7 @@ export default authMiddleware({
         '/api/validate-qr/:code',
         '/validate/:finalCode',
         '/events/:id/checkout',
+        "/assets/:path*",
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
@@ -22,6 +23,7 @@ export default authMiddleware({
         '/api/validate-qr/:code',
         '/validate/:finalCode',
         '/events/:id/checkout',
+        "/assets/:path*",
     ]
 });
 

@@ -7,6 +7,7 @@ import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from "react";
 import BankDetailsStatus from '@/components/shared/BankDetailsStates'
 import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus } from 'lucide-react';
+import Footer from '@/components/shared/Footer';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -23,7 +24,7 @@ export default async function ProfilePage() {
 
   return (
     <>
-
+    <div className='mt-16'>
       {/* USER INFO */}
       <section className='wrapper text-white flex flex-col gap-3'>
         <div className='w-full bg-neutral-950/60 border border-neutral-800/50 p-4'>
@@ -43,14 +44,14 @@ export default async function ProfilePage() {
 
           
           <Link href={`/${user?.username}`}>
-          <div className='justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-4 border border-neutral-900'>
+          <div className='rounded-sm justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-4 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Public Profile</p>
             <Globe width={16} height={16} className='self-center'/>
           </div>
           </Link>
 
           <Link href={`/events/create`}>
-          <div className='justify-between flex flex-row p-3 text-black hover:text-black hover:bg-white/85  bg-white mt-4 border border-neutral-900'>
+          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-white/85  bg-white mt-4 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Create Ticket</p>
             <Plus width={16} height={16} className='self-center'/>
           </div>
@@ -93,6 +94,11 @@ export default async function ProfilePage() {
           totalPages={2}
         />
       </section>
+      </div>
+
+      <div className='text-white wrapper'>
+            <Footer />
+            </div>
     </>
   );
 }

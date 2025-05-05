@@ -143,8 +143,8 @@ const PaystackButton = dynamic(
     <>
     {/* <div className='text-white'>{JSON.stringify(fees)}</div> */}
 
-    <div className="wrapper md:max-w-4xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
-    <div className="md:p-4 px-0 md:px-4 md:border md:border-neutral-800 flex flex-col md:mb-2">
+    <div className="wrapper md:max-w-4xl text-white grid grid-cols-1 gap-2 mt-12 md:gap-4 justify-center items-center mb-8">
+    <div className="md:p-0 px-0 md:px-0 flex flex-col md:mb-2 md:self-center">
         <div className='max-w-xl lg:px-10 md:px-8 self-center'> {/* Openning of ticket artwork div */}
           <div className="flex mt-6 mb-20 md:mb-0 md:mt-0 min-h-96 bg-black 
             justify-center items-center overflow-hidden" 
@@ -156,13 +156,13 @@ const PaystackButton = dynamic(
                 width={100} height={100}
                 className="h-full border border-0.5 
                 border-neutral-800/40 object-contain 
-                  w-auto spin"
+                  w-auto spin self-center"
               />
             </div>
           </div>
         </div>
 
-        <div className='flex flex-col md:self-center md:pr-8 gap-3 bg-black'>
+        <div className='flex flex-col md:self-center md:pr-8 gap-3 bg-black md:w-full'>
           {/* <div>
           <p className='p-semibold-16 text-neutral-500 mb-1'>
               About this ticket
@@ -362,7 +362,7 @@ const PaystackButton = dynamic(
         </div>
         <Link href='/events/create'>
         <p className="hover:bg-blue-700/85 absolute top-0 left-0 bg-gradient-to-tr inset-0 bg-blue-700/60 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
-          Join the community of 200+ sellers.
+          Join the community of 250+ sellers.
         </p>
         </Link>
         <Link href='/events/create'>

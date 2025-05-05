@@ -33,7 +33,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
   // if (isEventCreator) return null
   return (
     <>
-    <div className={`text-white bg-black relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
+    <div className={`text-white bg-neutral-950 relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
@@ -68,7 +68,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
 
       <div className='flex flex-row p-4 -mt-3 mb-2'>
       <div className='max-w-xl self-center'> {/* Openning of ticket artwork div */}
-          <div className="flex md:mb-0 md:mt-0 min-h-fit bg-black 
+          <div className="flex md:mb-0 md:mt-0 min-h-fit bg-neutral-950 
             justify-center items-center overflow-hidden" 
             style={{ height: '100px' }}>
             <div className="h-fit max-w-[60px] 
@@ -107,13 +107,13 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
         <div className='w-full p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
             <div className='flex flex-row gap-4'>
               <div className='flex flex-row gap-1'>
-                <p className='p-semibold-14 text-lime-400'>Sold:</p>
-                <p className='p-semibold-14 text-lime-400'>{event.amountSold}</p>
+                <p className='p-semibold-14 text-white'>Sold:</p>
+                <p className={`p-semibold-14 ${ event.amountSold > 0 ? 'text-lime' : 'text-neutral-700' }`}>{event.amountSold}</p>
               </div>
 
               <div className='flex flex-row gap-1'>
-                <p className='p-semibold-14 text-lime-400'>All-time Revenue:</p>
-                <p className='p-semibold-14 text-lime-400'>₦{revenue.toLocaleString()}</p>
+                <p className='p-semibold-14 text-white'>All-time Revenue:</p>
+                <p className={`p-semibold-14 ${ revenue > 0 ? 'text-lime' : 'text-neutral-700' }`}>₦{revenue.toLocaleString()}</p>
               </div>
             </div>
             </div>

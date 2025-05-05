@@ -79,8 +79,8 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         })
 
         if(newEvent) {
-          form.reset();
           router.push(`/profile`)
+          form.reset();
         }
       } catch (error) {
         console.log(error);
@@ -114,61 +114,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
     <Form {...form}>
       <form onSubmit={form.handleSubmit(onSubmit)} className="flex flex-col gap-5">
         <div className="flex flex-col gap-5">
-          <FormField
-            control={form.control}
-            name="title"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className="text-neutral-600">Ticket Name</FormLabel>
-                <FormControl>
-                  <Input placeholder="My Party - VIP Ticket" {...field} 
-                  className="p-regular-16 text-white
-                  rounded-none border border-neutral-800
-                  bg-black 
-                  outline-offset-0 
-                  focus-visible:ring-white 
-                  focus-visible:ring-offset-0"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
-            control={form.control}
-            name="categoryId"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Ticket Type</FormLabel>
-                <FormControl>
-                  <Dropdown onChangeHandler={field.onChange} value={field.value} />
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-        </div>
-
-        <div className="flex flex-col gap-5">
         <FormField
-            control={form.control}
-            name="description"
-            render={({ field }) => (
-              <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Description</FormLabel>
-                <FormControl className="h-70">
-                  <Textarea placeholder="Describe the benefits of getting this ticket to buyers & give additional info about your event." {...field} 
-                  className="p-regular-16 text-white
-                  rounded-none border border-neutral-800
-                  bg-black 
-                  outline-offset-0 
-                  focus-visible:ring-white 
-                  focus-visible:ring-offset-0"/>
-                </FormControl>
-                <FormMessage />
-              </FormItem>
-            )}
-          />
-          <FormField
             control={form.control}
             name="imageUrl"
             render={({ field }) => (
@@ -185,32 +131,94 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               </FormItem>
             )}
           />
-        </div>
 
-        <div className="flex flex-col gap-5 md:flex-row">
           <FormField
-              control={form.control}
-              name="location"
-              render={({ field }) => (
-                <FormItem className="w-full">
-                  <FormLabel className='text-neutral-600'>Event Location</FormLabel>
-                  <FormControl>
-                      <Input placeholder="Enter the exact location" {...field} 
-                      className="p-regular-16 text-white
-                      rounded-none border border-neutral-800
-                      bg-black 
-                      outline-offset-0 
-                      focus-visible:ring-white 
-                      focus-visible:ring-offset-0"/>
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
+            control={form.control}
+            name="title"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className="text-neutral-600">Ticket Name</FormLabel>
+                <FormControl>
+                  <Input placeholder="My Party - VIP Ticket" {...field} 
+                  className="p-regular-16 text-white
+                  rounded-md border border-neutral-800
+                  bg-black 
+                  outline-offset-0 
+                  focus-visible:ring-white 
+                  focus-visible:ring-offset-0"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
         </div>
 
-        <div className="flex flex-row gap-5">
+        <div className="flex flex-col gap-5">
         <FormField
+            control={form.control}
+            name="description"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className='text-neutral-600'>Description</FormLabel>
+                <FormControl className="h-70">
+                  <Textarea placeholder="Describe the benefits of getting this ticket to buyers & give additional info about your event." {...field} 
+                  className="p-regular-16 text-white
+                  rounded-md border border-neutral-800
+                  bg-black 
+                  outline-offset-0 
+                  focus-visible:ring-white 
+                  focus-visible:ring-offset-0"/>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+          
+        </div>
+
+        <div className="flex flex-col gap-5">
+          <FormField
+            control={form.control}
+            name="price"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className='text-neutral-600'>Ticket Price</FormLabel>
+                <FormControl>
+                  <div className="flex-center w-full gap-4 rounded-none justify-between">
+                    <Input type="tel" inputMode="numeric" placeholder="5000" {...field} 
+                    className="p-regular-16 text-white
+                    rounded-md border border-neutral-800
+                    bg-black 
+                    outline-offset-0 
+                    focus-visible:ring-white 
+                    focus-visible:ring-offset-0"/>
+                    <FormField
+                      control={form.control}
+                      name="isFree"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormControl>
+                            <div className="flex items-center">
+                              <label htmlFor="isFree" className="text-white whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
+                              <Checkbox 
+                              onCheckedChange={field.onChange} 
+                              checked={field.value}
+                              id="isFree" className="mr-2 rounded-sm h-5 w-5 border border-yellow-300" />
+                            </div>
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                </FormControl>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
+          <FormField
           control={form.control}
           name="quantity"
           render={({ field }) => (
@@ -220,12 +228,12 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               <div className="flex-center w-full gap-4 rounded-none justify-between">
                 <Input
                   className="p-regular-16 text-white
-                  rounded-none border border-neutral-800
+                  rounded-md border border-neutral-800
                   bg-black 
                   outline-offset-0 
                   focus-visible:ring-white 
                   focus-visible:ring-offset-0"
-                  type="number"
+                  type="tel" inputMode="numeric"
                   min="1"
                   value={field.value}
                   onChange={(e) => field.onChange(+e.target.value)}
@@ -236,8 +244,35 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             </FormItem>
           )}
         />
+          
+        </div>
+
+        <div className="flex flex-col gap-5">
+        <FormField
+              control={form.control}
+              name="url"
+              render={({ field }) => (
+                <FormItem className="w-full">
+                  <FormLabel className='text-neutral-600'>Web Link (Copy &amp; Paste)</FormLabel>
+                  <FormControl>
+                      <Input placeholder="Spotify playlist, Instagram, etc." {...field} 
+                      className="p-regular-16 text-white
+                      rounded-md border border-neutral-800
+                      bg-black 
+                      outline-offset-0 
+                      focus-visible:ring-white 
+                      focus-visible:ring-offset-0"/>
+                  </FormControl>
+                  <FormMessage />
+                </FormItem>
+              )}
+            />
 
 
+        <div className='flex flex-col gap-2 mt-8'>
+          <p className='p-medium-16 text-neutral-400/60'>Additional Info</p>
+          <hr className="border-0.5 border-neutral-400/50"/>
+        </div>
 
           <FormField
             control={form.control}
@@ -268,53 +303,28 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         <div className="flex flex-col gap-5">
           <FormField
             control={form.control}
-            name="price"
+            name="categoryId"
             render={({ field }) => (
               <FormItem className="w-full">
-                <FormLabel className='text-neutral-600'>Ticket Price</FormLabel>
+                <FormLabel className='text-neutral-600'>Event Type</FormLabel>
                 <FormControl>
-                  <div className="flex-center w-full gap-4 rounded-none justify-between">
-                    <Input type="tel" inputMode="numeric" placeholder="5000" {...field} 
-                    className="p-regular-16 text-white
-                    rounded-none border border-neutral-800
-                    bg-black 
-                    outline-offset-0 
-                    focus-visible:ring-white 
-                    focus-visible:ring-offset-0"/>
-                    <FormField
-                      control={form.control}
-                      name="isFree"
-                      render={({ field }) => (
-                        <FormItem>
-                          <FormControl>
-                            <div className="flex items-center">
-                              <label htmlFor="isFree" className="text-white whitespace-nowrap pr-3 leading-none peer-disabled:cursor-not-allowed peer-disabled:opacity-70">Free Ticket</label>
-                              <Checkbox 
-                              onCheckedChange={field.onChange} 
-                              checked={field.value}
-                              id="isFree" className="mr-2 rounded-none h-5 w-5 border border-yellow-300" />
-                            </div>
-                          </FormControl>
-                          <FormMessage />
-                        </FormItem>
-                      )}
-                    />
-                  </div>
+                  <Dropdown onChangeHandler={field.onChange} value={field.value} />
                 </FormControl>
                 <FormMessage />
               </FormItem>
             )}
           />
+
           <FormField
               control={form.control}
-              name="url"
+              name="location"
               render={({ field }) => (
                 <FormItem className="w-full">
-                  <FormLabel className='text-neutral-600'>Social Media Link (Copy &amp; Paste)</FormLabel>
+                  <FormLabel className='text-neutral-600'>Event Location</FormLabel>
                   <FormControl>
-                      <Input placeholder="Instagram, Spotify playlist, etc." {...field} 
+                      <Input placeholder="Enter the exact location" {...field} 
                       className="p-regular-16 text-white
-                      rounded-none border border-neutral-800
+                      rounded-md border border-neutral-800
                       bg-black 
                       outline-offset-0 
                       focus-visible:ring-white 
@@ -324,7 +334,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
                 </FormItem>
               )}
             />
-
         </div>
 
 
@@ -332,12 +341,16 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
         <Button 
           type="submit" 
           size="default" 
-          className=" w-full mb-4 min-h-3 bg-white hover:bg-white text-black"
+          className=" w-full mb-1 min-h-3 bg-white hover:bg-white text-black rounded-md"
           disabled={form.formState.isSubmitting}
         >
           {form.formState.isSubmitting ? (
-            'Just a few seconds left...'
+            'Please wait...'
           ): `${type} Ticket`}</Button>
+
+          <div className="md:max-w-4xl ">
+        <p className="text-neutral-600 p-regular-14 wrapper text-center mt-[-30px]">By clicking 'Create Ticket' you agree to our Terms of Use.</p>
+        </div>
       </form>
     </Form>
   )

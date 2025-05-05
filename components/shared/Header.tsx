@@ -15,6 +15,7 @@ const ibmMono = IBM_Plex_Mono({ subsets: ["latin"], weight: ["400", "600"] });
 const Header = () => {
   const { isLoaded, userId } = useAuth();
   const [hasAccess, setHasAccess] = useState<boolean | "default">("default");
+  const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
     if (!isLoaded || !userId) return; // Wait for Clerk to load
@@ -51,9 +52,19 @@ const Header = () => {
     checkAccess();
   }, [isLoaded, userId]); // Runs only when Clerk is fully loaded
 
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 10);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   return (
-    <div className="w-full sticky-header border-b-white/50 pb-[-20] absolute text-white">
-      <div className="bg-black wrapper flex items-center align-middle justify-between py-[-20]">
+    <div className={`w-full fixed top-0 z-50 transition-colors duration-300 ${scrolled ? "bg-zinc-950/80 shadow-sm shadow-black header-blur border border-r-0 border-l-0 border-t-0 border-b border-neutral-700/50" : "bg-transparent border border-r-0 border-l-0 border-t-0 border-b-0 border-neutral-700/50"}`}>
+      <div className="wrapper flex items-center justify-between py-4 text-white">
+        <SignedOut>
         <Link href="/" className="w-36">
           <Image 
             src="/assets/images/logo.svg" width={110} height={38}
@@ -61,9 +72,20 @@ const Header = () => {
             className="text-white"
           />
         </Link>
+        </SignedOut>
 
         <SignedIn>
-          <nav className="md:flex-between hidden w-full max-w-xs">
+        <Link href="/profile" className="w-36">
+          <Image 
+            src="/assets/images/logo.svg" width={110} height={38}
+            alt="Directicket Logo"
+            className="text-white"
+          />
+        </Link>
+        </SignedIn>
+
+        <SignedIn>
+        <nav className="md:flex-between hidden w-full max-w-xs">
             <ul className="flex gap-6">
               <li><Link href="/" className={`${ibmMono.className} ibm-16 hover:underline`}>HOME</Link></li>
               <li><Link href="/events/create" className={`${ibmMono.className} ibm-16 hover:underline`}>CREATE</Link></li>

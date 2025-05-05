@@ -15,6 +15,13 @@ import {
 import Faq from "@/components/shared/Faq";
 import { IBM_Plex_Mono } from 'next/font/google';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
+import { Ban, Banknote, ChartArea, CircleHelp, CirclePlus, CircleUserRound, Flag, HandCoins, Palette, ScanQrCode, ShoppingBag, Ticket, UsersRound } from "lucide-react";
+import InViewCounter from "@/components/shared/Counter";
+import LazyVideo from "@/components/shared/LazyVideo";
+import Footer from "@/components/shared/Footer";
+import CreatorProfileSection from "@/components/shared/CreatorImage";
+import CommunitySection from "@/components/shared/CommunityImage";
+import LazyVideoNoLoop from "@/components/shared/LazyVideoNoLoop";
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -30,141 +37,294 @@ export default async function Home({ searchParams }: SearchParamProps) {
     limit: 20,
   });
 
+
   return (
     <>
-      <section className="bg-black bg-contain py-5 md:py-10">
-        {/* <div className="wrapper grid grid-cols-1 gap-5 md:grid-cols-2 2xl:gap-0">
-          <div className="flex flex-col justify-center gap-8">
-            <h1 className="h1-bold space sm:text-center md:text-left">
-              Create and buy tickets to <span className="text-blue-700">
-                exciting experiences
-              </span>.
-            </h1>
-            <p className="p-regular-18 md:p-regular-24 sm:text-center md:text-left text-muted-foreground">
-            Buy or sell tickets and keep 100% of your earnings on 
-            Nigeria's most secure platform for experiences and gatherings.</p>
-            <Button size="lg" asChild className="bg-blue-700 hover:bg-blue-500 md:w-fit sm:items-center min-w-[200px]">
-              <Link href="/events/create">
-                Create a ticket now
-              </Link>
-            </Button>
-            <Button size="lg" asChild className="mt-[-15px] min-w-[200px] bg-white border hover:bg-white border-blue-700 text-blue-700 md:w-fit sm:items-center">
-              <Link href="/#events">
-                Browse Tickets
-              </Link>
-            </Button>
+      <section id="hero" className="min-h-screen bg-black text-white flex items-center justify-center">
+        <div className='wrapper flex flex-col gap-3 text-center items-center justify-center'>
+          
+          <div className='max-w-xl lg:px-10 md:px-8 self-center mb-2'> {/* Openning of ticket artwork div */}
+            <div className="flex md:mb-0 md:mt-0 min-h-fit bg-black 
+              justify-center items-center" 
+              style={{ height: '100px' }}>
+              <div className="box h-[150px] max-w-[150px] 
+                    md:max-h-[305px] md:max-w-[250px] lg:max-h-[405px]
+                    lg:max-w-[350px] flex items-center justify-center">
+                <Image src='/assets/images/ticket-artwork.jpg' alt="Ticket artwork"
+                  width={100} height={100}
+                  className="h-full border border-0.5 
+                  border-neutral-800/40 object-contain 
+                    w-auto spin self-center"
+                />
+              </div>
+            </div>
           </div>
 
-          <Image
-            src="/assets/images/hero.png"
-            alt="hero image"
-            width={1000}
-            height={1000}
-            className="max-h-[70vh] object-contain object-center 2xl:max-h-[50vh]"
-          />
-        </div> */}
+          <h1 className='h36-regular font-normal'>Make and Sell<br/>
+            <span className='font-bold'>Tickets Your Way.</span>
+          </h1>
+
+          <p className='p-regular-18 text-neutral-600 max-w-[75%] mb-2'>
+            Directicket lets you sell individual tickets, not manage events &mdash; just create and sell.
+          </p>
+
+          <SignedIn>
+              <button className={`${ibmMono.className} bg-white text-black ibm-18 py-2 px-4 rounded-sm`}>
+              <Link href='/events/create'>
+                MAKE A TICKET
+                </Link>
+              </button>
+          </SignedIn>
+          <SignedOut>
+              <button className={`${ibmMono.className} bg-white text-black ibm-18 py-2 px-4 rounded-sm`}>
+                <Link href='/sign-up'>
+                MAKE A TICKET
+                </Link>
+              </button>
+          </SignedOut>
+        </div>
       </section>
 
-      
+      <section id="ticket-as-product" className="flex-col min-h-screen bg-black text-white flex items-center justify-center">
+        <div className='h-full'>
+          <LazyVideoNoLoop src="/assets/videos/ticket-product.mp4" />
+          </div>
+        
+        <div className='wrapper flex flex-col gap-3 text-center items-center justify-center'>
+          <h1 className='h2-bold'>
+            Treat tickets like the products they are.
+          </h1>
 
-      <div className="wrapper flex flex-col items-center justify-center
-       h-fit mx-auto w-fit gap-2 text-white
-       focus:top-0 bg-black">
-        <h3 className=' h2-regular md:h2-regular mb-2 md:max-w-[600px] text-center md:text-center text-wrap'>
-          Keep 100% of what you earn on ticket sales.
-        </h3>
+          <p className='p-regular-18 text-neutral-500 max-w-[75%]'>
+            Directicket is the only place you can make tickets to whatever 
+            you want without making events first.
+          </p>
+        </div>
+      </section>
+
+      <section id="expressive-tickets" className="min-h-screen bg-black text-white flex items-start justify-start mt-8">
+        <div className='wrapper flex flex-col gap-2 text-left'>
+          <h1 className='h2-regular w-full'>
+            Tickets as <br/>
+            expressive as you are.
+          </h1>
+
+          <p className='p-regular-16 text-neutral-500 w-full'>
+            On Directicket, your creativity shines.
+          </p>
 
           
+          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory"> {/* start of snapping, sideways scrolling div */}
 
-        <SignedOut>
-          <div className='w-fit py-0'>
-            <Link href='/sign-up'>
-              <span className=''></span>
-              <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
-              text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
-                  JOIN 100+ SELLERS &rarr;
-              </button>
-            </Link>
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <LazyVideo src="/assets/videos/ticket-artwork-upload.mp4" />
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                <span className="text-white">Upload Ticket Artworks </span> and turn each ticket you create into an extension of your brand.
+              </p>
+            </div>
+
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <LazyVideo src="/assets/videos/create-tickets.mp4" />
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                Create tickets simply by <span className="text-white">adding details you want your customers to know.</span> It won't even take up to 30 seconds.
+              </p>
+            </div>
+
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <Image alt='image' src='/assets/images/spotify-playlists-image.png' width={500} height={500} className="w-full h-full object-cover" />              
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                Bring your tickets to life with <span className="text-white">any Spotify playlist of your choice.</span> Just paste in its link when creating a ticket.
+              </p>
+            </div>
+
           </div>
-        </SignedOut>
-        <SignedIn>
-        <div className='w-fit py-0'>
-            <Link href='/events/create'>
-              <span className=''></span>
-              <button className={`${ibmMono.className} ibm-12 h-10 w-full w-flex
-              text-white text-left md:hidden bg-black border-white border pl-3 pr-3`}>
-                  CREATE & SELL YOURS &rarr;
-              </button>
-            </Link>
-          </div>
-        </SignedIn>
-
-
-
-          <p 
-      className="bg-black pt-2 text-neutral-600 
-      md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
-       p-regular-14 pb-20 md:block hidden">
-          Keep 100% of profit from ticket sales when you sell tickets to your event on Directicket.{' '}
-          <Link href="/events/create" className="underline text-blue-500">Sell now &#8250;</Link>
-          </p>
-
-          <p 
-      className="bg-black pt-2 text-neutral-600 
-      md:w-fit w-fit sm:items-center h-[25px] text-center max-w-[260px] md:max-w-[400px]
-       p-regular-14 pb-20 md:hidden hidden">
-          Giving you 100% of ticket sales profit 
-          means you earn up to 20% more per ticket on Directicket.{' '}
-          <a href="#questions" className="underline text-black">Learn More &#8250;</a>
-          </p>
-      </div>
-
-      
-
-
-      <section id="events" className="wrapper bg-black my-8 flex flex-col  md:gap-12">
-     
-
-
-        {/* <h3 className="p-medium-20 md:p-medium-24 mx-auto">Get tickets now</h3> */}
-
-        
-        <Search />
-        <Collection 
-          data={events?.data}
-          emptyTitle="There aren&apos;t any Tickets with that name."
-          emptyStateSubtext="Check your search for spelling errors or try searching for something else."
-          collectionType="All_Events"
-          limit={6}
-          page={1}
-          totalPages={2}
-        />
+        </div>
       </section>
 
-      {/* <hr className="opacity-15"/> */}
-      
-      {/* <section id="questions" className=" text-white wrapper mt-2 mb-8 flex flex-col gap-8 md:gap-12
-      ">
-        <div className="flex flex-col gap-5">
-          <h3 className="h3-medium">Frequently Asked <br/>Questions</h3>
-          <hr/>
-          <Faq />
+      <CreatorProfileSection />
+
+      <section id="richer-exp" className="min-h-screen bg-black text-white flex items-start justify-start mt-8">
+        <div className='wrapper flex flex-col gap-2 text-left'>
+          <h1 className='h2-regular w-full'>
+            Get a richer experience.
+          </h1>
+
+          <p className='p-regular-16 text-neutral-500 w-full'>
+            No fees on what you earn, security built into every ticket, and so much more.
+          </p>
+
+          
+          <div className="flex overflow-x-auto gap-4 snap-x snap-mandatory"> {/* start of snapping, sideways scrolling div */}
+
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <Image alt='image' src='/assets/images/bank-alert-image.png' width={500} height={500} className="w-full h-full object-contain" />              
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                Sell tickets and <span className="text-white">get paid every business day without fees cutting into your earnings.</span>
+              </p>
+            </div>
+
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <Image alt='image' src='/assets/images/track-tickets-image.png' width={500} height={500} className="w-full h-full object-cover" />              
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                <span className="text-white">Track tickets you've created</span> and how they're performing right from your Dashboard.
+              </p>
+            </div>
+
+            <div className="shrink-0 w-80 snap-start flex flex-col gap-6
+             overflow-hidden mt-2 border border-neutral-900/70 card-bg p-6">
+              <Image alt='image' src='/assets/images/scan-qr-code-image.png' width={500} height={500} className="w-full h-full object-cover" />              
+              <hr className="border border-neutral-800"/>
+              <p className="p-regular-14 text-neutral-500">
+                <span className="text-white">Scan QR Codes on tickets with any app</span>, including your iPhone camera. Once scanned, tickets can't be gotten back.
+              </p>
+            </div>
+
+          </div>
         </div>
-      </section> */}
+      </section>
 
-      {/* <div className='wrapper flex flex-col items-center justify-center
-       h-fit mx-auto w-fit'>
-            <Link href='/events/create'>
-              <button className='p-semibold-14 h-10 
-              w-fit w-flex rounded-lg text-white
-              bg-blue-500 px-4 py-1 hover:underline  
-              fixed bottom-3 right-3 md:bottom-4 md:right-4 md:hidden'>
-                  Create your Ticket &rarr;
-              </button>
-            </Link>
-        </div> */}
-
+      <CommunitySection />
+          
       
+
+      <section className='wrapper'>
+        <div className="mt-8 gap-1 text-white">
+          <div className="relative overflow-hidden">
+            {/* Background Video */}
+            <video
+              autoPlay
+              muted
+              loop
+              playsInline
+              className="w-full min-h-96 object-cover"
+            >
+              <source src="/assets/videos/launch-party-bg-vid.mp4" type="video/mp4" />
+              Your browser does not support the video tag.
+            </video>
+
+            {/* Foreground Content */}
+            <div className='flex flex-col bottom-0 left-0 self-end'>
+              <p className="hover:bg-black/85 absolute inset-0 bg-black/50 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
+                Sights from our last ticketed experience.
+              </p>
+            </div>
+
+            <p className="absolute bottom-0 left-0 p-4 pl-5 p-regular-14 line-clamp-3 text-white/70">
+              Give guests an experience they'll never forget.
+            </p>
+          </div>
+        </div>
+      </section>
+
+      <div className='wrapper text-white my-52 flex flex-col gap-2 items-center justify-center'>
+        <div className='max-w-xl lg:px-10 md:px-8 self-center mb-2'> {/* Openning of ticket artwork div */}
+          <div className="flex md:mb-0 md:mt-0 min-h-fit bg-black 
+            justify-center items-center" 
+            style={{ height: '100px' }}>
+            <div className="box h-[150px] max-w-[150px] 
+                  md:max-h-[305px] md:max-w-[250px] lg:max-h-[405px]
+                  lg:max-w-[350px] flex items-center justify-center">
+              <Image src='/assets/images/ticket-artwork.jpg' alt="Ticket artwork"
+                width={100} height={100}
+                className="h-full border border-0.5 
+                border-neutral-800/40 object-contain 
+                  w-auto spin self-center"
+              />
+            </div>
+          </div>
+        </div>
+        <p className='h1-bold text-center'>Ticket anything. Instantly.</p>
+        <p className="p-regular-18 text-neutral-500 text-center my-2 w-[90%]">
+          Create individual tickets and sell them without creating events.
+        </p>
+        <SignedIn>
+          
+            <button className={`${ibmMono.className} p-2 px-4 bg-white rounded-sm text-black w-fit`}>
+            <Link href='/events/create'>
+              CREATE A TICKET
+              </Link>
+            </button>
+          
+        </SignedIn>
+        <SignedOut>
+          
+            <button className={`${ibmMono.className} p-2 px-4 bg-white rounded-sm text-black w-fit`}>
+            <Link href='/sign-up'>
+            LET'S GO
+            </Link>
+            </button>
+          
+        </SignedOut>
+      </div>
+
+      <div className='text-white wrapper'>
+      <Faq />
+      </div>
+
+      <section className='wrapper'>
+      <div className="wrapper flex overflow-x-auto gap-4 snap-x snap-mandatory md:flex-row">
+        <div className="shrink-0 w-[100%] snap-start flex flex-col gap-2 card-bg p-4 rounded-md border border-neutral-800">
+          <CircleHelp width={25} height={25} className='text-pink-500'/>
+          <h3 className='h3-medium text-white'>Need our help?</h3>
+          <div className='flex flex-col gap-4'>
+          <p className='p-regular-16 text-neutral-500 w-[90%]'>
+            Our customer support team is standing by to take your questions.
+          </p>
+          
+          <button className={`${ibmMono.className} p-2 px-4 text-center hover:bg-pink-500/50 bg-pink-500 rounded-sm text-black w-full`}>
+          <Link href='https://instagram.com/directicket.live'>
+            SEND TEXT
+            </Link>
+          </button>
+          </div>
+        </div>
+
+        <div className="self-start h-fit shrink-0 w-[100%] snap-start first-letter:flex flex-col gap-2 card-bg p-4 rounded-md border border-neutral-800">
+          <Flag width={25} height={25} className='text-red-600'/>
+          <h3 className='h3-medium text-white'>Report an issue.</h3>
+          <div className='flex flex-col gap-4'>
+          <p className='p-regular-16 text-neutral-500 w-[90%]'>
+            If you see something, say something. We'll get on it ASAP.
+          </p>
+          <SignedIn>
+            
+              <button className={`${ibmMono.className} p-2 px-4 text-center hover:bg-red-600/50 bg-red-600 rounded-sm text-black w-full`}>
+              <Link href='/report'>
+                FILE REPORT
+                </Link>
+              </button>
+            
+          </SignedIn>
+          
+          <SignedOut>
+            
+            <button className={`${ibmMono.className} p-2 px-4 text-center hover:bg-red-600/50 bg-red-600 rounded-sm text-black w-full`}>
+            <Link href='/sign-in'>
+              SIGN IN TO CONTINUE
+              </Link>
+            </button>
+            
+          </SignedOut>
+          
+          </div>
+        </div>
+      </div>      
+      </section>
+
+      <div className='text-white wrapper'>
+      <Footer />
+      </div>
+
     </>
   );
 }

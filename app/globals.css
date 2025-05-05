@@ -103,20 +103,28 @@ body {
   /* TYPOGRAPHY */
   /* 64 */
   .h1-bold {
-    @apply font-bold text-[40px] leading-[48px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px];
+    @apply font-bold text-[40px] tracking-tight leading-[44px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px];
+  }
+
+  .h1-regular {
+    @apply font-normal text-[40px] tracking-tight leading-[44px] lg:text-[48px] lg:leading-[60px]  xl:text-[58px] xl:leading-[74px];
+  }
+
+  .h36-regular {
+    @apply font-normal text-[36px] tracking-tight leading-[40px] lg:text-[44px] lg:leading-[56px]  xl:text-[54px] xl:leading-[70px];
   }
 
   /* 40 */
   .h2-bold {
-    @apply font-bold text-[32px] leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
+    @apply font-bold tracking-tight text-[32px] leading-[36px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
   }
 
   .h2-medium {
-    @apply font-semibold tracking-tight text-[32px]  leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
+    @apply font-semibold tracking-tight text-[32px]  leading-[36px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
   }
 
   .h2-regular {
-    @apply font-normal tracking-normal text-[32px]  leading-[40px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
+    @apply font-normal tracking-tight text-[32px]  leading-[36px] lg:text-[36px] lg:leading-[44px] xl:text-[40px] xl:leading-[48px];
   }
 
   /* 36 */
@@ -148,15 +156,15 @@ body {
   }
 
   .p-semibold-24 {
-    @apply font-semibold text-[24px] leading-[20px];
+    @apply font-semibold text-[24px] leading-[26px];
   }
 
   .p-medium-24 {
-    @apply font-medium text-[24px] leading-[28px];
+    @apply font-medium text-[24px] leading-[26px];
   }
 
   .p-regular-24 {
-    @apply font-normal text-[24px] leading-[36px];
+    @apply font-normal text-[24px] leading-[26px];
   }
 
   /* 20 */
@@ -178,32 +186,32 @@ body {
 
   /* 18 */
   .p-semibold-18 {
-    @apply text-[18px] font-semibold leading-[28px] tracking-[2%];
+    @apply text-[18px] font-semibold leading-[22px] tracking-[2%];
   }
 
   .p-medium-18 {
-    @apply text-[18px] font-medium leading-[28px];
+    @apply text-[18px] font-medium leading-[22px];
   }
 
   .p-regular-18 {
-    @apply text-[18px] font-normal leading-[28px] tracking-[2%];
+    @apply text-[18px] font-normal leading-[22px] tracking-[2%];
   }
 
   /* 16 */
   .p-bold-16 {
-    @apply text-[16px] font-bold leading-[24px];
+    @apply text-[16px] font-bold leading-[20px];
   }
 
   .p-semibold-16 {
-    @apply text-[16px] font-semibold leading-[22px] tracking-[-2%];
+    @apply text-[16px] font-semibold leading-[20px] tracking-[-2%];
   }
 
   .p-medium-16 {
-    @apply text-[16px] font-medium leading-[22px];
+    @apply text-[16px] font-medium leading-[20px];
   }
 
   .p-regular-16 {
-    @apply text-[16px] font-normal leading-[24px];
+    @apply text-[16px] font-normal leading-[20px];
   }
 
   /* 14 */
@@ -347,6 +355,14 @@ body {
   background-color: lime;
 }
 
+.card-bg {
+  background-color: #191919;
+}
+
+.text-lime {
+  color: lime;
+}
+
 .fixed-bottom {
   position: fixed;
   bottom: 0;
@@ -386,4 +402,40 @@ body {
 .gradient {
   background: 
     linear-gradient(to bottom, rgba(0, 0, 0, 1) 50%, rgba(0, 0, 0, 0.7) 100%);
+}
+
+.contact-container{
+  display: flex;
+  align-items: center;
+}
+
+.contact-left{
+  display: flex;
+  align-items:center;
+  flex-direction: column;
+  gap: 20px
+}
+
+.contact-inputs {
+  width: 350px;
+  height: 50px;
+  border: 1.5px solid #191919;
+  outline: 1px;
+  padding-left: 25px;
+  color: #ffffff;
+}
+
+.area-inputs {
+  width: 350px;
+  height: auto;
+  border: 1.5px solid #191919;
+  outline: 1px;
+  padding-left: 25px;
+  color: #ffffff;
+}
+
+input[type="text"]
+
+.contact-inputs:focus{
+  border: 4px solid #5A91F7
 }
