@@ -40,7 +40,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
 
   return (
     <>
-    <div className='flex items-center justify-center w-full'>
+    <div className='lg:flex lg:items-center lg:justify-center lg:w-full'>
     <div className='lg:max-w-screen-md'>
       <section id="hero" className="min-h-screen bg-black text-white flex items-center justify-center">
         <div className='wrapper flex flex-col gap-3 text-center items-center justify-center'>
