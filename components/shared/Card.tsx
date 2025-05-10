@@ -87,9 +87,9 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
           </div>
         </div>
 
-        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-neutral-950/85 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
+        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-neutral-800/85 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
           Sales for this ticket are closed.<br />
-          { !hasOrderLink ? <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-12 text-neutral-600'>Did it close too soon? <Link href={`events/${event._id}/update`} className='underline'>Update this ticket's details.</Link></span>}
+          { !hasOrderLink ? <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-12 text-neutral-600'>Did it close too soon? <Link href={`events/${event._id}/update`} className='underline my-2 mx-1'>Update this ticket's details.</Link></span>}
         </p>
 
         <div className={`self-center flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
