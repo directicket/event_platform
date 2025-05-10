@@ -58,13 +58,13 @@ export default async function PublicProfilePage({ params }: Props) {
       <div className='flex flex-row items-start justify-start'>
         <div className='flex flex-row gap-1'>
           <p className="text-sm font-medium text-white">
-            {eventCount} {eventCount === 1 ? 'Listing' : 'Listings'}
+            {eventCount} {eventCount === 1 ? 'Ticket' : 'Tickets'}
           </p>
           <p className='text-sm font-regular text-white'>
             &bull;
           </p>
           <p className="text-sm font-medium text-white">
-            {totalTicketsSold} {totalTicketsSold === 1 ? 'Ticket' : 'Tickets'} Sold
+            {totalTicketsSold} {totalTicketsSold === 1 ? 'All-time Sale' : 'All-time Sales'}
           </p>
         </div>
       </div>
