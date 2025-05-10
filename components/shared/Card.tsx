@@ -114,12 +114,17 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
         <div className='z-20 w-full p-4 border border-dashed border-neutral-900 border-b-0 border-r-0 border-t border-l-0'>
             <div className='flex flex-row gap-4'>
               <div className='flex flex-row gap-1'>
+                <p className='p-semibold-14 text-white'>Stock:</p>
+                <p className={`p-semibold-14 ${ event.quantity > 0 ? 'text-white' : 'text-red-700' }`}>{event.quantity}</p>
+              </div>
+
+              <div className='flex flex-row gap-1'>
                 <p className='p-semibold-14 text-white'>Sold:</p>
                 <p className={`p-semibold-14 ${ event.amountSold > 0 ? 'text-lime' : 'text-neutral-700' }`}>{event.amountSold}</p>
               </div>
 
               <div className='flex flex-row gap-1'>
-                <p className='p-semibold-14 text-white'>All-time Revenue:</p>
+                <p className='p-semibold-14 text-white'>Revenue:</p>
                 <p className={`p-semibold-14 ${ revenue > 0 ? 'text-lime' : 'text-neutral-700' }`}>₦{revenue.toLocaleString()}</p>
               </div>
             </div>
