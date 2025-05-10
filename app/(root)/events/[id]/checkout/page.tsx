@@ -184,7 +184,7 @@ const PaystackButton = dynamic(
           </div>
 
           <a href='#buy'>
-          <p className={`${ibmMono.className} text-white p-4 bg-black border hover:bg-white hover:text-black`}>BUY TICKET <br/><br/>LIMITED STOCK AVAILABLE</p>
+          <p className={`${ibmMono.className} text-white p-4 bg-black border hover:bg-white hover:text-black`}>BUY TICKET <br/><br/>{`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} IN STOCK` : `LIMITED STOCK AVAILABLE`}`}</p>
           </a>
 
           <div className='flex flex-col gap-1'>

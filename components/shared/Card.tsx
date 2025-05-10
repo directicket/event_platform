@@ -59,7 +59,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
                   : ''
               }`}
             >
-              {`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `${event.quantity} IN STOCK` : `IN STOCK`}`}
+              {`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} LEFT` : `IN STOCK`}`}
             </span>
         </p>
         </div>
