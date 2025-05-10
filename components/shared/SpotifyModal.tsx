@@ -14,7 +14,7 @@ export default function TicketModal({ showModal, setShowModal }: TicketModalProp
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 w-full">
       <div className="bg-none p-6 rounded-lg">
-        <div className="bg-card md:max-w-96 p-4 border border-neutral-700/45 rounded-md gap-3 flex flex-col items-center py-8 justify-center">
+        <div className="card-bg md:max-w-96 p-4 border border-neutral-700/45 rounded-md gap-3 flex flex-col items-center py-8 justify-center">
           <Image
             alt='image'
             src='/assets/images/spotify-playlists-image.png'
