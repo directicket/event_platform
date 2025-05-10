@@ -9,9 +9,9 @@ export default function TicketModal() {
   if (!showModal) return null
 
   return (
-    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50">
-      <div className="bg-none p-6 rounded-lg relative">
-        <div className="card-bg p-4 border border-neutral-700/45 rounded-md gap-3 flex flex-col items-center py-8 justify-center">
+    <div className="fixed inset-0 bg-black bg-opacity-50 flex justify-center items-center z-50 w-full">
+      <div className="bg-none p-6 rounded-lg">
+        <div className="card-bg md:max-w-96 p-4 border border-neutral-700/45 rounded-md gap-3 flex flex-col items-center py-8 justify-center">
           <video autoPlay muted loop playsInline className="w-full h-full object-cover">
             <source src="/assets/videos/ticket-artwork-upload.mp4" type="video/mp4" />
             Your browser does not support the video tag.

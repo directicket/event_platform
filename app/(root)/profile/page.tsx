@@ -27,7 +27,7 @@ export default async function ProfilePage() {
     <div className='mt-16'>
       {/* USER INFO */}
       <section className='wrapper text-white flex flex-col gap-3'>
-        <div className='w-full bg-neutral-950/60 border border-neutral-800/50 p-4'>
+        <div className='w-full bg-neutral-950/60 border border-neutral-800/50 p-4 rounded-md'>
           <h1 className='text-xl font-normal'>{userFullName}</h1>
           <p className='text-sm text-neutral-600'>directicket.live/{userName}</p>
 
@@ -51,19 +51,30 @@ export default async function ProfilePage() {
           </Link>
 
           <Link href={`/events/create`}>
-          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-white/85  bg-white mt-4 border border-neutral-900'>
+          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-yellow-400/85  bg-yellow-400 mt-4 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Create Ticket</p>
             <Plus width={16} height={16} className='self-center'/>
           </div>
           </Link>
         </div>
 
-        <div className="flex flex-col gap-2">
-          <div className="flex flex-col p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
+        <div className="flex overflow-x-auto gap-3 snap-x snap-mandatory rounded-md">
+          <div className="shrink-0 w-80 md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
             <div className="flex flex-row gap-[7.5px]">
-              <HandHeart width={18} height={18} className='text-lime-400'/>
-              <p className={`${ibmMono.className} ibm-14 text-white`}>NO FEES ON PAYOUTS</p>
+              <Globe width={18} height={18} className='text-yellow-400 self-center'/>
+              <p className={`${ibmMono.className} ibm-14 text-white`}>SHARE YOUR PROFILE</p>
             </div>
+            <hr className='border-0.5 border-dashed border-neutral-700 my-3 w-full'/>
+            <p className="p-regular-12 md:p-regular-16 text-neutral-600">
+              Share your public profile so your customers can browse all the tickets you've made at any time.</p>
+          </div>
+
+          <div className="shrink-0 w-80 md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-neutral-950/60 border border-neutral-800/50 gap-1">
+            <div className="flex flex-row gap-[7.5px]">
+              <HandHeart width={18} height={18} className='text-yellow-400 self-center'/>
+              <p className={`${ibmMono.className} ibm-14 text-white self-center`}>EARN WITHOUT FEES</p>
+            </div>
+            <hr className='border-0.5 border-dashed border-neutral-700 my-3 w-full'/>
             <p className="p-regular-12 md:p-regular-16 text-neutral-600">
               All your revenue from ticket sales are sent into your bank account every business day.</p>
           </div>
@@ -71,14 +82,14 @@ export default async function ProfilePage() {
       </section>
 
       {/* LISTINGS */}
-      <section className='bg-black bg-cover bg-center pt-5 md:pt-16 md:py-2'>
-        <div className='wrapper flex items-left justify-left sm:justify-between align-middle'>
-          <h3 className='p-regular-16 md:p-regular-18 text-left sm:text-left text-white'>
-            Your Listings
+      <section className='bg-black bg-cover bg-center pt-5 md:pt-16 md:py-2 mb-2'>
+        <div className='wrapper flex flex-col gap-0'>
+          <h3 className='text-xl md:p-regular-18 text-left sm:text-left text-white'>
+            Your Tickets
           </h3>
-          <Button size="sm" className='flex-row bg-black text-white hover:text-black hover:bg-white p-medium-12 underline rounded-full hidden sm:flex'>
-            <Link href="/events/create">New Ticket</Link>
-          </Button>
+          <p className='p-regular-14 md:p-regular-18 text-left sm:text-left text-neutral-600'>
+            View all the tickets you've created on directicket.
+          </p>
         </div>
       </section>
 

@@ -27,7 +27,7 @@ const Collection = ({
     <>
       {data.length > 0 ? (
         <div className='flex flex-col items-center gap-10'>
-            <ul className='grid w-full grid-cols-1 gap-5 md:gap-3 sm:grid-cols-2 md:grid-cols-1 lg:grid-cols-1 xl:gap-0'>
+            <ul className='grid w-full grid-cols-1 gap-5 md:gap-3 sm:grid-cols-2 md:grid-cols-2 lg:grid-cols-2 lg:gap-6 xl:gap-6'>
                 {data.map((event) => {
                     const isPrivateOrganizerView = collectionType === 'Events_Organized';
                     const isPublicOrganizerView = collectionType === 'Public_Events_Organized';

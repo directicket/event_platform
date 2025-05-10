@@ -36,6 +36,7 @@ const SpotifyPreview: React.FC<SpotifyPreviewProps> = ({ playlistUrl }) => {
         )
 
   return (
+    <>
     <div className='w-full overflow-hidden'>
         <iframe
             src={`https://open.spotify.com/embed/playlist/${playlistId}`}
@@ -53,8 +54,12 @@ const SpotifyPreview: React.FC<SpotifyPreviewProps> = ({ playlistUrl }) => {
                 Learn how to add a playlist to your ticket.
             </span>
         </p>
+        
+    </div>
+    <div className='w-full flex items-center justify-center'>
         <TicketModal showModal={showModal} setShowModal={setShowModal} />
     </div>
+    </>
   )
 }
 
