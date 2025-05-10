@@ -40,8 +40,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
             <div className='w-fit p-0 bg-none text-white hover:text-neutral-800 z-30 right-4 top-4 isolate absolute'>
-                <Link href={`/events/${event._id}/update`} className='flex flex-row gap-2 w-fit mx-2'>
-                  <p className={`${ibmMono.className} ibm-16 text-white self-center`}>EDIT TICKET</p>
+                <Link href={`/events/${event._id}/update`}>
                   <SquarePen width={16} height={16}/>
                 </Link>
             </div>
