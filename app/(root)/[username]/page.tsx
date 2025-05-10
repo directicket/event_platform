@@ -3,6 +3,7 @@ import { getEventsByUser } from '@/lib/actions/event.actions'
 import Event from '@/lib/database/models/event.model'
 import Collection from '@/components/shared/Collection'
 import { IBM_Plex_Mono } from 'next/font/google';
+import Footer from '@/components/shared/Footer';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -87,6 +88,10 @@ export default async function PublicProfilePage({ params }: Props) {
                 totalPages={2}
             />
         </section>
+    </div>
+
+    <div className='text-white wrapper'>
+      <Footer />
     </div>
     </>
   )

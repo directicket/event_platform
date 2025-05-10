@@ -50,7 +50,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             <span className='text-yellow-300'>FREE</span> 
             : 
             `₦${event.price}`
-          } {' '}&#8226;{' '}
+          }  { hasOrderLink ? ' ' : <span>{' '}&bull;{' '}
             <span className={`${
                 event.quantity < 10
                   ? 'text-red-600'
@@ -61,6 +61,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
             >
               {`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} LEFT` : `IN STOCK`}`}
             </span>
+            </span> }
         </p>
         </div>
         {/* <p className='p-regular-12 md:p-regular-14 self-center'>See details &rarr;</p> */}
@@ -86,9 +87,9 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
           </div>
         </div>
 
-        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-black/85 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
+        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-neutral-950/85 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
           Sales for this ticket are closed.<br />
-          <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span>
+          { !hasOrderLink ? <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-12 text-neutral-600'>Did it close too soon? <Link href={`events/${event._id}/update`} className='underline'>Update this ticket's details.</Link></span>}
         </p>
 
         <div className={`self-center flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
