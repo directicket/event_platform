@@ -35,12 +35,13 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
   // if (isEventCreator) return null
   return (
     <>
-    <div className={`text-white rounded-md bg-neutral-900 relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
+    <div className={`text-white rounded-md bg-neutral-950 relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
             <div className='w-fit p-0 bg-none text-white hover:text-neutral-800 z-30 right-4 top-4 isolate absolute'>
-                <Link href={`/events/${event._id}/update`}>
+                <Link href={`/events/${event._id}/update`} className='flex flex-row gap-2 w-fit mx-2'>
+                  <p className={`${ibmMono.className} ibm-16 text-white self-center`}>EDIT TICKET</p>
                   <SquarePen width={16} height={16}/>
                 </Link>
             </div>
@@ -87,9 +88,9 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
           </div>
         </div>
 
-        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-black/60 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
+        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-black/80 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
           Sales for this ticket are closed.<br />
-          { !hasOrderLink ? <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-12 text-neutral-600'>Did it close too soon? <Link href={`events/${event._id}/update`} className='underline my-2 mx-1'>Update this ticket's details.</Link></span>}
+          { !hasOrderLink ? <span className='p-regular-12 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-12 text-neutral-600'>Too soon? Edit this ticket's details.</span>}
         </p>
 
         <div className={`self-center flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
