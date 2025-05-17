@@ -189,14 +189,16 @@ const PaystackButton = dynamic(
           <a href='#buy' className='mb-2'>
           <p className={`${ibmMono.className} rounded-md text-black p-4 bg-neutral-200 border border-neutral-200 hover:bg-white/80 hover:text-black`}>BUY TICKET <br/><br/>{`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} IN STOCK` : `LIMITED STOCK AVAILABLE`}`}</p>
           </a>
-          {hasEventStarted ? 
-          <p className={`${ibmMono.className} rounded-md text-neutral-600 p-4 bg-black border border-neutral-950`}>HURRY! THE EVENT HAS STARTED.</p>
-          : <div></div>}
+          
 
           <div className='flex flex-col gap-1'>
             <p className='p-regular-14 text-neutral-400 mb-10'>
               {event.description}
             </p>
+
+            {hasEventStarted ? 
+          <p className={`${ibmMono.className} rounded-md text-neutral-600 p-4 bg-black border border-neutral-800/80`}>HURRY! THE EVENT HAS STARTED.</p>
+          : <div></div>}
 
             <p className='p-semibold-16 text-neutral-400 mb-1'>
               Additional Info
