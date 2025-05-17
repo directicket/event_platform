@@ -6,7 +6,7 @@ import Link from 'next/link';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from "react";
 import BankDetailsStatus from '@/components/shared/BankDetailsStates'
-import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus } from 'lucide-react';
+import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus, Ticket } from 'lucide-react';
 import Footer from '@/components/shared/Footer';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
@@ -47,6 +47,13 @@ export default async function ProfilePage() {
           <div className='rounded-sm justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-4 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Public Profile</p>
             <Globe width={16} height={16} className='self-center'/>
+          </div>
+          </Link>
+
+          <Link href={`/profile/my-orders`}>
+          <div className='rounded-sm justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-4 border border-neutral-900'>
+            <p className='p-regular-14 self-center ml-0.5'>My Purchases</p>
+            <Ticket width={16} height={16} className='self-center'/>
           </div>
           </Link>
 
