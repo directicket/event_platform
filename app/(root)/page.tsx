@@ -15,7 +15,7 @@ import {
 import Faq from "@/components/shared/Faq";
 import { IBM_Plex_Mono } from 'next/font/google';
 import { SignedIn, SignedOut, UserButton } from "@clerk/nextjs";
-import { Ban, Banknote, ChartArea, CircleHelp, CirclePlus, CircleUserRound, Flag, HandCoins, Palette, ScanQrCode, ShoppingBag, Ticket, UsersRound } from "lucide-react";
+import { Ban, Banknote, ChartArea, CircleHelp, CirclePlus, CircleUserRound, Flag, HandCoins, Palette, ScanQrCode, ShoppingBag, Ticket, TriangleAlert, UsersRound } from "lucide-react";
 import InViewCounter from "@/components/shared/Counter";
 import LazyVideo from "@/components/shared/LazyVideo";
 import Footer from "@/components/shared/Footer";
@@ -327,6 +327,17 @@ export default async function Home({ searchParams }: SearchParamProps) {
       <Footer />
       </div>
       </div>
+      </div>
+
+      <div className="wrapper flex flex-col items-center justify-center scroll-container
+        fixed bottom-0 h-fit mx-auto right-0 left-0 w-fit
+        px-4 p-3 bg-red-600 bg-blur">
+        <div className="scrolling-text flex flex-row">
+          <TriangleAlert className='text-black flex-row' height={20} width={20}/>
+          <p className="p-medium-14 pl-1 flex-row text-black">
+              <span className='font-bold'>Ticket Expiry is here!</span> Make tickets expire when your event starts..
+          </p>
+        </div>
       </div>
     </>
   );

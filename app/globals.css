@@ -439,3 +439,23 @@ input[type="text"]
 .contact-inputs:focus{
   border: 4px solid #5A91F7
 }
+
+.scroll-container{
+  overflow:hidden;
+  white-space: nowrap;
+}
+
+.scrolling-text {
+  padding-right: 10%;
+  animation: scroll-loop 8s linear infinite;
+  min-width: 120%;
+}
+
+@keyframes scroll-loop {
+  0% {
+    transform: translateX(100%);
+  }
+  100% {
+    transform: translateX(-100%);
+  }
+}
