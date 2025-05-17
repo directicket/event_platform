@@ -190,7 +190,7 @@ const PaystackButton = dynamic(
           <p className={`${ibmMono.className} rounded-md text-black p-4 bg-neutral-200 border border-neutral-200 hover:bg-white/80 hover:text-black`}>BUY TICKET <br/><br/>{`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} IN STOCK` : `LIMITED STOCK AVAILABLE`}`}</p>
           </a>
           {hasEventStarted ? 
-          <p className={`${ibmMono.className} rounded-md text-white p-4 bg-neutral-900 border border-neutral-950/50`}>THE EVENT THIS TICKET IS FOR HAS ALREADY BEGUN.</p>
+          <p className={`${ibmMono.className} rounded-md text-neutral-600 p-4 bg-black border border-neutral-950`}>HURRY! THE EVENT HAS STARTED.</p>
           : <div></div>}
 
           <div className='flex flex-col gap-1'>
@@ -271,7 +271,7 @@ const PaystackButton = dynamic(
         <div className="shadow-md shadow-black mt-2 mb-2 shrink-0 w-full md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-neutral-900 border border-neutral-800/50 gap-1">
           <div className="flex flex-row gap-[7.5px]">
             <TriangleAlert width={18} height={18} className='text-red-600 self-center'/>
-            <p className={`${ibmMono.className} ibm-14 text-white`}>EXPIRY NOTICE</p>
+            <p className={`${ibmMono.className} ibm-14 text-white`}>DON'T BE LATE!</p>
           </div>
           <hr className='border-0.5 border-dashed border-neutral-500 my-3 w-full'/>
           <p className="p-regular-14 md:p-regular-16 text-neutral-500">
@@ -368,7 +368,7 @@ const PaystackButton = dynamic(
         <button 
           className="w-full p-4 bg-red-600/30 rounded-md text-red-600 md:p-semibold-18"
           >
-          This ticket is no longer on sale.
+          You're too late! Sales are closed.
         </button>
        </SignedIn>
        }
