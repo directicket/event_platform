@@ -1,4 +1,5 @@
 import { Schema, model, models, Document } from 'mongoose'
+import "@/lib/database/models/event.model"
 
 export interface IOrder extends Document {
   createdAt: Date
