@@ -1,8 +1,8 @@
 import { auth } from "@clerk/nextjs";
 import { NextResponse } from "next/server";
+import Event from "@/lib/database/models/event.model";
 import Order from "@/lib/database/models/order.model";
 import User from "@/lib/database/models/user.model";
-import Event from "@/lib/database/models/event.model";
 import { connectToDatabase } from "@/lib/database";
 
 export async function GET() {
