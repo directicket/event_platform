@@ -4,6 +4,7 @@ import QRCode from 'qrcode';
 import { Redis } from '@upstash/redis';
 import { getEventById } from '@/lib/actions/event.actions';
 import Order from "@/lib/database/models/order.model"
+import User from "@/lib/database/models/user.model"
 import { connectToDatabase } from '@/lib/database';
 
 await connectToDatabase();
@@ -79,6 +80,12 @@ export async function POST(req) {
     // Only create order if it doesn't already exist
     const existingOrder = await Order.findOne({ stripeId: reference });
     if (!existingOrder) {
+      const user = await User.findOne({ clerkId: userId })
+
+      if (!user) {
+        throw new Error("User not found")
+      }
+
       await Order.create({
         stripeId: reference,
         totalAmount: (data.data.amount / 100).toFixed(2), // Paystack returns amount in kobo
