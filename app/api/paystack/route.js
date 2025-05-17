@@ -20,7 +20,7 @@ export async function GET(req) {
 
     // Calculate fees
     const serviceFee = Math.ceil(price * 0.075); // 7.5% service fee
-    const paymentProcessingFee = Math.ceil(price * 0.015); // 1.5% + no flat fee anymore!
+    const paymentProcessingFee = Math.ceil(price * 0.015 + 100); // 1.5% + no flat fee anymore!
     const totalPrice = price + serviceFee + paymentProcessingFee;
 
     return NextResponse.json({

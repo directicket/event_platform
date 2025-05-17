@@ -21,13 +21,23 @@ export async function GET(req, { params }) {
       return NextResponse.json({ error: "QR Code is invalid or has already been used" }, { status: 404 });
     }
 
-    const userKey = `qr:${userId}`;
-    const storedEntries = await redis.hgetall(userKey);
-    const storedCode = Object.values(storedEntries).find((code) =>
-      code.endsWith(`${userId}-${randomCode}`)
-    );
+    // Fetch all keys starting with qr:${userId} from Redis
+    const userKeys = await redis.keys(`qr:${userId}-*`);
+    if (!userKeys.length) {
+      return NextResponse.json({ error: "No valid QR Codes found" }, { status: 404 });
+    }
 
-    if (!storedCode) {
+    // Loop through the keys and check if any match the randomCode
+    let validCodeFound = false;
+    for (let key of userKeys) {
+      const storedCode = await redis.get(key);
+      if (storedCode && storedCode.endsWith(randomCode)) {
+        validCodeFound = true;
+        break;
+      }
+    }
+
+    if (!validCodeFound) {
       return NextResponse.json({ error: "QR Code is invalid or has already been used" }, { status: 404 });
     }
 

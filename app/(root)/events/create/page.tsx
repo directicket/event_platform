@@ -24,7 +24,7 @@ const CreateEvent = () => {
       
     </section> 
 
-    <section id='create'>
+    <section id='create' className="wrapper">
       <div className="wrapper flex flex-row gap-2 mb-9">
         <div className='p-2 border border-neutral-800 bg-neutral-950 rounded-md flex flex-row gap-3'>
         <Ticket height={50} width={50} className="text-white self-center -rotate-45 pt-2 w-24"/>

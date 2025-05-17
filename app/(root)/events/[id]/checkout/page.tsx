@@ -6,7 +6,7 @@ import { useAuth, SignedIn, SignedOut, useUser } from "@clerk/nextjs";
 import { useRouter } from "next/navigation";
 import Image from "next/image";
 import { formatDateTime } from "@/lib/utils";
-import { CircleX } from "lucide-react";
+import { CircleX, TriangleAlert } from "lucide-react";
 import Link from "next/link";
 import { getEventById } from "@/lib/actions/event.actions";
 import { getUserById } from "@/lib/actions/user.actions";
@@ -137,6 +137,9 @@ const PaystackButton = dynamic(
           alert("Something went wrong. Please try again.");
         }
       };
+
+      const hasEventStarted = new Date(event.startDateTime) <= new Date();
+      const areTicketsExpiring = new Date(event.expiryDate) <= new Date();
       
 
   return (
@@ -162,7 +165,7 @@ const PaystackButton = dynamic(
           </div>
         </div>
 
-        <div className='flex flex-col md:self-center md:pr-8 gap-3 bg-black md:w-full'>
+        <div className='flex flex-col md:self-center gap-3 md:w-full'>
           {/* <div>
           <p className='p-semibold-16 text-neutral-500 mb-1'>
               About this ticket
@@ -170,34 +173,37 @@ const PaystackButton = dynamic(
           <hr className="border border-neutral-800 border-dashed"/>
           </div> */}
 
-          <div className='flex flex-auto gap-4 md:gap-6'>
+          <div className='flex flex-auto gap-4 md:gap-6 '>
             <div className='w-full'>
-              <p className='p-regular-16 md:p-medium-16'>{event.title}</p>
+              <p className='p-regular-16 md:p-medium-16 text-neutral-100'>{event.title}</p>
             </div>
 
             <div>
-              <p className={`${ibmMono.className} ibm-16 md:ibm-16 mt-[-0.4px] text-white`}>
+              <p className={`${ibmMono.className} ibm-16 md:ibm-16 mt-[-0.4px] text-neutral-100`}>
                 {event.isFree ? 
                 <span className={`${ibmMono.className}text-yellow-300`}>FREE</span> : `₦${event.price}`}
               </p>
             </div>
           </div>
 
-          <a href='#buy'>
-          <p className={`${ibmMono.className} text-white p-4 bg-black border hover:bg-white hover:text-black`}>BUY TICKET <br/><br/>{`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} IN STOCK` : `LIMITED STOCK AVAILABLE`}`}</p>
+          <a href='#buy' className='mb-2'>
+          <p className={`${ibmMono.className} rounded-md text-black p-4 bg-neutral-200 border border-neutral-200 hover:bg-white/80 hover:text-black`}>BUY TICKET <br/><br/>{`${event.quantity === 0 ? 'OUT OF STOCK' : event.quantity <= 30 ? `ONLY ${event.quantity} IN STOCK` : `LIMITED STOCK AVAILABLE`}`}</p>
           </a>
+          {hasEventStarted ? 
+          <p className={`${ibmMono.className} rounded-md text-white p-4 bg-neutral-900 border border-neutral-950/50`}>THE EVENT THIS TICKET IS FOR HAS ALREADY BEGUN.</p>
+          : <div></div>}
 
           <div className='flex flex-col gap-1'>
-            <p className='p-regular-14 text-neutral-500 mb-10'>
+            <p className='p-regular-14 text-neutral-400 mb-10'>
               {event.description}
             </p>
 
-            <p className='p-semibold-16 text-neutral-500 mb-1'>
+            <p className='p-semibold-16 text-neutral-400 mb-1'>
               Additional Info
             </p>
-            <hr className="border border-neutral-800 border-dashed"/>
+            <hr className="border-0.5 border-neutral-400 border-dashed"/>
 
-            <div className='flex flex-auto gap-6 mt-2 text-neutral-500'>
+            <div className='flex flex-auto gap-6 mt-2 text-neutral-400'>
               <div className='w-[50%]'>
                 <p className='p-regular-14'>{event.location}</p>
               </div>
@@ -211,9 +217,12 @@ const PaystackButton = dynamic(
               </div>
             </div>
           </div>
+
+          
+
           <div className='md:flex md:flex-col gap-8 mt-2 md:mt-0'>
           <SpotifyPreview playlistUrl={`${event.url}`}/>
-        </div>
+          </div>
         </div>
         
       </div>
@@ -224,14 +233,14 @@ const PaystackButton = dynamic(
         <h2 className="p-medium-20 md:p-medium-20 text-wrap">Meet the creator</h2>
         <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>You can find all tickets made by a creator on their profile.</p>
       </div>
-      <div className="relative overflow-hidden mt-2">
+      <div className="relative rounded-md overflow-hidden mt-2">
         <div className="w-full overflow-hidden max-h-48 min-h-48">
           <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} 
           alt="Ticket Artwork" width={100} height={100}
-          className="w-full object-cover overflow-hidden blur min-h-48"/>
+          className="w-full object-cover rounded-md overflow-hidden blur min-h-48"/>
         </div>
         <Link href={`/${event.organizer.username}`}>
-        <p className="hover:bg-neutral-950/95 absolute top-0 left-0 inset-0 bg-black/70 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
+        <p className="hover:bg-neutral-950/95 rounded-md absolute top-0 left-0 inset-0 bg-black/70 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
           There's more! Explore {event.organizer.username}'s profile.
         </p>
         </Link>
@@ -255,7 +264,23 @@ const PaystackButton = dynamic(
       </div>
       </section>
 
-      <div className="p-4 px-5 md:px-4 border border-neutral-800 flex flex-col gap-2 md:gap-4">
+      
+
+      <div className="p-4 px-5 md:px-4 rounded-md border bg-neutral-900/30 border-neutral-800/50 flex flex-col gap-2 md:gap-4">
+        { event.expiryDate ?
+        <div className="shadow-md shadow-black mt-2 mb-2 shrink-0 w-full md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-neutral-900 border border-neutral-800/50 gap-1">
+          <div className="flex flex-row gap-[7.5px]">
+            <TriangleAlert width={18} height={18} className='text-red-600 self-center'/>
+            <p className={`${ibmMono.className} ibm-14 text-white`}>EXPIRY NOTICE</p>
+          </div>
+          <hr className='border-0.5 border-dashed border-neutral-500 my-3 w-full'/>
+          <p className="p-regular-14 md:p-regular-16 text-neutral-500">
+            This ticket will expire if it isn't scanned before {' '}
+            <span className='underline text-red-600'>{formatDateTime(event.expiryDate).timeOnly} on {' '}
+            {formatDateTime(event.expiryDate).dateOnly}.</span>
+          </p>
+        </div> : <div></div> }
+        
         <div className="flex flex-auto justify-between">
           <p className="p-semibold-20">Total</p>
           <p className="p-semibold-20">₦{fees.totalPrice}</p>
@@ -288,9 +313,9 @@ const PaystackButton = dynamic(
         <div className="flex flex-auto justify-between mt-2">
           <div className="flex flex-col">
           <p className="p-semibold-14 md:p-medium-16">No refunds* &mdash; All Ticket sales are final.</p>
-          <p className="p-regular-14 text-neutral-600 mt-1">
+          <p className="p-regular-14 text-neutral-500 mt-1">
             * Exceptions may apply, see our refund policy. <br/>
-          By clicking 'Complete Order' you also agree to our Terms of Use and Refund Policy.
+          By clicking 'Get Ticket' you also agree to our Terms of Use and Refund Policy.
           </p>
           </div>
         </div>
@@ -298,13 +323,13 @@ const PaystackButton = dynamic(
 
       <div className='flex flex-col mb-3 md:mt-0 mt-2'>
         <p className="p-regular-14 md:p-regular-16 mb-2 text-neutral-600">Select a Delivery method</p>
-          <div className="p-4 px-5 md:px-4 bg-neutral-900/50 md:bg-neutral-950 border border-neutral-800 flex flex-col">
+          <div className="p-4 px-5 md:px-4 rounded-md bg-neutral-900/50 md:bg-neutral-950 border border-neutral-900 flex flex-col">
             <div className="flex flex-col md:px-1">
               <div className='flex flex-auto justify-between'>
-                <p className='p-semibold-14 md:p-regular-16 mb-1'>View in web</p>
+                <p className='p-semibold-14 md:p-regular-16 mb-1'>View in web (default)</p>
                 <p className="p-semibold-14 md:p-regular-16 mb-1">FREE</p>
               </div>
-              <p className='p-regular-14 md:p-regular-16 text-neutral-600'>
+              <p className='p-regular-14 md:p-regular-16 text-neutral-500'>
                 Your Ticket will be available in the web to view immediately after purchase.</p>
             </div>
           </div>
@@ -329,21 +354,31 @@ const PaystackButton = dynamic(
       </div> */}
 
       
+      { !areTicketsExpiring ?
       <SignedIn>
         <button 
           onClick={handlePayment} 
-          className="w-full p-4 paystack-button text-black md:p-semibold-18"
+          className="w-full p-4 paystack-button md:hidden rounded-md text-black md:p-semibold-18"
           >
-          Get Ticket
+          Buy Now
         </button>
        </SignedIn>
+       : 
+       <SignedIn>
+        <button 
+          className="w-full p-4 bg-red-600/30 rounded-md text-red-600 md:p-semibold-18"
+          >
+          This ticket is no longer on sale.
+        </button>
+       </SignedIn>
+       }
 
        <SignedOut>
        <Link href='/sign-in'>
        <button
           className="w-full p-4 bg-white text-black md:p-semibold-18"
           >
-          Get Ticket
+          Buy Now
         </button>
         </Link>
        </SignedOut>
@@ -354,15 +389,15 @@ const PaystackButton = dynamic(
         <h2 className="p-medium-20 md:p-medium-20 text-wrap">Create & sell your Tickets</h2>
         <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500 line-clamp-2'>Create tickets then share your profile to your buyers. And keep a 100% of what you earn on all ticket sales.</p>
       </div>
-      <div className="relative overflow-hidden mt-2 text-white">
+      <div className="relative rounded-md overflow-hidden mt-2 text-white">
         <div className="w-full overflow-hidden max-h-48 min-h-48">
           <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} 
           alt="Ticket Artwork" width={100} height={100}
-          className="w-full object-cover overflow-hidden min-h-48 blur-lg"/>
+          className="w-full object-cover overflow-hidden  min-h-48 blur-lg"/>
         </div>
         <Link href='/events/create'>
-        <p className="hover:bg-blue-700/85 absolute top-0 left-0 bg-gradient-to-tr inset-0 bg-blue-700/60 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
-          Join the community of 250+ sellers.
+        <p className="hover:bg-blue-700/85 absolute rounded-md top-0 left-0 bg-gradient-to-tr inset-0 bg-blue-700/60 border border-neutral-800 p-4 pl-5 h3-medium line-clamp-3">
+          Join the community of 350+ sellers.
         </p>
         </Link>
         <Link href='/events/create'>

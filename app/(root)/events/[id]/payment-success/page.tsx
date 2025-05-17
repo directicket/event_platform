@@ -59,7 +59,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           headers: {
             'Content-Type': 'application/json',
           },
-          body: JSON.stringify({ reference }),
+          body: JSON.stringify({ reference, eventId: id, }),
         });
 
         if (!response.ok) {

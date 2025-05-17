@@ -24,7 +24,7 @@ const SpotifyPreview: React.FC<SpotifyPreviewProps> = ({ playlistUrl }) => {
                 </div>
                 <div className='flex flex-col text-center items-center justify-center gap-1 p-3 bg-neutral-950 border rounded-bl-md rounded-br-md border-neutral-700/50'>
                     
-                    <p className='text-black hover:bg-yellow-700/80 bg-yellow-700 border border-yellow-600/50 p-3 px-5 p-bold-14
+                    <p className='text-black hover:bg-yellow-700/80 bg-yellow-500 border border-yellow-500/50 p-3 px-5 p-bold-14
                      max-w-[80%] my-3 truncate rounded-full line-clamp-1'>
                         <Link href={playlistUrl}>{playlistUrl}</Link>
                     </p>

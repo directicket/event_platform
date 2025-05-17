@@ -2,6 +2,7 @@ import { NextResponse } from "next/server";
 import { auth } from "@clerk/nextjs";
 import QRCode from "qrcode";
 import { Redis } from "@upstash/redis";
+import { getEventById } from '@/lib/actions/event.actions';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -22,16 +23,25 @@ export async function POST(req) {
       return NextResponse.json({ error: "Event ID is required" }, { status: 400 });
     }
 
-    const userKey = `qr:${userId}`;
+    //get event details:
+    const event = await getEventById(eventId);
+    if (!event) throw new Error("Event data is missing");
+    
+    const eventDate = new Date(event.expiryDate)
+
+    //get ttl time:
+    const ttl = Math.floor((eventDate.getTime() - Date.now()) / 1000)
+
+    const qrKey = `qr:${userId}-${eventId}`;
     
     // First-time fetch from Redis
-    let finalCode = await redis.hget(userKey, eventId);
+    let finalCode = await redis.get(qrKey);
 
     // If QR code doesn't exist, generate a new one
     if (!finalCode) {
       const randomCode = Math.random().toString(36).substring(2, 12).toUpperCase();
       finalCode = `https://directicket.live/validate/${userId}-${randomCode}`;
-      await redis.hset(userKey, { [eventId]: finalCode });
+      await redis.set(qrKey, finalCode, { ex: ttl } );
     }
 
     // Generate QR code

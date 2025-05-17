@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { auth } from '@clerk/nextjs';
 import QRCode from 'qrcode';
 import { Redis } from '@upstash/redis';
+import { getEventById } from '@/lib/actions/event.actions';
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -16,20 +17,29 @@ export async function POST(req) {
     }
 
     const body = await req.json();
-    const { reference } = body;
+    const { reference, eventId } = body;
+
+    //get event details:
+    const event = await getEventById(eventId);
+    if (!event) throw new Error("Event data is missing");
+    
+    const eventDate = new Date(event.expiryDate)
+
+    //get ttl time:
+    const ttl = Math.floor((eventDate.getTime() - Date.now()) / 1000)
 
     if (!reference) {
       return NextResponse.json({ error: 'Reference is required' }, { status: 400 });
     }
 
-    const userKey = `qr:${userId}`;
+    const qrKey = `qr:${userId}-${reference}`;
     
     // Fetch user's existing QR codes
-    const existingQRs = await redis.hgetall(userKey) || {};
+    const existingQR = await redis.get(qrKey)
 
-    if (existingQRs[reference]) {
+    if (existingQR) {
       // Return existing QR code
-      const qrCodeDataUrl = await QRCode.toDataURL(existingQRs[reference]);
+      const qrCodeDataUrl = await QRCode.toDataURL(existingQR);
       const base64Data = qrCodeDataUrl.split(',')[1];
       const imageBuffer = Buffer.from(base64Data, 'base64');
       return new Response(imageBuffer, { headers: { 'Content-Type': 'image/png' } });
@@ -60,7 +70,7 @@ export async function POST(req) {
     const imageBuffer = Buffer.from(base64Data, 'base64');
 
     // Store in Redis atomically
-    await redis.hset(userKey, { [reference]: finalCode });
+    await redis.set(qrKey, finalCode, { ex: ttl });
 
     return new Response(imageBuffer, { headers: { 'Content-Type': 'image/png' } });
   } catch (error) {

@@ -268,6 +268,30 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
               )}
             />
 
+            <FormField
+            control={form.control}
+            name="expiryDate"
+            render={({ field }) => (
+              <FormItem className="w-full">
+                <FormLabel className='text-neutral-600'>Expiry</FormLabel>
+                <FormControl >
+                    <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
+                    showTimeSelect
+                    timeInputLabel="Time:"
+                    dateFormat="dd/MM/yyyy h:mm aa"
+                    wrapperClassName="datePicker text-red-500 p-0"
+                    withPortal={true}
+                    onFocus={(e) => e.target.blur()}
+                    />
+                </FormControl>
+
+                <p className="text-neutral-600 p-regular-14 flex text-wrap">
+                  Control when unscanned QR codes become invalid.</p>
+                <FormMessage />
+              </FormItem>
+            )}
+          />
+
 
         <div className='flex flex-col gap-2 mt-8'>
           <p className='p-medium-16 text-neutral-400/60'>Additional Info</p>
@@ -280,7 +304,6 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
             render={({ field }) => (
               <FormItem className="w-full">
                 <FormLabel className='text-neutral-600'>Event Date & Time</FormLabel>
-                
                 <FormControl >
                     <DatePicker selected={field.value} onChange={(date) => field.onChange(date)}
                     showTimeSelect

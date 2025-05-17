@@ -8,6 +8,7 @@ export interface iEvent extends Document {
     createdAt: Date;
     imageURL: string;
     startDateTime: Date;
+    expiryDate: Date;
     quantity: number;
     amountSold: number;
     price: string;
@@ -24,6 +25,7 @@ const EventSchema = new Schema({
     createdAt: { type: Date, default: Date.now },
     imageURL: { type: String, required: true },
     startDateTime: { type: Date, default: Date.now },
+    expiryDate: { type: Date, default: Date.now },
     quantity: { type: Number, required: true },
     amountSold: { type: Number, default: 0 },
     price: { type: String },
