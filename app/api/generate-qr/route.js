@@ -83,7 +83,7 @@ export async function POST(req) {
         stripeId: reference,
         totalAmount: (data.data.amount / 100).toFixed(2), // Paystack returns amount in kobo
         event: eventId,
-        buyer: userId,
+        buyer: user._id,
       });
     }
 
