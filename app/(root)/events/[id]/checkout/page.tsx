@@ -192,12 +192,12 @@ const PaystackButton = dynamic(
           
 
           <div className='flex flex-col gap-1'>
-            <p className='p-regular-14 text-neutral-400 mb-10'>
+            <p className={`p-regular-14 text-neutral-400 ${!hasEventStarted ? 'mb-10' : ' '}`}>
               {event.description}
             </p>
 
             {hasEventStarted ? 
-          <p className={`${ibmMono.className} rounded-md text-neutral-600 p-4 bg-black border border-neutral-800/80`}>HURRY! THE EVENT HAS STARTED.</p>
+          <p className={`${ibmMono.className} mb-10 rounded-md text-neutral-600 p-4 bg-black border border-neutral-800/80`}>HURRY! THE EVENT HAS STARTED.</p>
           : <div></div>}
 
             <p className='p-semibold-16 text-neutral-400 mb-1'>

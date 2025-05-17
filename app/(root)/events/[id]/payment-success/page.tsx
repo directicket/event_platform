@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useUser } from "@clerk/nextjs";
 import Image from 'next/image';
+import ExpiryModal from '@/components/shared/ExpiryModal';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -93,7 +94,8 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     <>
     
       <div className="mt-16 wrapper md:max-w-xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
-        
+        <ExpiryModal />
+
         <div className='flex flex-col mb-2'>
           <div className='flex flex-row gap-1'>
             <CircleCheck height={18} width={18} className='text-lime-500 self-center'/>
@@ -196,6 +198,20 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             Ticket is valid until date and time of the event.
           </p>
         </div>
+
+        { event.expiryDate ?
+          <div className="shadow-md shadow-black mt-2 mb-2 shrink-0 w-full md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-red-600/30 border border-neutral-800/50 gap-1">
+            <div className="flex flex-row gap-[7.5px]">
+              <TriangleAlert width={18} height={18} className='text-red-600 self-center'/>
+              <p className={`${ibmMono.className} ibm-14 text-white`}>DON'T BE LATE!</p>
+            </div>
+            <hr className='border-0.5 border-dashed border-red-400 my-3 w-full'/>
+            <p className="p-regular-14 md:p-regular-16 text-red-400">
+              This ticket will expire if it isn't scanned before {' '}
+              <span className='underline text-red-600'>{formatDateTime(event.expiryDate).timeOnly} on {' '}
+              {formatDateTime(event.expiryDate).dateOnly}.</span>
+            </p>
+          </div> : <div></div> }
       </div>
     </>
   );

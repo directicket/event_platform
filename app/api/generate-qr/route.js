@@ -3,6 +3,10 @@ import { auth } from '@clerk/nextjs';
 import QRCode from 'qrcode';
 import { Redis } from '@upstash/redis';
 import { getEventById } from '@/lib/actions/event.actions';
+import Order from "@/lib/database/models/order.model"
+import { connectToDatabase } from '@/lib/database';
+
+await connectToDatabase();
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -71,6 +75,18 @@ export async function POST(req) {
 
     // Store in Redis atomically
     await redis.set(qrKey, finalCode, { ex: ttl });
+
+    // Only create order if it doesn't already exist
+    const existingOrder = await Order.findOne({ stripeId: reference });
+    if (!existingOrder) {
+      await Order.create({
+        stripeId: reference,
+        totalAmount: (data.data.amount / 100).toFixed(2), // Paystack returns amount in kobo
+        event: eventId,
+        buyer: userId,
+      });
+    }
+
 
     return new Response(imageBuffer, { headers: { 'Content-Type': 'image/png' } });
   } catch (error) {
