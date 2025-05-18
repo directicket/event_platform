@@ -334,8 +334,8 @@ export default async function Home({ searchParams }: SearchParamProps) {
         px-4 p-3 bg-red-600 bg-blur">
         <div className="scrolling-text flex flex-row">
           <TriangleAlert className='text-black flex-row' height={20} width={20}/>
-          <p className="p-medium-14 pl-1 flex-row text-black">
-              <span className='font-bold'>Ticket Expiry is here!</span> Make tickets expire when your event starts..
+          <p className="p-medium-16 pl-1 flex-row text-black">
+              <span className='font-bold'>Ticket Expiry is here!</span> Make tickets for late comers expire when your event starts!
           </p>
         </div>
       </div>
