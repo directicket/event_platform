@@ -202,7 +202,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
 
         <div>
           <p className='p-regular-14 text-white mt-2'>
-            You can always view this ticket via this link. SAVE IT. And DO NOT share this link with anyone.
+            You can always find this ticket by going to Your Dashboard {">"} My Purchases. DO NOT share this ticket with anyone.
             Ticket is valid until date and time of the event.
           </p>
         </div>

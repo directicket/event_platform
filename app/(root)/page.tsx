@@ -76,6 +76,12 @@ export default async function Home({ searchParams }: SearchParamProps) {
                 MAKE A TICKET
                 </Link>
               </button>
+
+              <button className={`${ibmMono.className} bg-black text-white ibm-18 mt-1 rounded-sm`}>
+              <Link href='/profile'>
+                VIEW DASHBOARD
+                </Link>
+              </button>
           </SignedIn>
           <SignedOut>
               <button className={`${ibmMono.className} bg-white text-black ibm-18 py-2 px-4 rounded-sm`}>
