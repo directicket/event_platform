@@ -35,21 +35,21 @@ export default function Tickets() {
 
   
 
-  if (loading) return <p className='text-white h-screen text-center w-screen p-regular-16'>Please wait, your tickets are loading...</p>;
-  if (!orders.length) return <p className='text-neutral-400 h-screen text-center w-screen p-regular-20'>No tickets found.</p>;
+  if (loading) return <p className='text-white h-screen text-left w-screen p-regular-16'>Please wait, your tickets are loading...</p>;
+  if (!orders.length) return <p className='text-neutral-400 h-screen text-left w-screen p-regular-20'>No tickets found.</p>;
 
   return (
-    <div className="grid gap-4">
+    <div className="grid gap-4 mt-4">
       {orders.map(order => (
-        <div key={order.id} className="rounded-sm border-0.5 border-t-0 border-b-[0.5px] border-l-0 border-r-0 p-4 text-white">
+        <div key={order.id} className="rounded-md border border-neutral-800/60 text-white">
           <h3 className="text-lg font-semibold">{order.eventTitle}</h3>
           
           <div className='flex flex-col gap-1'>
             <div className='flex flex-row justify-between text-lime'>
               <p className="text-sm">₦{order.totalAmount}</p>
-              <p className="text-sm">{order.reference}</p>
+              <p className="text-sm">Ref: {order.reference}</p>
             </div>
-            <hr className='border-0.5'/>
+            <hr className='border-0.5 border border-neutral-800 border-dashed'/>
             <p className="text-sm text-neutral-600">
             Bought on {new Date(order.createdAt).toLocaleString()}
             </p>
@@ -58,7 +58,7 @@ export default function Tickets() {
           
           <a
             href={`/events/${order.eventId}/payment-success?reference=${order.reference}&txref=${order.reference}`}
-            className="text-lime underline mt-2 inline-block"
+            className="text-lime hover:no-underline underline mt-2 inline-block"
           >
             View Ticket →
           </a>
