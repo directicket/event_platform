@@ -53,7 +53,7 @@ export async function POST(req) {
     const qrCodeDataUrl = await QRCode.toDataURL(finalCode);
 
         // Only create order if it doesn't already exist
-    const existingOrder = await Order.findOne({ stripeId: reference });
+    const existingOrder = await Order.findOne({ stripeId: qrCodeDataUrl });
     if (!existingOrder) {
       const user = await User.findOne({ clerkId: userId })
 
