@@ -193,6 +193,13 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           <p className='text-neutral-600 text-left'>Loading your Ticket...</p>
         )}
 
+        <Link href={`/profile/my-orders`}>
+          <div className='rounded-sm justify-between w-full flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-2 border border-neutral-900'>
+            <p className='p-regular-14 self-center ml-0.5'>View All Purchases</p>
+            <Ticket width={16} height={16} className='self-center'/>
+          </div>
+          </Link>
+
         <div>
           <p className='p-regular-14 text-white mt-2'>
             You can always view this ticket via this link. SAVE IT. And DO NOT share this link with anyone.
@@ -214,12 +221,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
             </p>
           </div>
 
-          <Link href={`/profile/my-orders`}>
-          <div className='rounded-sm justify-between w-full flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-4 border border-neutral-900'>
-            <p className='p-regular-14 self-center ml-0.5'>View All Purchases</p>
-            <Ticket width={16} height={16} className='self-center'/>
-          </div>
-          </Link>
+          
       </div>
     </>
   );
