@@ -3,11 +3,7 @@ import { auth } from "@clerk/nextjs";
 import QRCode from "qrcode";
 import { Redis } from "@upstash/redis";
 import { getEventById } from '@/lib/actions/event.actions';
-import Order from "@/lib/database/models/order.model"
-import User from "@/lib/database/models/user.model"
-import { connectToDatabase } from '@/lib/database';
 
-await connectToDatabase();
 
 const redis = new Redis({
   url: process.env.UPSTASH_REDIS_REST_URL,
@@ -53,21 +49,21 @@ export async function POST(req) {
     const qrCodeDataUrl = await QRCode.toDataURL(finalCode);
 
         // Only create order if it doesn't already exist
-    const existingOrder = await Order.findOne({ stripeId: qrCodeDataUrl });
-    if (!existingOrder) {
-      const user = await User.findOne({ clerkId: userId })
+    // const existingOrder = await Order.findOne({ stripeId: qrCodeDataUrl });
+    // if (!existingOrder) {
+    //   const user = await User.findOne({ clerkId: userId })
 
-      if (!user) {
-        throw new Error("User not found")
-      }
+    //   if (!user) {
+    //     throw new Error("User not found")
+    //   }
 
-      await Order.create({
-        stripeId: reference,
-        totalAmount: (data.data.amount / 100).toFixed(2), // Paystack returns amount in kobo
-        event: eventId,
-        buyer: user._id,
-      });
-    }
+    //   await Order.create({
+    //     stripeId: reference,
+    //     totalAmount: (data.data.amount / 100).toFixed(2), // Paystack returns amount in kobo
+    //     event: eventId,
+    //     buyer: user._id,
+    //   });
+    // }
     
     return NextResponse.json({ qrCodeDataUrl, finalCode });
   } catch (error) {
