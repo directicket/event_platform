@@ -23,7 +23,7 @@ export default function BrowserAlertModal() {
             Copy the link you're trying to access into a browser like Safari or Chrome for the best experience.
           </p>
           
-            <button onClick={() => setShowModal(false)} className="rounded-full bg-red-600 text-black p-2 px-4 w-fit p-regular-14 self-center">
+            <button onClick={() => setShowModal(false)} className="rounded-full bg-yellow-400 text-black p-2 px-4 w-fit p-regular-14 self-center">
               Continue
             </button>
 
