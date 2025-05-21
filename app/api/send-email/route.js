@@ -63,7 +63,7 @@ export async function POST(req) {
         <img src="${qrCodeUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
         <hr />
         <p><strong>Don't Be Late!</strong> This ticket will expire if it isn't scanned before ${event.expiryDate ? 
-          formatDateTime(event.expiryDate) : 'Date & Time not specified'}.</p>
+          `${formatDateTime(event.expiryDate).timeOnly} on ${formatDateTime(event.expiryDate).dateOnly}` : '[date & time not specified]'}.</p>
       </div>
     `;
 
