@@ -12,6 +12,7 @@ import { useEffect } from "react";
 import { usePathname, useRouter } from "next/navigation";
 import NProgress from "nprogress";
 import Loading from '@/components/shared/Loading'
+import SocialMediaCheck from "@/components/shared/SocialMediaCheck";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -68,6 +69,7 @@ export default function RootLayout({
           className={`${inter.variable} antialiased`}
         >
           <Providers>
+            <SocialMediaCheck/>
           {children}
           </Providers>
           <Analytics/>
