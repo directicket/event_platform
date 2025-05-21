@@ -41,7 +41,7 @@ export default function Tickets() {
   return (
     <div className="grid gap-4 mt-4">
       {orders.map(order => (
-        <div key={order.id} className="rounded-md border border-neutral-800/60 text-white">
+        <div key={order.id} className="rounded-md border border-neutral-800 p-4 text-white">
           <h3 className="text-lg font-semibold">{order.eventTitle}</h3>
           
           <div className='flex flex-col gap-1'>
@@ -49,7 +49,7 @@ export default function Tickets() {
               <p className="text-sm">₦{order.totalAmount}</p>
               <p className="text-sm">Ref: {order.reference}</p>
             </div>
-            <hr className='border-0.5 border border-neutral-800 border-dashed'/>
+            <hr className='border-0.5 border border-neutral-700/80 border-dashed'/>
             <p className="text-sm text-neutral-600">
             Bought on {new Date(order.createdAt).toLocaleString()}
             </p>
