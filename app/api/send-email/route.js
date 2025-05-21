@@ -62,7 +62,8 @@ export async function POST(req) {
         <p>Scan this QR Code at the entrance:</p>
         <img src="${qrCodeUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
         <hr />
-        <p><strong>Don't Be Late!</strong> This ticket will expire if it isn't scanned before ${event.expiryDate ? event.expiryDate : 'Date & Time not specified'}</p>
+        <p><strong>Don't Be Late!</strong> This ticket will expire if it isn't scanned before ${event.expiryDate ? 
+          formatDateTime(event.expiryDate) : 'Date & Time not specified'}.</p>
       </div>
     `;
 
