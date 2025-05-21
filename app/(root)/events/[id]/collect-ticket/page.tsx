@@ -9,6 +9,7 @@ import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useUser } from "@clerk/nextjs";
 import Image from 'next/image';
+import ExpiryModal from '@/components/shared/ExpiryModal';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -120,6 +121,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
     <>
     
       <div className="mt-16 wrapper md:max-w-xl text-white grid grid-cols-1 gap-2 md:gap-4 justify-center items-center mb-8">
+        <ExpiryModal />
         
         <div className='flex flex-col mb-2'>
           <div className='flex flex-row gap-1'>
@@ -221,10 +223,10 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
         <div className='gap-2'>
           <p className='p-regular-14 text-white mt-2'>
             You can also find this Ticket in your email. 
-            Ticket is valid until date and time of the event.
+            Can't see yours? DM us on Instagram @directicket.live.
           </p>
           {/* <button onClick={handleDownload} disabled={isDownloading} className={`${ibmMono.className}
-          border border-white hover:text-black hover:bg-white
+          border border-white hover:text-black hover:bg-white 
           ibm-14 md:ibm-16 mt-2 p-2 bg-black text-white w-full rounded-none`}>{ isDownloading ? 'DOWNLOADING...' : 'DOWNLOAD YOUR TICKET' }</button> */}
         </div>
 

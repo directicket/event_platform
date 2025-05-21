@@ -57,10 +57,12 @@ export async function POST(req) {
         <p><strong>Date:</strong> ${formatDateTime(event.startDateTime).dateOnly}</p>
         <p><strong>Time:</strong> ${formatDateTime(event.startDateTime).timeOnly}</p>
         <p><strong>Location:</strong> ${event.location}</p>
-        <p><strong>Organizer:</strong> @${event.organizer.username}</p>
+        <p><strong>Organizer:</strong> /${event.organizer.username}</p>
         <hr />
         <p>Scan this QR Code at the entrance:</p>
         <img src="${qrCodeUrl}" alt="QR Code" style="width: 150px; height: 150px;" />
+        <hr />
+        <p><strong>Don't Be Late!</strong> This ticket will expire if it isn't scanned before ${event.expiryDate ? event.expiryDate : 'Date & Time not specified'}</p>
       </div>
     `;
 
