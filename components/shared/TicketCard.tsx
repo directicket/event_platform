@@ -1,5 +1,6 @@
 "use client";
 
+import { getEventById } from "@/lib/actions/event.actions";
 import { useEffect, useState } from "react";
 
 type Order = {
@@ -21,6 +22,7 @@ export default function Tickets() {
         const res = await fetch("/api/my-orders", { cache: "no-store" });
         const data = await res.json();
         setOrders(data.orders);
+        const event = getEventById(data.orders.eventId)
       } catch (err) {
         console.error("Failed to fetch orders", err);
       } finally {
@@ -31,22 +33,32 @@ export default function Tickets() {
     fetchOrders();
   }, []);
 
-  if (loading) return <p>Loading your tickets...</p>;
-  if (!orders.length) return <p className='text-white'>No tickets found.</p>;
+  
+
+  if (loading) return <p className='text-white h-screen text-center w-screen p-regular-16'>Please wait, your tickets are loading...</p>;
+  if (!orders.length) return <p className='text-neutral-400 h-screen text-center w-screen p-regular-20'>No tickets found.</p>;
 
   return (
     <div className="grid gap-4">
       {orders.map(order => (
-        <div key={order.id} className="rounded-xl border p-4 shadow-sm text-white">
+        <div key={order.id} className="rounded-sm border-0.5 border-t-0 border-b-[0.5px] border-l-0 border-r-0 p-4 text-white">
           <h3 className="text-lg font-semibold">{order.eventTitle}</h3>
-          <p className="text-sm text-muted-foreground">
+          
+          <div className='flex flex-col gap-1'>
+            <div className='flex flex-row justify-between text-lime'>
+              <p className="text-sm">₦{order.totalAmount}</p>
+              <p className="text-sm">{order.reference}</p>
+            </div>
+            <hr className='border-0.5'/>
+            <p className="text-sm text-neutral-600">
             Bought on {new Date(order.createdAt).toLocaleString()}
-          </p>
-          <p className="text-sm">Reference: {order.reference}</p>
-          <p className="text-sm">Amount: ₦{order.totalAmount}</p>
+            </p>
+          </div>
+
+          
           <a
             href={`/events/${order.eventId}/payment-success?reference=${order.reference}&txref=${order.reference}`}
-            className="text-blue-600 underline mt-2 inline-block"
+            className="text-lime underline mt-2 inline-block"
           >
             View Ticket →
           </a>
