@@ -27,11 +27,12 @@ const MobileNav = () => {
       {isOpen && (
         <div onClick={() => setIsOpen(false)} className="fixed inset-0 bg-black bg-opacity-80 flex flex-col items-center justify-center h-screen">
           <button onClick={() => setIsOpen(false)} className="absolute top-4 right-4 text-white h1-bold font-normal">✕</button>
-          <div className="p-6 rounded-lg shadow-lg flex flex-col gap-4">
+          <div className="p-6 rounded-lg flex flex-col gap-4">
             <p className='ibm-14 text-neutral-600'>SELECT ONE:</p>
             <Link href="/events/create" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>1. Create a Ticket</Link>
             <Link href="/profile" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>2. Your Dashboard</Link>
             <Link href="/" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>3. About Directicket</Link>
+            <Link href="/blog" onClick={() => setIsOpen(false)} className={`${ibmMono.className}text-white ibm-16 hover:underline`}>4. Directicket Blog</Link>
           </div>
         </div>
       )}

@@ -44,6 +44,7 @@ const EventForm = ({ userId, type, event, eventId }: EventFormProps) => {
     ? {
       ...event, 
       startDateTime: new Date(event.startDateTime),
+      expiryDate: new Date(event.expiryDate),
     }
     : eventDefaultValues;
   const router = useRouter();

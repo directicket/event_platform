@@ -11,6 +11,10 @@ export const headerLinks = [
       label: 'DASHBOARD',
       route: '/profile',
     },
+    {
+      label: 'BLOG',
+      route: '/blog',
+    },
   ]
   
   export const eventDefaultValues = {

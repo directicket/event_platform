@@ -227,6 +227,19 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
           border border-white hover:text-black hover:bg-white
           ibm-14 md:ibm-16 mt-2 p-2 bg-black text-white w-full rounded-none`}>{ isDownloading ? 'DOWNLOADING...' : 'DOWNLOAD YOUR TICKET' }</button> */}
         </div>
+
+        <div className="shadow-md shadow-black mt-2 mb-2 shrink-0 w-full md:w-[100%] snap-start flex flex-col rounded-md p-4 bg-red-600/30 border border-neutral-800/50 gap-1">
+          <div className="flex flex-row gap-[7.5px]">
+            <TriangleAlert width={18} height={18} className='text-red-600 self-center'/>
+            <p className={`${ibmMono.className} ibm-14 text-white`}>DON'T BE LATE!</p>
+          </div>
+          <hr className='border-0.5 border-dashed border-red-400 my-3 w-full'/>
+          <p className="p-regular-14 md:p-regular-16 text-red-400">
+            This ticket will expire if it isn't scanned before {' '}
+            <span className='underline text-red-600'>{ event ? formatDateTime(event.expiryDate).timeOnly : 'Loading...' } on {' '}
+            { event ? formatDateTime(event.expiryDate).dateOnly : 'Loading...' }.</span>
+          </p>
+        </div>
       </div>
     </>
   );
