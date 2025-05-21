@@ -16,7 +16,7 @@ export default function BrowserAlertModal() {
           <TriangleAlert className="max-w-40 max-h-36 object-cover text-yellow-400" />
             
           <h2 className="p-semibold-24 tracking-tight md:p-bold-24 text-wrap text-center text-white mt-4">
-            This browser may be faulty.
+            This Social Media browser may be faulty.
           </h2>
           <p className="text-neutral-500 text-center p-regular-14 md:p-regular-16 max-w-[90%]">
             Social media browsers are not the best for handling transactions. 
