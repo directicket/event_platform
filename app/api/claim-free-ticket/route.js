@@ -54,7 +54,7 @@ export async function POST(req) {
     const qrCodeDataUrl = await QRCode.toDataURL(finalCode);
 
         // Only create order if it doesn't already exist
-    const existingOrder = await Order.findOne({ stripeId: randomCode });
+    const existingOrder = await Order.findOne({ stripeId: finalCode });
     if (!existingOrder) {
       const user = await User.findOne({ clerkId: userId })
 
@@ -63,7 +63,7 @@ export async function POST(req) {
       }
 
       await Order.create({
-        stripeId: randomCode,
+        stripeId: finalCode,
         totalAmount: 'FREE', // Paystack returns amount in kobo
         event: eventId,
         buyer: user._id,
