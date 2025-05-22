@@ -5,6 +5,8 @@ export default authMiddleware({
         '/',
         '/events/:id',
         '/:username',
+        '/blog',
+        '/blog/:slug',
         '/api/webhook/clerk',
         '/api/webhook/paystack',
         '/api/webhook/stripe',
@@ -16,6 +18,8 @@ export default authMiddleware({
     ],
     ignoredRoutes: [
         '/api/webhook/clerk',
+        '/blog',
+        '/blog/:slug',
         '/api/webhook/paystack',
         '/api/webhook/stripe',
         '/api/uploadthing',

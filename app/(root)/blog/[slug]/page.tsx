@@ -54,7 +54,7 @@ function renderBlock(block: any) {
       return (
         <p className="text-white leading-7 mb-4">
           {block.paragraph.rich_text.map((text: any, i: number) => (
-            <span key={i}>{text.plain_text}</span>
+            <span key={i} className='my-1'>{text.plain_text}</span>
           ))}
         </p>
       );
