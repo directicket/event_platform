@@ -22,7 +22,7 @@ export default function Tickets() {
         const res = await fetch("/api/my-orders", { cache: "no-store" });
         const data = await res.json();
         setOrders(data.orders);
-        // const event = getEventById(data.orders.eventId)
+        // const event = getEventById(data.orders.eventId) 
       } catch (err) {
         console.error("Failed to fetch orders", err);
       } finally {
