@@ -459,3 +459,7 @@ input[type="text"]
     transform: translateX(-100%);
   }
 }
+
+.p-regular-blog {
+    @apply text-[16px] font-normal leading-[18px];
+  }

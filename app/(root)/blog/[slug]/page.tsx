@@ -52,9 +52,9 @@ function renderBlock(block: any) {
   switch (block.type) {
     case 'paragraph':
       return (
-        <p className="text-white leading-7 mb-4">
+        <p className="text-white mb-8">
           {block.paragraph.rich_text.map((text: any, i: number) => (
-            <span key={i} className='my-4'>{text.plain_text}</span>
+            <span key={i} className='p-regular-blog'>{text.plain_text}</span>
           ))}
         </p>
       );
