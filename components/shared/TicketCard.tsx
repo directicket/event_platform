@@ -36,7 +36,7 @@ export default function Tickets() {
   
 
   if (loading) return <p className='text-white h-screen text-left w-screen p-regular-16'>Please wait, your tickets are loading...</p>;
-  if (!orders.length) return <p className='text-neutral-400 h-screen text-left w-screen p-regular-20'>No tickets found.</p>;
+  if (!orders?.length) return <p className='text-neutral-400 h-screen text-left w-screen p-regular-20'>No tickets found.</p>;
 
   return (
     <div className="grid gap-4 mt-4">

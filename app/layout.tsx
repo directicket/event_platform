@@ -13,6 +13,7 @@ import { usePathname, useRouter } from "next/navigation";
 import NProgress from "nprogress";
 import Loading from '@/components/shared/Loading'
 import SocialMediaCheck from "@/components/shared/SocialMediaCheck";
+import NotMobileWarning from "@/components/shared/NotMobileWarning";
 
 const inter = Inter({ 
   subsets: ["latin"],
@@ -69,6 +70,7 @@ export default function RootLayout({
           className={`${inter.variable} antialiased`}
         >
           <Providers>
+            <NotMobileWarning />
             <SocialMediaCheck/>
           {children}
           </Providers>

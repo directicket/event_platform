@@ -45,12 +45,12 @@ const BankDetailsStatus = () => {
     <>
       {hasAccess === "default" || hasAccess === false ? (
         <Link href="/profile/bank-details">
-          <p className={`${ibmMono.className} underline font-normal p-regular-14 text-neutral-500`}>
+          <p className={`${ibmMono.className} underline font-normal p-regular-14 text-red-600`}>
             Add yours
           </p>
         </Link>
       ) : (
-        <p className={`${ibmMono.className} font-normal p-regular-14 text-blue-700`}>
+        <p className={`${ibmMono.className} font-normal p-regular-14 text-yellow-400`}>
           Added
         </p>
       )}

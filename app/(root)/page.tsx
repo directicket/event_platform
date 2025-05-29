@@ -282,14 +282,14 @@ export default async function Home({ searchParams }: SearchParamProps) {
       <section className='wrapper'>
       <div className="wrapper flex overflow-x-auto gap-4 snap-x snap-mandatory md:flex-row">
         <div className="shrink-0 w-[100%] snap-start flex flex-col gap-2 card-bg p-4 rounded-md border border-neutral-800">
-          <CircleHelp width={25} height={25} className='text-pink-500'/>
+          <CircleHelp width={25} height={25} className='text-white'/>
           <h3 className='h3-medium text-white'>Need our help?</h3>
           <div className='flex flex-col gap-4'>
           <p className='p-regular-16 text-neutral-500 w-[90%]'>
             Our customer support team is standing by to take your questions.
           </p>
           
-          <button className={`${ibmMono.className} p-2 px-4 text-center hover:bg-pink-500/50 bg-pink-500 rounded-sm text-black w-full`}>
+          <button className={`${ibmMono.className} p-2 px-4 text-center hover:bg-white/50 bg-white rounded-sm text-black w-full`}>
           <Link href='https://instagram.com/directicket.live'>
             SEND TEXT
             </Link>
@@ -297,7 +297,7 @@ export default async function Home({ searchParams }: SearchParamProps) {
           </div>
         </div>
 
-        <div className="self-start h-fit shrink-0 w-[100%] snap-start first-letter:flex flex-col gap-2 card-bg p-4 rounded-md border border-neutral-800">
+        {/* <div className="self-start h-fit shrink-0 w-[100%] snap-start first-letter:flex flex-col gap-2 card-bg p-4 rounded-md border border-neutral-800">
           <Flag width={25} height={25} className='text-red-600'/>
           <h3 className='h3-medium text-white'>Report an issue.</h3>
           <div className='flex flex-col gap-4'>
@@ -325,11 +325,11 @@ export default async function Home({ searchParams }: SearchParamProps) {
           </SignedOut>
           
           </div>
-        </div>
+        </div> */}
       </div>      
       </section>
 
-      <div className='text-white wrapper'>
+      <div className='text-white wrapper mb-7'>
       <Footer />
       </div>
       </div>

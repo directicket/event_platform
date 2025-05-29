@@ -43,7 +43,7 @@ const Faq = () => {
                 <AccordionTrigger className="p-semibold-16 text-left text-wrap">Are there any fees associated with using Directicket?</AccordionTrigger>
                 <AccordionContent className="text-neutral-500 p-regular-14 md:max-w-[500px]">
                   Directicket charges a service fee of 7.5% of the ticket price to customers. 
-                  The only money we make is from the service fee we charge to customers at checkout.
+                  We only make make money from the service fee we charge to customers at checkout.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -54,7 +54,7 @@ const Faq = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger className="p-semibold-16 text-left text-wrap">How fast do I get paid using Directicket?</AccordionTrigger>
                 <AccordionContent className="text-neutral-500 p-regular-14 md:max-w-[500px]">
-                  Payouts happen every business day on Directicket. Which excludes public holidays and Sundays.
+                  Payouts happen every business day on Directicket.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>
@@ -65,7 +65,7 @@ const Faq = () => {
               <AccordionItem value="item-1">
                 <AccordionTrigger className="p-semibold-16 text-left text-wrap">How can I get in contact with customer support?</AccordionTrigger>
                 <AccordionContent className="text-neutral-500 p-regular-14 md:max-w-[500px]">
-                  You can DM us on Instagram @directicket.live or call either 09025771255 or 09035960581.
+                  You can DM us on Instagram @directicket.live or send an email to support@directicket.live.
                 </AccordionContent>
               </AccordionItem>
             </Accordion>

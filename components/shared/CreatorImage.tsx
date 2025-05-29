@@ -16,7 +16,7 @@ export default function CreatorProfileSection() {
     <section id="creator-profile" className="min-h-screen bg-black text-white flex items-start justify-start">
       <div className='wrapper flex flex-col gap-2 text-left' ref={ref}>
         <h1 className='h2-regular w-full'>
-          Introduce{' '}
+          Share{' '}
           <span
             className={`transition-all duration-700 ${
               animate
@@ -24,9 +24,9 @@ export default function CreatorProfileSection() {
                 : 'font-normal text-white'
             }`}
           >
-            yourself
+            your profile
           </span>{' '}
-          as a creator.
+          to customers.
         </h1>
 
         <p className='p-regular-16 text-neutral-500 w-full'>

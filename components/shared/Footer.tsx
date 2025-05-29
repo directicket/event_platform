@@ -244,7 +244,7 @@ const Footer = () => {
 
       <div className="flex flex-row justify-between">
         <p className='p-regular-16 text-neutral-600'>
-          Directicket &copy; 2025
+          &copy; 2025 Directicket
         </p>
         <p className='p-regular-16 text-neutral-600'>
           Made in Nigeria
