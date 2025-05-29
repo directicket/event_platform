@@ -6,14 +6,16 @@ import Link from 'next/link';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useEffect, useState } from "react";
 import BankDetailsStatus from '@/components/shared/BankDetailsStates'
-import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus, Ticket, CircleUserRound } from 'lucide-react';
+import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus, Ticket, CircleUserRound, SquareArrowOutUpRight } from 'lucide-react';
 import Footer from '@/components/shared/Footer';
 import CopyText from '@/components/shared/CopyText';
 import CollectionDashboard from '@/components/shared/CollectionDashboard';
-import { getUserByUsername } from '@/lib/actions/user.actions';
+import { getUserById, getUserByUsername } from '@/lib/actions/user.actions';
 import Event from '@/lib/database/models/event.model'
 import Search from '@/components/shared/Search';
 import { useSearchParams } from 'next/navigation';
+import CountUp from 'react-countup';
+import InViewCounter from '@/components/shared/RevenueConter';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -35,6 +37,23 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
 
   const organizedEvents = await getEventsByUser({ query, userId, page: 1 });
 
+  const userObject = await getUserById(userId)
+
+    const ticketCount = await Event.countDocuments({ organizer: userId })
+  
+    const ticketMade = await getEventsByUser({ userId: userId, page: 1 })
+  
+    const totalTicketsSold = organizedEvents?.data?.reduce((acc: number, event: any) => {
+      return acc + (event.amountSold || 0)
+    }, 0) || 0
+
+    const totalTicketsRevenue = organizedEvents?.data?.reduce((acc: number, event: any) => {
+      const price = Number(event.price) || 0
+      const sold = Number(event.amountSold) || 0
+      return acc + price * sold
+    }, 0) || 0
+
+
   return (
     <>
     <div className='mt-16'>
@@ -43,24 +62,52 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
 
         
         <h1 className='h3-regular font-normal'>
-          <span className='text-neutral-600'>Hello,</span> <br/>{userFullName}.</h1>
+          <span className='text-neutral-600'>Hello,</span> <br/>{userFullName} {userObject.isVerified && ( <img src='/assets/icons/white-black-check.svg' alt='verified' className='inline w-5 h-5 mb-0.5'/>)}</h1>
         
         <div className='flex flex-auto gap-2'>
         <CopyText text={`directicket.live/${userName}`} />
         <a 
           href={`/${userName}`}
           className='text-sm p-0.5 px-2 bg-black hover:bg-white/90 text-neutral-200 hover:text-neutral-900 border border-neutral-800/80 w-fit ibm-12 rounded-sm'>
-              Open Link
+              View <SquareArrowOutUpRight height={14} width={14} className={`inline self-center mb-0.5`} />
+              
         </a>
         </div>
 
+        {/* <div className='flex flex-row items-start justify-start'>
+        <div className='flex flex-row gap-1'>
+          <p className="text-sm font-medium text-white">
+            {ticketCount} {ticketCount === 1 ? 'Ticket' : 'Tickets'}
+          </p>
+          <p className='text-sm font-regular text-white'>
+            &bull;
+          </p>
+          <p className="text-sm font-medium text-white">
+            {totalTicketsSold} {totalTicketsSold === 1 ? 'All-time Sale' : 'All-time Sales'}
+          </p>
+        </div>
+      </div> */}
+
         <div className='flex flex-row gap-6 md:gap-24 mt-3 p-4 border border-neutral-800 rounded-md'>
             <div className='flex flex-col'>
-              <p className='p-regular-12 text-neutral-600'>Email</p>
-              <p className={`${ibmMono.className} truncate font-normal p-regular-14 max-w-44 md:max-w-fit line-clamp-1`}>{userEmail}</p>
+              <p className='p-regular-12 text-neutral-600'>Tickets</p>
+              <p className={`${ibmMono.className} truncate font-normal p-regular-14 max-w-44 md:max-w-fit line-clamp-1`}>
+                {ticketCount}</p>
             </div>
             <div className='flex flex-col'>
-              <p className='p-regular-12 text-neutral-600'>Bank details</p>
+              <p className='p-regular-12 text-neutral-600'>Sales</p>
+              <p className={`${ibmMono.className} truncate font-normal p-regular-14 max-w-44 md:max-w-fit line-clamp-1`}>
+                {totalTicketsSold}</p>
+            </div>
+            <div className='flex flex-col'>
+              <p className='p-regular-12 text-neutral-600'>Revenue</p>
+              <InViewCounter totalTicketsRevenue={totalTicketsRevenue} />
+            </div>
+            <div className='w-[1px] border border-neutral-900 rounded-md'>
+
+            </div>
+            <div className='flex flex-col'>
+              <p className='p-regular-12 text-neutral-600 line-clamp-1'>Bank details</p>
               <BankDetailsStatus />
             </div>
           </div>

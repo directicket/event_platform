@@ -35,7 +35,7 @@ const CopyText = ({ text }: { text: string }) => {
     return (
         <button 
         onClick={handleCopy}
-        className='text-sm p-0.5 px-2 bg-white/10 text-neutral-300 w-fit ibm-12 rounded-sm text-left'>
+        className='text-sm p-0.5 px-2 bg-white/10 transform animate-in text-neutral-300 w-fit ibm-12 rounded-sm text-left'>
            <Copy height={14} width={14} className={`inline self-center mb-0.5 ${ copied ? 'hidden' : 'block'}`}/>{' '} 
            {copied ? 'Profile link copied!' : text}
           </button>

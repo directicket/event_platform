@@ -129,7 +129,7 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
               </div>
 
               <div className='flex flex-col gap-1'>
-                <p className='p-regular-14 text-neutral-500'>This ticket will expire by <span className='text-red-600'>{formatDateTime(event.expiryDate).timeOnly} on {formatDateTime(event.expiryDate).dateOnly}</span> for customers that haven't scanned it.</p>
+                <p className='p-regular-14 text-neutral-500'>This ticket will expire by <span className='text-pink-600'>{formatDateTime(event.expiryDate).timeOnly} on {formatDateTime(event.expiryDate).dateOnly}</span> for customers that haven't scanned it.</p>
               </div>
 
               
