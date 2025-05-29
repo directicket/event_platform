@@ -10,30 +10,51 @@ import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus, Tic
 import Footer from '@/components/shared/Footer';
 import CopyText from '@/components/shared/CopyText';
 import CollectionDashboard from '@/components/shared/CollectionDashboard';
+import { getUserByUsername } from '@/lib/actions/user.actions';
+import Event from '@/lib/database/models/event.model'
+import Search from '@/components/shared/Search';
+import { useSearchParams } from 'next/navigation';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
-export default async function ProfilePage() {
+export default async function ProfilePage({ searchParams }: { searchParams: { [key: string]: string | string[] | undefined } }) {
+  const query = typeof searchParams.query === 'string' ? searchParams.query : '';
   const user = await currentUser();
   const userFullName = `${user?.firstName} ${user?.lastName}`;
+  const userFirstName = user?.firstName
   const userEmail = user?.emailAddresses[0]?.emailAddress;
   const userName = user?.username;
+  const userPhoto = user?.imageUrl
+
+  const stringUserName = userName?.toString()
+
+  // const userUserName = await getUserByUsername(stringUserName)
 
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
 
-  const organizedEvents = await getEventsByUser({ userId, page: 1 });
+  const organizedEvents = await getEventsByUser({ query, userId, page: 1 });
 
   return (
     <>
     <div className='mt-16'>
       {/* USER INFO */}
-      <section className='wrapper text-white flex flex-col gap-3'>
-        <div className='w-full bg-neutral-950/70 border border-neutral-800/50 p-4 rounded-md'>
-          <h1 className='text-xl font-normal'>{userFullName}</h1>
-          <CopyText text={`directicket.live/${userName}`} />
+      <section className='wrapper text-white flex flex-col gap-2'>
 
-          <div className='flex flex-row gap-6 md:gap-24 mt-8'>
+        
+        <h1 className='h3-regular font-normal'>
+          <span className='text-neutral-600'>Hello, <img src={userPhoto} className='w-8 h-8 mb-1 rounded-full inline border border-neutral-800'/></span> <br/>{userFullName}.</h1>
+        
+        <div className='flex flex-auto gap-2'>
+        <CopyText text={`directicket.live/${userName}`} />
+        <a 
+          href={`/${userName}`}
+          className='text-sm p-0.5 px-2 bg-black hover:bg-white/90 text-neutral-200 hover:text-neutral-900 border border-neutral-800/80 w-fit ibm-12 rounded-sm'>
+              Open Link
+        </a>
+        </div>
+
+        <div className='flex flex-row gap-6 md:gap-24 mt-3 p-4 border border-neutral-800 rounded-md'>
             <div className='flex flex-col'>
               <p className='p-regular-12 text-neutral-600'>Email</p>
               <p className={`${ibmMono.className} truncate font-normal p-regular-14 max-w-44 md:max-w-fit line-clamp-1`}>{userEmail}</p>
@@ -43,45 +64,32 @@ export default async function ProfilePage() {
               <BankDetailsStatus />
             </div>
           </div>
-
-          
-          <div className='flex flex-row justify-between gap-4'>
-          <Link href={`/${user?.username}`} className='w-full'>
-          <div className='w-full rounded-sm gap-2 justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-800/75 bg-neutral-900/75 mt-4 border border-neutral-900'>
-            <p className='p-regular-14 self-center ml-0.5'>View Profile</p>
-            <CircleUserRound width={17} height={17} className='self-center'/>
-          </div>
-          </Link>
+        
+ 
+          <div className='flex flex-row justify-between gap-2 mt-[1px]'>
 
           <Link href={`/profile/my-orders`} className='w-full'>
-          <div className='w-full rounded-sm gap-2 justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-800/75 bg-neutral-900/75 mt-4 border border-neutral-900'>
+          <div className='w-full rounded-sm gap-2 justify-between flex flex-row p-3 hover:text-white hover:bg-neutral-800/75 bg-neutral-900/75 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>My Purchases</p>
             <Ticket width={16} height={16} className='self-center -rotate-45'/>
           </div>
           </Link>
-          </div>
 
-          <Link href={`/events/create`}>
-          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-yellow-400/85  bg-yellow-400 mt-4 border border-neutral-900'>
+          <Link href={`/events/create`} className='w-full'>
+          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-lime-400/85  paystack-button border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Create Ticket</p>
             <Plus width={16} height={16} className='self-center'/>
           </div>
           </Link>
-        </div>
+          </div>
 
+          
           
       </section>
 
       {/* LISTINGS */}
-      <section className='bg-black bg-cover bg-center pt-5 md:pt-16 md:py-2 mb-2'>
-        <div className='wrapper flex flex-col gap-0'>
-          <h3 className='text-xl md:p-regular-18 text-left sm:text-left text-white'>
-            Manage Tickets
-          </h3>
-          <p className='p-regular-14 md:p-regular-18 text-left sm:text-left text-neutral-600'>
-            View all the tickets you've created on directicket.
-          </p>
-        </div>
+      <section className='bg-black bg-cover bg-center pt-5 md:pt-16 md:py-2 mb-2 wrapper'>
+        <Search />
       </section>
 
       <section className='wrapper mt-[-30px]'>

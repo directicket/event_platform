@@ -124,11 +124,18 @@ export async function getAllEvents({ query, limit = 400, page, category }: GetAl
 }
 
 // GET EVENTS BY ORGANIZER
-export async function getEventsByUser({ userId, limit = 400, page }: GetEventsByUserParams) {
+export async function getEventsByUser({ userId, limit = 400, page, query }: GetEventsByUserParams & { query?: string }) {
   try {
     await connectToDatabase()
 
-    const conditions = { organizer: userId }
+    const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+    const conditions = {
+      $and: [
+        { organizer: userId },
+        titleCondition
+      ]
+    }
+
     const skipAmount = (page - 1) * limit
 
     const eventsQuery = Event.find(conditions)
@@ -139,7 +146,10 @@ export async function getEventsByUser({ userId, limit = 400, page }: GetEventsBy
     const events = await populateEvent(eventsQuery)
     const eventsCount = await Event.countDocuments(conditions)
 
-    return { data: JSON.parse(JSON.stringify(events)), totalPages: Math.ceil(eventsCount / limit) }
+    return {
+      data: JSON.parse(JSON.stringify(events)),
+      totalPages: Math.ceil(eventsCount / limit)
+    }
   } catch (error) {
     handleError(error)
   }

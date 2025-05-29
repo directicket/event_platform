@@ -216,24 +216,24 @@ body {
 
   /* 14 */
   .p-semibold-14 {
-    @apply text-[14px] font-semibold leading-[20px] tracking-tight;
+    @apply text-[14px] font-semibold leading-[18px] tracking-tight;
   }
 
   .p-bold-14 {
-    @apply text-[14px] font-bold leading-[20px];
+    @apply text-[14px] font-bold leading-[18px];
   }
 
   .p-medium-14 {
-    @apply text-[14px] font-medium leading-[20px];
+    @apply text-[14px] font-medium leading-[18px];
   }
 
   .p-regular-14 {
-    @apply text-[14px] font-normal leading-[20px];
+    @apply text-[14px] font-normal leading-[18px];
   }
 
   /* 12 */
   .p-medium-12 {
-    @apply text-[12px] font-medium leading-[20px];
+    @apply text-[12px] font-medium leading-[14px];
   }
 
   .p-regular-12 {
@@ -335,6 +335,11 @@ body {
 .box {
   transform-style: preserve-3d;
   perspective: 1000px;
+}
+
+.small-box {
+  transform-style: preserve-3d;
+  perspective: 300px;
 }
 
 .spin {

@@ -1,7 +1,7 @@
 import { iEvent } from '@/lib/database/models/event.model'
 import { formatDateTime } from '@/lib/utils'
 import { auth } from '@clerk/nextjs/server'
-import { BadgeCheck, SquarePen } from 'lucide-react'
+import { BadgeCheck, CirclePause, OctagonPause, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -70,26 +70,21 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
                   
 
       <div className='flex flex-row p-4 -mt-3 mb-2'>
-      <div className='max-w-xl self-center'> {/* Openning of ticket artwork div */}
-          <div className="flex md:mb-0 md:mt-0 h-fit md:min-h-0 bg-black
-            justify-center items-center overflow-hidden">
+      <div className='max-w-xl self-center '> {/* Openning of ticket artwork div */}
+          <div className="flex md:mb-0 md:mt-0 h-fit md:min-h-32 bg-black
+            justify-center items-center">
             <div className="h-fit max-w-[60px] 
                   md:h-full md:max-w-[60px] lg:max-h-[250px]
-                  lg:max-w-[350px] flex items-center justify-center">
+                  lg:max-w-[350px] flex items-center justify-center small-box">
               <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} alt="Ticket artwork"
                 width={100} height={100}
                 className="h-fit md:max-w-[250px] border border-0.5 
                 border-neutral-800/40 object-contain 
-                  w-auto md:w-fit"
+                  w-auto md:w-fit rounded-[calc(var(--radius)-6px)] spin"
               />
             </div>
           </div>
         </div>
-
-        <p className={`flex flex-col p-medium-16 ${hasEventFinished ? 'pointer-events-none bg-black/85 z-10 flex items-center justify-center text-center absolute inset-0 hover:border rounded-md' : 'hidden'}`}>
-          Sales for this ticket are paused.<br />
-          { !hasOrderLink ? <span className='p-regular-14 text-neutral-600'>Its event has either started or passed.</span> : <span className='p-regular-14 text-neutral-600'>Resume by editing Event Date & Time.</span>}
-        </p>
 
         <div className={`self-center flex flex-col w-full p-4 ${event.quantity === 0 ? 'pointer-events-none opacity-50' : ''}`}>
           <Link href={`/events/${event._id}/${event.isFree ? 'collect-ticket' : 'checkout'}`} className={`${event.quantity === 0 || hasEventFinished ? 'pointer-events-none opacity-50' : ''}`}>
@@ -122,7 +117,7 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
                 </div>
 
                 <div className='flex flex-row gap-1'>
-                  <p className={`p-0.5 px-2 bg-white/10 text-neutral-300 w-fit ibm-12 rounded-sm ${ event.amountSold > 0 ? 'text-lime bg-lime-500/20' : 'text-neutral-700' }`}>{event.amountSold} sold</p>
+                  <p className={`p-0.5 px-2 text-neutral-300 w-fit ibm-12 rounded-sm ${ event.amountSold > 0 ? 'text-lime bg-lime-400/15' : 'text-neutral-700 bg-white/10' }`}>{event.amountSold} sold</p>
                 </div>
 
                 <div className='flex flex-row gap-1'>
@@ -134,11 +129,23 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
                 <p className='p-regular-14 text-neutral-500'>This ticket will expire by <span className='text-red-600'>{formatDateTime(event.expiryDate).timeOnly} on {formatDateTime(event.expiryDate).dateOnly}</span> for customers that haven't scanned it.</p>
               </div>
 
+              
+
             </div>
         </div>
           )}
 
-            <div className='z-20 relative w-full flex flex-row gap-1 p-4 mt-8'>
+            
+            <div className='z-20 relative w-full flex flex-col gap-1 p-4 mt-8'>
+              {hasEventFinished ? 
+              <div className='mb-2 flex flex-row gap-2 bg-white/5 border border-neutral-700/60 py-2 pr-4 pl-3 items-start rounded-sm'>
+                <CirclePause height={35} width={35} className='text-neutral-200 self-center w-10'/>
+                <p className='p-regular-14 leading-tight self-center text-neutral-200 mb-[3px]'>Sales for this ticket are paused because your event has started.</p>
+              </div> 
+              : 
+              <div></div>
+              }
+
             <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500'>
               Created {formatDateTime(event.createdAt).dateOnly}
             </p>
