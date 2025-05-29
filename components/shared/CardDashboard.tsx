@@ -117,12 +117,15 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
                 </div>
 
                 <div className='flex flex-row gap-1'>
-                  <p className={`p-0.5 px-2 text-neutral-300 w-fit ibm-12 rounded-sm ${ event.amountSold > 0 ? 'text-lime bg-lime-400/15' : 'text-neutral-700 bg-white/10' }`}>{event.amountSold} sold</p>
+                  <p className={`p-0.5 px-2 text-neutral-700 bg-white/10 w-fit ibm-12 rounded-sm 
+                    ${event.isFree && event.amountSold > 0 ? 'text-yellow-400 bg-yellow-400/20' : `${ event.amountSold > 0 ? 'text-lime bg-lime-400/15' : 'text-neutral-700'}`}
+                    
+                    `}>{event.amountSold} { event.isFree ? 'collected' : 'sold'}</p>
                 </div>
 
-                <div className='flex flex-row gap-1'>
+                { !event.isFree ? <div className='flex flex-row gap-1'>
                   <p className={`p-0.5 px-2 bg-white/10 w-fit ibm-12 rounded-sm ${ revenue > 0 ? 'text-black paystack-button' : 'text-neutral-700' }`}>₦{revenue.toLocaleString()} made</p>
-                </div>
+                </div> : <div></div>}
               </div>
 
               <div className='flex flex-col gap-1'>

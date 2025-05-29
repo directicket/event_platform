@@ -43,7 +43,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
 
         
         <h1 className='h3-regular font-normal'>
-          <span className='text-neutral-600'>Hello, <img src={userPhoto} className='w-8 h-8 mb-1 rounded-full inline border border-neutral-800'/></span> <br/>{userFullName}.</h1>
+          <span className='text-neutral-600'>Hello,</span> <br/>{userFullName}.</h1>
         
         <div className='flex flex-auto gap-2'>
         <CopyText text={`directicket.live/${userName}`} />
@@ -76,7 +76,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
           </Link>
 
           <Link href={`/events/create`} className='w-full'>
-          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-lime-400/85  paystack-button border border-neutral-900'>
+          <div className='rounded-sm justify-between flex flex-row p-3 text-black hover:text-black hover:bg-white/85 bg-neutral-100 border border-neutral-900'>
             <p className='p-regular-14 self-center ml-0.5'>Create Ticket</p>
             <Plus width={16} height={16} className='self-center'/>
           </div>
