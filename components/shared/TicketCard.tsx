@@ -46,8 +46,8 @@ export default function Tickets() {
           
           <div className='flex flex-col gap-1'>
             <div className='flex flex-row justify-between text-lime'>
-              <p className="text-sm">₦{order.totalAmount}</p>
-              <p className="text-sm">Ref: {order.reference}</p>
+              <p className="text-sm">{ order.totalAmount === '0' ? "FREE" : `₦${order.totalAmount}` }</p>
+              { order.totalAmount === '0' ? <p className="text-sm">Ref: {order.id}</p> : <p className="text-sm">Ref: {order.reference}</p> }
             </div>
             <hr className='border-0.5 border border-neutral-700/80 border-dashed'/>
             <p className="text-sm text-neutral-600">
@@ -55,13 +55,21 @@ export default function Tickets() {
             </p>
           </div>
 
-          
+          { order.totalAmount === '0' ? 
+          <a
+            href={`/events/${order.eventId}/collect-ticket`}
+            className="text-lime hover:no-underline underline mt-2 inline-block"
+          >
+            View Ticket →
+          </a>
+          : 
           <a
             href={`/events/${order.eventId}/payment-success?reference=${order.reference}&txref=${order.reference}`}
             className="text-lime hover:no-underline underline mt-2 inline-block"
           >
             View Ticket →
           </a>
+          }
         </div>
       ))}
     </div>

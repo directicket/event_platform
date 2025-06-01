@@ -4,12 +4,13 @@ import { useEffect, useState, useRef } from 'react';
 import { useSearchParams } from 'next/navigation';
 import { getEventById } from '@/lib/actions/event.actions';
 import { formatDateTime } from '@/lib/utils';
-import { CircleCheck, TriangleAlert } from 'lucide-react';
+import { CircleCheck, Ticket, TriangleAlert } from 'lucide-react';
 import html2canvas from 'html2canvas';
 import { IBM_Plex_Mono } from 'next/font/google';
 import { useUser } from "@clerk/nextjs";
 import Image from 'next/image';
 import ExpiryModal from '@/components/shared/ExpiryModal';
+import Link from 'next/link';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -219,6 +220,12 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
         ) : (
           <p className='text-neutral-600 text-left'>Loading your Ticket...</p>
         )}
+        <Link href={`/profile/my-orders`}>
+        <div className='rounded-sm justify-between w-full flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-300/45 mt-2 border border-neutral-900 text-white'>
+          <p className='p-regular-14 self-center ml-0.5'>View All Purchases</p>
+          <Ticket width={16} height={16} className='self-center'/>
+        </div>
+        </Link>
 
         <div className='gap-2'>
           <p className='p-regular-14 text-white mt-2'>

@@ -194,7 +194,7 @@ export default function QRCodePage({ params: { id } }: { params: { id: string } 
         )}
 
         <Link href={`/profile/my-orders`}>
-          <div className='rounded-sm justify-between w-full flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-900/45 mt-2 border border-neutral-900'>
+          <div className='rounded-sm justify-between w-full flex flex-row p-3 hover:text-white hover:bg-neutral-900/75 bg-neutral-300/45 mt-2 border border-neutral-900 text-white'>
             <p className='p-regular-14 self-center ml-0.5'>View All Purchases</p>
             <Ticket width={16} height={16} className='self-center'/>
           </div>
