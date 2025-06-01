@@ -16,6 +16,7 @@ export interface iEvent extends Document {
     url?: string;
     category: { _id: string, name: string };
     organizer: { _id: string, firstName: string, lastName: string, username: string };
+    tags?: { _id: string, name: string } // add [] to the end to allow for multiple tags per item in the schema
 }
 
 const EventSchema = new Schema({
@@ -33,6 +34,7 @@ const EventSchema = new Schema({
     url: { type: String },
     category: { type: Schema.Types.ObjectId, ref: 'Category' },
     organizer: { type: Schema.Types.ObjectId, ref: 'User' },
+    tags: { type: Schema.Types.ObjectId, ref: 'Tag'}
 })
 
 const Event = models.Event || model('Event', EventSchema);

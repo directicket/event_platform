@@ -8,6 +8,9 @@ import React from 'react'
 import { Button } from '../ui/button'
 import { IBM_Plex_Mono } from 'next/font/google';
 import CheckoutButton from './CheckoutButton'
+import dynamic from 'next/dynamic'
+
+const TagDropdownWrapper = dynamic(() => import('./TagDropdownWrapper'), { ssr: false })
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] })
 
@@ -45,6 +48,8 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
                 </Link>
             </div>
         )}
+        
+
         <p className={`${ibmMono.className} p-regular-14 md:p-regular-14 ${event.quantity === 0 ? 'opacity-50' : ''}`}>
           {event.isFree ? 
             <span className='text-yellow-300'>FREE</span> 
@@ -149,9 +154,15 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
               <div></div>
               }
 
-            <p className='p-regular-12 md:p-regular-14 font-normal text-neutral-500'>
+              <div className='flex flex-row justify-between mt-2'>
+            <p className='p-regular-12 md:p-regular-14 font-normal self-end text-neutral-500'>
               Created {formatDateTime(event.createdAt).dateOnly}
             </p>
+
+            <TagDropdownWrapper eventId={event._id} />
+
+            </div>
+
             </div>
 
     </div>

@@ -124,34 +124,67 @@ export async function getAllEvents({ query, limit = 400, page, category }: GetAl
 }
 
 // GET EVENTS BY ORGANIZER
-export async function getEventsByUser({ userId, limit = 400, page, query }: GetEventsByUserParams & { query?: string }) {
+export async function getEventsByUser({
+  userId,
+  limit = 400,
+  page = 1,
+  query,
+}: GetEventsByUserParams & { query?: string }) {
   try {
-    await connectToDatabase()
+    await connectToDatabase();
 
-    const titleCondition = query ? { title: { $regex: query, $options: 'i' } } : {}
+    const mongoUser = await User.findById(userId)
+    if (!mongoUser) throw new Error('User not found');
+
+    const titleCondition = query
+      ? { title: { $regex: query, $options: 'i' } }
+      : {};
+
     const conditions = {
-      $and: [
-        { organizer: userId },
-        titleCondition
-      ]
-    }
+      $and: [{ organizer: mongoUser._id }, titleCondition],
+    };
 
-    const skipAmount = (page - 1) * limit
+    const skipAmount = (page - 1) * limit;
 
-    const eventsQuery = Event.find(conditions)
+    let eventsQuery = Event.find(conditions)
       .sort({ createdAt: 'desc' })
       .skip(skipAmount)
-      .limit(limit)
+      .limit(limit);
 
-    const events = await populateEvent(eventsQuery)
-    const eventsCount = await Event.countDocuments(conditions)
+    let events = await populateEvent(eventsQuery);
+    const eventsCount = await Event.countDocuments(conditions);
+
+    // If user has no events, create one dummy event
+    if (events.length === 0) {
+      // Optional: grab a default category
+      const defaultCategory = await Category.findOne({ name: 'Party' });
+
+      const dummyEvent = new Event({
+        title: 'Summer Party - VIP Entry Ticket',
+        description:
+          'Get access to the venue. This is a dummy ticket made by Directicket.',
+        location: 'Abuja, Nigeria',
+        imageURL: 'https://x8ismcy6r4.ufs.sh/f/d45f822b-75a0-413e-a19b-9c323ea56ec3-1xdpbn.jpeg',
+        startDateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // +1 day
+        expiryDate: new Date(),
+        quantity: 100,
+        price: '5000',
+        isFree: false,
+        organizer: mongoUser._id,
+        category: defaultCategory._id, // optional
+      });
+
+      await dummyEvent.save();
+
+      events = await populateEvent(Event.find({ _id: dummyEvent._id }));
+    }
 
     return {
       data: JSON.parse(JSON.stringify(events)),
-      totalPages: Math.ceil(eventsCount / limit)
-    }
+      totalPages: Math.ceil(eventsCount / limit) || 1,
+    };
   } catch (error) {
-    handleError(error)
+    handleError(error);
   }
 }
 

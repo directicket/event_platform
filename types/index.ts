@@ -113,6 +113,13 @@ export type CreateUserParams = {
   export type CreateCategoryParams = {
     categoryName: string
   }
+
+  // ====== TAG PARAMS
+  export type CreateTagParams = {
+    name: string
+    ownerId: string
+    createdAt: Date
+  }
   
   // ====== ORDER PARAMS
   export type CheckoutOrderParams = {

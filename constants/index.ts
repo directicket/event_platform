@@ -18,15 +18,15 @@ export const headerLinks = [
   ]
   
   export const eventDefaultValues = {
-    title: '',
-    description: '',
-    location: '',
+    title: 'My Event - Regular Ticket',
+    description: 'Buy this ticket to gain access to the venue. Hurry! Stock is very limited.',
+    location: 'Abuja, Nigeria',
     imageUrl: '',
-    startDateTime: new Date(),
+    startDateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // Current date + 1 day
     expiryDate: new Date(),
-    quantity: 1,
+    quantity: 100,
     categoryId: '',
-    price: '',
+    price: '3000',
     isFree: false,
     url: '',
   }
