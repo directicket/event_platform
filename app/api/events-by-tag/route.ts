@@ -21,7 +21,7 @@ export async function POST(req: NextRequest) {
     const events = await Event.find({ tags: tagId })
       .populate('organizer', 'firstName lastName username')
       // .populate('category', 'name')
-      .populate('tags', 'name') // still use populate for display name
+      // .populate('tags', 'name') // still use populate for display name
 
     return NextResponse.json({ data: events });
   } catch (err) {
