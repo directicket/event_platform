@@ -1,7 +1,7 @@
 import { iEvent } from '@/lib/database/models/event.model'
 import { formatDateTime } from '@/lib/utils'
 import { auth } from '@clerk/nextjs/server'
-import { BadgeCheck, CirclePause, OctagonPause, SquarePen } from 'lucide-react'
+import { BadgeCheck, ChartLine, CirclePause, OctagonPause, SquarePen } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
 import React from 'react'
@@ -38,7 +38,7 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
   // if (isEventCreator) return null
   return (
     <>
-    <div className={`text-white rounded-md bg-black relative flex flex-col gap-0 border-neutral-800/60 border w-full ${event.quantity === 0 ? '' : ''}`}>
+    <div className={`text-white rounded-lg bg-black relative flex flex-col gap-0 border-neutral-800/60 border w-full ${event.quantity === 0 ? '' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (
@@ -163,7 +163,18 @@ const CardDashboard = ({ event, hasOrderLink, hidePrice, showStats }: CardProps)
 
             </div>
 
+            <Link href={`/profile/${event._id}/sales-report`}>
+            <div className='z-[999] p-regular-14 md:p-regular-14 flex flex-row gap-2 font-normal self-end bg-blue-900/20 text-blue-600 w-full border border-neutral-800/30 rounded-md mt-2 p-4'>
+              <ChartLine width={18} height={18} className='self-center' /> 
+              <p className='self-center'>
+                See who's bought this! <span className='font-semibold underline hover:no-underline inset-0'>View Report &rarr;</span>
+              </p>
             </div>
+          </Link>
+
+            </div>
+
+            
 
     </div>
     </>
