@@ -8,6 +8,7 @@ import { getEventsByUser } from '@/lib/actions/event.actions'
 import UserOrganizedEvents from './ServerGroupWrapper'
 import Image from 'next/image'
 import { formatDateTime } from '@/lib/utils'
+import Link from 'next/link'
 
 interface Tag {
   _id: string
@@ -153,6 +154,7 @@ const Tags = () => {
         <div className="flex gap-2 overflow-x-auto w-full snap-x snap-mandatory">
         {tagEvents.map(event => (
             <div key={event._id} className='text-white/80 snap-start min-w-[90%] text-sm border rounded-sm border-neutral-800 p-4 w-full'>
+            <Link href={`/profile/${event._id}/sales-report`}>
             <div className='flex flex-row gap-4'>
 
             <div className='max-w-xl'> {/* Openning of ticket artwork div */}
@@ -177,6 +179,7 @@ const Tags = () => {
             </div>
 
             </div>
+            </Link>
 
 
                 <div className='flex flex-wrap gap-1 mt-4'>
