@@ -42,29 +42,29 @@ export default function Tickets() {
     <div className="grid gap-4 mt-4">
       {orders.map(order => (
         <div key={order.id} className="rounded-md border border-neutral-800 p-4 text-white">
-          <h3 className="text-lg font-semibold">{order.eventTitle}</h3>
+          <h3 className="text-lg font-semibold">{order?.eventTitle}</h3>
           
           <div className='flex flex-col gap-1'>
             <div className='flex flex-row justify-between text-lime'>
-              <p className="text-sm">{ order.totalAmount === '0' ? "FREE" : `₦${order.totalAmount}` }</p>
-              { order.totalAmount === '0' ? <p className="text-sm">Ref: {order.id}</p> : <p className="text-sm">Ref: {order.reference}</p> }
+              <p className="text-sm">{ order?.totalAmount === '0' ? "FREE" : `₦${order.totalAmount}` }</p>
+              { order.totalAmount === '0' ? <p className="text-sm">Ref: {order?.id}</p> : <p className="text-sm">Ref: {order?.reference}</p> }
             </div>
             <hr className='border-0.5 border border-neutral-700/80 border-dashed'/>
             <p className="text-sm text-neutral-600">
-            Bought on {new Date(order.createdAt).toLocaleString()}
+            Bought on {new Date(order?.createdAt).toLocaleString()}
             </p>
           </div>
 
-          { order.totalAmount === '0' ? 
+          { order?.totalAmount === '0' ? 
           <a
-            href={`/events/${order.eventId}/collect-ticket`}
+            href={`/events/${order?.eventId}/collect-ticket`}
             className="text-lime hover:no-underline underline mt-2 inline-block"
           >
             View Ticket →
           </a>
           : 
           <a
-            href={`/events/${order.eventId}/payment-success?reference=${order.reference}&txref=${order.reference}`}
+            href={`/events/${order?.eventId}/payment-success?reference=${order?.reference}&txref=${order?.reference}`}
             className="text-lime hover:no-underline underline mt-2 inline-block"
           >
             View Ticket →

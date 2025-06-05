@@ -35,7 +35,7 @@ const Card = ({ event, hasOrderLink, hidePrice, showStats }: CardProps) => {
   // if (isEventCreator) return null
   return (
     <>
-    <div className={`text-white rounded-md bg-neutral-950 relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
+    <div className={`${!event.url ? 'hidden' : 'block'} text-white rounded-md bg-neutral-950 relative flex flex-col gap-0 border-neutral-900 border w-full ${event.quantity === 0 ? '' : ''}`}>
       <div className='flex flex-row w-full p-4 justify-between'>
         <div className='flex flex-row'>
         {isEventCreator && !hidePrice && (

@@ -56,13 +56,13 @@ export default async function PublicProfilePage({ params }: Props) {
     <div className='flex flex-col gap-0.5 self-center max-w-[275px] overflow-clip'>
       <h1 className='p-regular-24 font-bold w-full line-clamp-1'>{user.firstName} {user.lastName} <span>{user.isVerified && ( <img src='/assets/icons/white-black-check.svg' alt='verified' className='inline w-5 h-5 mb-0.5'/>)}</span></h1>
       
-      <div className='flex flex-row items-start justify-start'>
+      {/* <div className='flex flex-row items-start justify-start'>
         <div className='flex flex-row gap-1'>
           <p className="text-sm font-medium text-white">
             {eventCount} {eventCount === 1 ? 'Ticket' : 'Tickets'}
           </p>
         </div>
-      </div>
+      </div> */}
       
       <p className={`${ibmMono.className} text-sm text-neutral-400 truncate`}>
         directicket.live/<span className='font-bold text-white'>{user.username}</span>

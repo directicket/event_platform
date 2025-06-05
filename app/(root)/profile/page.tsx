@@ -142,7 +142,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
       <section className='flex flex-col gap-2 bg-black bg-cover bg-center pt-5 md:pt-16 md:py-2 mb-2 wrapper'>
         <Search />
 
-        <div className='flex flex-row gap-2'>
+        <div className='flex flex-col gap-2'>
         <Tags /> 
         {/* <UserTags /> */}
         </div>
@@ -151,19 +151,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
       
 
       <section className='wrapper mt-[-30px]'>
-        {ticketCount === 1 ? 
-        <div className="shadow-md shadow-black mt-2 
-        mb-2 shrink-0 w-full md:w-[100%] 
-        snap-start flex flex-col rounded-md p-4
-         bg-neutral-900 border border-neutral-800/50 gap-1">
-        <div className="flex flex-row gap-[7.5px]">
-          <SquarePen width={18} height={18} className='text-white self-center'/>
-          <p className={`${ibmMono.className} ibm-14 text-white`}>EDIT YOUR FIRST TICKET</p>
-        </div>
-        <p className="p-regular-14 md:p-regular-16 text-neutral-500">
-          Try replacing the Ticket Artwork, name, description, price and more to get started.
-        </p>
-      </div> : <div></div>}
+        
         <CollectionDashboard
           data={organizedEvents?.data}
           emptyTitle="You haven't created any tickets yet"

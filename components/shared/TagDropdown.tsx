@@ -54,7 +54,7 @@ const TagDropdown = ({
         value={selectedTag}
         onChange={e => handleSelect(e.target.value)}
       >
-        <option value="" disabled>No Group</option>
+        <option value="" disabled>Add to Group</option>
         {tags.map(tag => (
           <option key={tag._id} value={tag._id}>
             {tag.name}

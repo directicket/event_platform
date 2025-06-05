@@ -160,9 +160,9 @@ export async function getEventsByUser({
       const defaultCategory = await Category.findOne({ name: 'Party' });
 
       const dummyEvent = new Event({
-        title: 'Summer Party - VIP Entry Ticket',
+        title: 'Demo Party - Regular Ticket',
         description:
-          'Get access to the venue. This is a dummy ticket made by Directicket.',
+          'This is a dummy ticket made by Directicket.',
         location: 'Abuja, Nigeria',
         imageURL: 'https://x8ismcy6r4.ufs.sh/f/d45f822b-75a0-413e-a19b-9c323ea56ec3-1xdpbn.jpeg',
         startDateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // +1 day

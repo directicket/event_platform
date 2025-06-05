@@ -50,7 +50,7 @@ const BankDetailsStatus = () => {
           </p>
         </Link>
       ) : (
-        <p className={`${ibmMono.className} font-normal p-regular-14 text-yellow-400`}>
+        <p className={`${ibmMono.className} font-normal p-regular-14 text-blue-600`}>
           Added
         </p>
       )}

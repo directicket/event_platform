@@ -1,6 +1,6 @@
 'use client'
 
-import { BookmarkPlus, X, EllipsisVertical, FolderOpen } from 'lucide-react'
+import { BookmarkPlus, X, EllipsisVertical, FolderOpen, GalleryVerticalEnd } from 'lucide-react'
 import React, { useState, useEffect } from 'react'
 import { createTag } from '@/lib/actions/tag.actions'
 import CollectionGroups from './CollectionGroups'
@@ -9,10 +9,13 @@ import UserOrganizedEvents from './ServerGroupWrapper'
 import Image from 'next/image'
 import { formatDateTime } from '@/lib/utils'
 import Link from 'next/link'
+import LazyVideo from './LazyVideo'
+import LazyVideoRewind from './LazyVideoRewind'
 
 interface Tag {
   _id: string
   name: string
+  createdAt: Date
 }
 
 const Tags = () => {
@@ -62,23 +65,61 @@ const Tags = () => {
 
   return (
     <>
+      <div className='flex flex-row gap-2'>
       <div className='flex flex-row min-w-fit'>
         <button
           onClick={() => setOpen(true)}
-          className='rounded-md justify-between flex flex-row p-3 gap-1 min-w-fit
+          className='rounded-lg justify-between flex flex-row p-3 gap-1 min-w-fit
           text-white hover:text-black hover:bg-white bg-black border border-neutral-900'
         >
-          <FolderOpen width={16} height={16} className='self-center' />
+          <GalleryVerticalEnd width={16} height={16} className='self-center' />
           <p className='p-regular-14 self-center ml-0.5'>New Group</p>
         </button>
       </div>
+
+      <div className="flex flex-col space-y-2">
+        <div className="flex flex-row gap-2 overflow-x-auto max-w-fit">
+          {fetchingTags ? (
+            <p className="text-white"></p>
+          ) : (
+            tags.map(tag => (
+              <button
+                key={tag._id}
+                onClick={async () => {
+                  setSelectedTag(tag)
+                  const res = await fetch('/api/events-by-tag', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ tagId: tag._id })
+                  })
+
+                  const data = await res.json()
+                  setTagEvents(data.data || [])
+                }}
+                className="rounded-lg justify-between flex flex-row p-3 pr-1 gap-1
+                  text-white hover:text-white hover:bg-white/10 bg-white/5 border border-neutral-900 min-w-fit"
+              >
+                <p className="p-regular-14 self-center">{tag.name}</p>
+                <EllipsisVertical width={16} height={16} className="self-center text-white/40" />
+              </button>
+            ))
+          )}
+        </div>
+      </div>
+      </div>
+
+
+
 
       {open && (
         <div className='fixed inset-0 z-50 flex items-center justify-center bg-black/50'>
           <div className='bg-neutral-950 border border-neutral-800 rounded-xl p-6 w-[90%] max-w-md'>
             <div className='flex justify-between items-center mb-4'>
+              <div className='flex flex-col self-start'>
               <h2 className='text-white text-lg font-medium'>Create a new group</h2>
-              <button onClick={() => setOpen(false)} className='text-neutral-400 hover:text-white'>
+              <p className='p-regular-14 text-neutral-500'>Make related tickets a lot easier to track.</p>
+              </div>
+              <button onClick={() => setOpen(false)} className='text-neutral-400 hover:text-white self-start mt-0.5'>
                 <X />
               </button>
             </div>
@@ -101,35 +142,8 @@ const Tags = () => {
           </div>
         </div>
       )}
+      
 
-      <div className="flex flex-row gap-2 overflow-x-auto max-w-fit">
-        {fetchingTags ? (
-            <p className="text-white"></p>
-            ) : (
-            tags.map(tag => (
-                <button
-                key={tag._id}
-                onClick={async () => {
-                setSelectedTag(tag)
-                const res = await fetch('/api/events-by-tag', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ tagId: tag._id }) // 👈 send tagId
-                })
-
-                const data = await res.json()
-                setTagEvents(data.data || [])
-                }}
-
-                className="rounded-md justify-between flex flex-row p-3 pr-1 gap-1
-                text-white hover:text-white hover:bg-white/10 bg-white/5 border border-neutral-900 min-w-fit"
-                >
-                <p className="p-regular-14 self-center">{tag.name}</p>
-                <EllipsisVertical width={16} height={16} className="self-center text-white/40" />
-                </button>
-            ))
-            )}
-      </div>
 
       {selectedTag && (
   <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
@@ -147,13 +161,15 @@ const Tags = () => {
 
       {selectedTag && (
         <>
-        <div>
-        <p className="text-white text-xl font-semibold">{selectedTag?.name}</p>
+        <div className='flex flex-col self-start mb-2'>
+        <h2 className='text-white text-lg font-medium'>{selectedTag?.name}</h2>
+        <p className='p-regular-14 text-neutral-500'>Created on {formatDateTime(selectedTag?.createdAt).dateOnly}</p>
         </div>
-        <div className='w-full mt-3'>
+        
+        <div className='w-full mt-4'>
         <div className="flex gap-2 overflow-x-auto w-full snap-x snap-mandatory">
         {tagEvents.map(event => (
-            <div key={event._id} className='text-white/80 snap-start min-w-[90%] text-sm border rounded-sm border-neutral-800 p-4 w-full'>
+            <div key={event._id} className='text-white/80 snap-start min-w-[90%] text-sm hover:border-white border rounded-sm border-neutral-800 p-4 w-full'>
             <Link href={`/profile/${event._id}/sales-report`}>
             <div className='flex flex-row gap-4'>
 
@@ -165,8 +181,7 @@ const Tags = () => {
                     lg:max-w-[350px] flex items-start justify-start small-box">
                 <Image src={event ? event.imageURL : '/assets/images/dt-icon.svg'} alt="Ticket artwork"
                 width={100} height={100}
-                className="h-20 md:max-w-[250px] border border-0.5 
-                border-neutral-800/40 object-contain 
+                className="h-20 md:max-w-[250px] object-contain 
                     w-auto md:w-fit rounded-[calc(var(--radius)-6px)] spin"
                 />
             </div>
@@ -202,12 +217,26 @@ const Tags = () => {
         ))}
         </div>
         </div>
+
+        <p className='p-regular-14 text-neutral-500 mt-3'>Tap a ticket for detailed insights.</p>
         </>
         )}
     </div>
   </div>
 )}
-
+        
+        
+        {!fetchingTags && tags.length <= 1 && (
+          <div className='text-white p-4 bg-black border border-neutral-800/60 rounded-lg flex flex-row gap-4'>
+            <div className='max-w-36 max-h-36 self-center'>
+            <LazyVideoRewind src="/assets/videos/ticket-product.mp4" />
+            </div>
+            <div className='flex flex-col self-center'>
+            <p className='text-md'>Say hello to <span className='font-bold'>Groups!</span></p>
+            <p className="text-sm text-white/60">Use Groups to organize and track any related tickets.</p>
+            </div>
+          </div>
+        )}
     </>
   )
 }

@@ -21,12 +21,12 @@ export async function GET() {
   const orders = await Order.find({ buyer: user._id }).populate("event");
 
   const formatted = orders.map(order => ({
-    id: order._id,
-    eventTitle: order.event.title,
-    eventId: order.event._id,
-    createdAt: order.createdAt,
-    totalAmount: order.totalAmount,
-    reference: order.stripeId,
+    id: order._id || "null",
+    eventTitle: order.event.title || "null",
+    eventId: order.event._id || "null",
+    createdAt: order.createdAt || "null",
+    totalAmount: order.totalAmount || "null",
+    reference: order.stripeId || "null",
   }));
 
   return NextResponse.json({ orders: formatted });

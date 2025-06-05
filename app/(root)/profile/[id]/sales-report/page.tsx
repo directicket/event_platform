@@ -98,10 +98,10 @@ export default async function SalesReportPage({ params }: Props) {
       <h1 className="h2-regular mb-2"><span className='text-neutral-600'>Sales Report:</span><br/>{event.title}</h1>
       
       <div className='flex flex-row justify-between'>
-      <p className='p-regular-12 mt-4 text-white'>Created on {formatDateTime(event.createdAt).dateOnly}</p>
-      <p className='p-regular-12 mt-4 text-lime'>
-        {event.isFree ? <span className='text-yellow-300'>FREE</span> 
-        : `₦${event.price}`}
+      <p className='p-regular-14 mt-4 text-white'>Created on {formatDateTime(event.createdAt).dateOnly}</p>
+      <p className='p-regular-14 mt-4'>
+        {event.isFree ? <span className='text-black bg-yellow-400 rounded-sm px-1'>FREE</span> 
+        : <span className='text-black paystack-button rounded-sm px-1'>₦{event.price}</span>}
       </p>
       </div>
 
