@@ -140,9 +140,19 @@ export async function getEventsByUser({
       ? { title: { $regex: query, $options: 'i' } }
       : {};
 
-    const conditions = {
-      $and: [{ organizer: mongoUser._id }, titleCondition],
-    };
+    const conditions: any = {
+    $and: [
+      { organizer: mongoUser._id },
+      titleCondition
+    ],
+  };
+
+  // If it's a search, exclude dummy event(s)
+  if (query) {
+  conditions.$and.push({ url: { $exists: true, $ne: null } });
+  }
+
+
 
     const skipAmount = (page - 1) * limit;
 
@@ -154,29 +164,31 @@ export async function getEventsByUser({
     let events = await populateEvent(eventsQuery);
     const eventsCount = await Event.countDocuments(conditions);
 
-    // If user has no events, create one dummy event
-    if (events.length === 0) {
-      // Optional: grab a default category
-      const defaultCategory = await Category.findOne({ name: 'Party' });
+        // If user has no events, create one dummy event
+        // If user has no events AT ALL (not just filtered by query), create one dummy event
+    if (!query) {
+      const totalUserEvents = await Event.countDocuments({ organizer: mongoUser._id });
 
-      const dummyEvent = new Event({
-        title: 'Demo Party - Regular Ticket',
-        description:
-          'This is a dummy ticket made by Directicket.',
-        location: 'Abuja, Nigeria',
-        imageURL: 'https://x8ismcy6r4.ufs.sh/f/d45f822b-75a0-413e-a19b-9c323ea56ec3-1xdpbn.jpeg',
-        startDateTime: new Date(Date.now() + 1000 * 60 * 60 * 24), // +1 day
-        expiryDate: new Date(),
-        quantity: 100,
-        price: '5000',
-        isFree: false,
-        organizer: mongoUser._id,
-        category: defaultCategory._id, // optional
-      });
+      if (totalUserEvents === 0) {
+        const defaultCategory = await Category.findOne({ name: 'Party' });
 
-      await dummyEvent.save();
+        const dummyEvent = new Event({
+          title: 'Demo Party - Regular Ticket',
+          description: 'This is a dummy ticket made by Directicket.',
+          location: 'Abuja, Nigeria',
+          imageURL: 'https://x8ismcy6r4.ufs.sh/f/d45f822b-75a0-413e-a19b-9c323ea56ec3-1xdpbn.jpeg',
+          startDateTime: new Date(Date.now() + 1000 * 60 * 60 * 24),
+          expiryDate: new Date(),
+          quantity: 100,
+          price: '5000',
+          isFree: false,
+          organizer: mongoUser._id,
+          category: defaultCategory?._id,
+        });
 
-      events = await populateEvent(Event.find({ _id: dummyEvent._id }));
+        await dummyEvent.save();
+        events = await populateEvent(Event.find({ _id: dummyEvent._id }));
+      }
     }
 
     return {
