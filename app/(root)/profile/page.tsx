@@ -70,13 +70,15 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
             <PartyPopper width={23} height={23} className={`text-neutral-600 mb-[5.25px] ${ ticketCount === 1 ? 'inline' : 'hidden'}`}/>{' '}
             { ticketCount === 1 ? "Welcome" : "Hello"},</span> <br/>{userFullName} {userObject.isVerified && ( <img src='/assets/icons/white-black-check.svg' alt='verified' className='inline w-5 h-5 mb-0.5'/>)}</h1>
         
+        
+
+        <div className='flex flex-auto gap-2'>
         <ReusablePopover 
         header="Copy & share your Profile Link."
         message="Customers can shop all your tickets from this link."
         localStorageKey="profilePopoverDismissed">
-
-        <div className='flex flex-auto gap-2'>
         <CopyText text={`directicket.live/${userName}`} />
+        </ReusablePopover>
         <a 
           href={`/${userName}`}
           className='text-sm p-0.5 px-2 bg-black hover:bg-white/90 text-neutral-200 hover:text-neutral-900 border border-neutral-800/80 w-fit ibm-12 rounded-sm'>
@@ -84,7 +86,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
               
         </a>
         </div>
-        </ReusablePopover>
+        
 
         {/* <div className='flex flex-row items-start justify-start'>
         <div className='flex flex-row gap-1'>
