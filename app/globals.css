@@ -332,6 +332,10 @@ body {
   backdrop-filter: blur(20px); /* adjust the blur amount */
 }
 
+.bg-blur-sm {
+  backdrop-filter: blur(6px); /* adjust the blur amount */
+}
+
 .box {
   transform-style: preserve-3d;
   perspective: 1000px;

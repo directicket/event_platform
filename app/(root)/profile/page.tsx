@@ -18,6 +18,8 @@ import CountUp from 'react-countup';
 import InViewCounter from '@/components/shared/RevenueConter';
 import Tags from '@/components/shared/Tags';
 import UserTags from '@/components/shared/UserTags';
+import * as Popover from '@radix-ui/react-popover';
+import ReusablePopover from '@/components/shared/PopOver';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -68,6 +70,11 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
             <PartyPopper width={23} height={23} className={`text-neutral-600 mb-[5.25px] ${ ticketCount === 1 ? 'inline' : 'hidden'}`}/>{' '}
             { ticketCount === 1 ? "Welcome" : "Hello"},</span> <br/>{userFullName} {userObject.isVerified && ( <img src='/assets/icons/white-black-check.svg' alt='verified' className='inline w-5 h-5 mb-0.5'/>)}</h1>
         
+        <ReusablePopover 
+        header="Copy & share your Profile Link."
+        message="Customers can shop all your tickets from this link."
+        localStorageKey="profilePopoverDismissed">
+
         <div className='flex flex-auto gap-2'>
         <CopyText text={`directicket.live/${userName}`} />
         <a 
@@ -77,6 +84,7 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
               
         </a>
         </div>
+        </ReusablePopover>
 
         {/* <div className='flex flex-row items-start justify-start'>
         <div className='flex flex-row gap-1'>
@@ -154,8 +162,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
         
         <CollectionDashboard
           data={organizedEvents?.data}
-          emptyTitle="You haven't created any tickets yet"
-          emptyStateSubtext="Whenever you create tickets they will show up here."
+          emptyTitle="No tickets found."
+          emptyStateSubtext="Looks like you don't have any tickets."
           collectionType="Events_Organized"
           limit={12}
           page={1}
