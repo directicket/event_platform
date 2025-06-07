@@ -62,12 +62,12 @@ export default async function Home({ searchParams }: SearchParamProps) {
             </div>
           </div>
 
-          <h1 className='h36-regular font-normal'>Make and Sell<br/>
-            <span className='font-bold'>Tickets Your Way.</span>
+          <h1 className='h36-regular font-normal'>Make Your Tickets<br/>
+            <span className='font-bold'>An Experience.</span>
           </h1>
 
           <p className='p-regular-18 text-neutral-600 max-w-[75%] mb-2'>
-            Directicket lets you sell individual tickets, not manage events &mdash; just create and sell.
+            Every ticket gets its own page, rules, and vibe. Sell them separately and stay in control.
           </p>
 
           <SignedIn>
