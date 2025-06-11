@@ -23,7 +23,7 @@ export default function CompleteProfileModal({ clerkId, userName, imageUrl }: { 
     day: "",
     month: "",
     year: "",
-    gender: "Rather Not Say",
+    gender: "Male",
     bio: ""
   }
 })
@@ -92,21 +92,21 @@ const onSubmit = async (data: FormData) => {
           <div className="flex gap-2">
             <input
               {...register("day")}
-              type="text"
+              type="tel" inputMode="numeric"
               placeholder="DD"
               className="w-1/3 border rounded p-2"
             />
             <span className="flex items-center">/</span>
             <input
               {...register("month")}
-              type="text"
+              type="tel" inputMode="numeric"
               placeholder="MM"
               className="w-1/3 border rounded p-2"
             />
             <span className="flex items-center">/</span>
             <input
               {...register("year")}
-              type="text"
+              type="tel" inputMode="numeric"
               placeholder="YYYY"
               className="w-1/3 border rounded p-2"
             />

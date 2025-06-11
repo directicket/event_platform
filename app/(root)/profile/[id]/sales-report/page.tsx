@@ -7,6 +7,8 @@ import { formatDateTime } from '@/lib/utils'
 import { getUserById } from '@/lib/actions/user.actions';
 import { ChartColumnIncreasing } from 'lucide-react';
 import { now } from 'mongoose';
+import { GenderTrendChart } from '@/components/shared/GenderOrderChart';
+import { startOfDay, addHours, isSameHour } from 'date-fns';
 
 interface Props {
   params: {
@@ -93,6 +95,41 @@ export default async function SalesReportPage({ params }: Props) {
 
   const peakHourLabel = peakHour !== null ? `${formatHour(peakHour)} - ${formatHour((peakHour + 1) % 24)}` : null;
 
+  const genderCounts = orders.reduce(
+    (acc: { male: number; female: number; unknown: number }, order: any) => {
+      const gender = order?.buyer?.gender;
+
+      if (gender === 'Male') acc.male += 1;
+      else if (gender === 'Female') acc.female += 1;
+      else acc.unknown += 1;
+
+      return acc;
+    },
+    { male: 0, female: 0, unknown: 0 }
+  );
+  const totalKnownGender = genderCounts.male + genderCounts.female;
+  const malePercent = totalKnownGender ? (genderCounts.male / totalKnownGender) * 100 : 0;
+  const femalePercent = totalKnownGender ? (genderCounts.female / totalKnownGender) * 100 : 0;
+
+  const genderTrendData = Array.from({ length: 24 }).map((_, hour) => {
+    const label = `${hour}:00`;
+
+    const hourOrders = orders.filter(order => {
+      const createdAt = new Date(order.createdAt);
+      return createdAt.getHours() === hour;
+    });
+
+    const maleCount = hourOrders.filter(o => o.buyer?.gender === 'Male').length;
+    const femaleCount = hourOrders.filter(o => o.buyer?.gender === 'Female').length;
+
+    return {
+      time: label,
+      Male: maleCount,
+      Female: femaleCount,
+    };
+  });
+
+
   return (
     <div className="p-6 max-w-4xl mx-auto text-white mt-16">
       <h1 className="h2-regular mb-2"><span className='text-neutral-600'>Sales Report:</span><br/>{event.title}</h1>
@@ -159,6 +196,28 @@ export default async function SalesReportPage({ params }: Props) {
       </div>
       }
       <hr className='border-0.5 border-neutral-800/80 my-4'/>
+      
+      <div className="w-full mt-6">
+        <h3 className="text-sm text-neutral-200 mb-2">Gender Breakdown</h3>
+        <div className="flex w-full h-6 rounded-md overflow-hidden bg-neutral-800">
+          <div
+            className="bg-blue-400 h-full border-r border-black items-center"
+            style={{ width: `${malePercent}%` }}
+          />
+          <div
+            className="bg-fuchsia-500 h-full border-l border-black"
+            style={{ width: `${femalePercent}%` }}
+          />
+        </div>
+        <div className="flex justify-between text-xs text-gray-300 mt-1">
+          <p className={`p-semibold-14 ${malePercent === 0 ? 'text-neutral-700' : 'text-blue-400'}`}>M - {malePercent.toFixed(1)}%</p>
+          <p className={`p-semibold-14 ${malePercent === 0 ? 'text-neutral-700' : 'text-fuchsia-500'}`}>F - {femalePercent.toFixed(1)}%</p>
+        </div>
+      </div>
+
+      <div className="w-full mt-6">
+        <GenderTrendChart data={genderTrendData} />
+      </div>
 
       {orders.length === 0 ? (
         <p className='text-neutral-600 text-lg'>No purchases yet.</p>
