@@ -10,7 +10,7 @@ import { TrendingUp, HandCoins, ArrowRight, Globe, Sunrise, HandHeart, Plus, Tic
 import Footer from '@/components/shared/Footer';
 import CopyText from '@/components/shared/CopyText';
 import CollectionDashboard from '@/components/shared/CollectionDashboard';
-import { getUserById, getUserByUsername } from '@/lib/actions/user.actions';
+import { getUserByClerkId, getUserById, getUserByUsername } from '@/lib/actions/user.actions';
 import Event from '@/lib/database/models/event.model'
 import Search from '@/components/shared/Search';
 import { useSearchParams } from 'next/navigation';
@@ -20,6 +20,7 @@ import Tags from '@/components/shared/Tags';
 import UserTags from '@/components/shared/UserTags';
 import * as Popover from '@radix-ui/react-popover';
 import ReusablePopover from '@/components/shared/PopOver';
+import CompleteProfileModal from '@/components/shared/CompleteProfileModal';
 
 const ibmMono = IBM_Plex_Mono({ subsets: ['latin'], weight: ['400', '600'] });
 
@@ -32,12 +33,22 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
   const userName = user?.username;
   const userPhoto = user?.imageUrl
 
-  const stringUserName = userName?.toString()
+  const stringUserName = userFirstName as string
 
   // const userUserName = await getUserByUsername(stringUserName)
 
   const { sessionClaims } = auth();
   const userId = sessionClaims?.userId as string;
+  console.log(userId)
+
+  const clerkId = user?.id as string
+  console.log(clerkId)
+
+  const mongoUser = await getUserById(userId)
+  const shouldShowModal = !mongoUser.gender || !mongoUser.dateOfBirth
+
+  const imageUrl = mongoUser.photo
+
 
   const organizedEvents = await getEventsByUser({ query, userId, page: 1 });
 
@@ -60,6 +71,8 @@ export default async function ProfilePage({ searchParams }: { searchParams: { [k
 
   return (
     <>
+    {shouldShowModal && <CompleteProfileModal clerkId={clerkId} userName={stringUserName} imageUrl={imageUrl}/>}
+    
     <div className='mt-16'>
       {/* USER INFO */}
       <section className='wrapper text-white flex flex-col gap-2'>

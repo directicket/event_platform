@@ -13,3 +13,12 @@ export const eventFormSchema = z.object({
     isFree: z.boolean(),
     url: z.string().url(),
   })
+
+  export const completeProfileSchema = z.object({
+  clerkId: z.string(),
+  gender: z.enum(['Male', 'Female', 'Rather Not Say']),
+  day: z.string().min(1).max(2),
+  month: z.string().min(1).max(2),
+  year: z.string().min(4).max(4),
+  bio: z.string().max(300).optional()
+})

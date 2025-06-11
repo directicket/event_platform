@@ -9,11 +9,14 @@ export type CreateUserParams = {
   }
   
   export type UpdateUserParams = {
-    firstName: string
-    lastName: string
-    username: string
-    photo: string
-  }
+  firstName?: string
+  lastName?: string
+  username?: string
+  photo?: string
+  gender?: 'Male' | 'Female' | 'Rather Not Say'
+  dateOfBirth?: Date
+  bio?: string
+}
 
   export type createBanksParams = {
     userId: string

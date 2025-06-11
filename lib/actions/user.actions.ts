@@ -92,3 +92,10 @@ export async function getUserByUsername(username: string) {
     handleError(error)
   }
 }
+
+export async function getUserByClerkId(clerkId: string) {
+  await connectToDatabase()
+  const user = await User.findOne({ clerkId })
+  if (!user) throw new Error('User not found')
+  return JSON.parse(JSON.stringify(user))
+}
